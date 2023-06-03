@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gradient-form {
+      background: url(images/2.jpg);
+    }
+    .gradient-custom-2 {
+      background-image: linear-gradient(to right, #667eea, #764ba2);
+    }
+  </style>
+  <title>Registration Form</title>
+</head>
+
+<body>
+  <section class="h-100 gradient-form">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100" style="border-radius: 50px;">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+                  <div class="text-center">
+                    <a class="navbar-brand" href="index.html">
+                      <center>
+                        <div class="logo-for-all"><img src="images/Logo_Yoga.png"></div>
+                      </center>
+                    </a>
+                    <h4 class="mt-1 mb-5 pb-1">Vì Chúng Tôi Hiểu Bạn</h4>
+                    <h4 class="mt-1 mb-4 pb-1">Tạo Tài Khoản</h4>
+                  </div>
+                  <form>
+                    <div class="form-outline mb-4">
+                      <input type="text" id="form2Example11" class="form-control" placeholder="Full name" />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <input type="email" id="form2Example11" class="form-control" placeholder="Email address" />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <input type="password" id="form2Example22" class="form-control" placeholder="Password" />
+                    </div>
+                    <div class="form-outline mb-4">
+                      <input type="password" id="form2Example33" class="form-control" placeholder="Confirm password" />
+                    </div>
+                    <div class="text-center pt-1 mb-3 pb-1">
+                      <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Create Account</button>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                      <p class="mb-0 me-2">Already have an account? </p>
+                      <button type="button" class="btn btn-outline-danger" onclick="Login()">Log in</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <h4 class=""><img src="images/OIP (1).jpg"></h4>
+                  <h4 class="mb-4">Những Kinh Nghiệm Trong Thực Hành Yoga</h4>
+                  <p class="small mb-10">Giữ một thái độ hài lòng với kết quả đạt được mà không quan tâm tranh đua, 
+                    ganh tị với sự thành công của cá thể khác. 
+                    Tuy nhiên song song với đó vẫn phải cố gắng để đạt được sự tiến bộ tối đa của bản thân để có thể nghĩ rằng 
+                    ” mình đã cố gắng hết sức “.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function Login(){
+      window.location.href = "loginpage.html";
+    }
+  </script>
+</body>
+
+</html>
