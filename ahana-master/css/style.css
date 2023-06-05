@@ -15,9 +15,10 @@
 html,
 body {
 	height: 100%;
+	font-smoothing: antialiased;
 	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	font-smoothing: antialiased;
+	
 }
 
 h1,
@@ -4357,4 +4358,12 @@ only screen and (min-width: 576px) and (max-width: 767px),
 }
 .gradient-form{
 	width: 100%;
+	background: linear-gradient(145deg, #b19cd9 0%, #d3d3d3 100%);
+
+}
+.form-outline input.form-control {
+    border-radius: 20px;
+}
+.card{
+	border-radius: 50px;
 }
