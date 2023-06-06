@@ -15,10 +15,9 @@
 html,
 body {
 	height: 100%;
-	font-smoothing: antialiased;
 	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	
+	font-smoothing: antialiased;
 }
 
 h1,
@@ -153,9 +152,9 @@ ol {
 .hero-section,
 .back-to-top {
 	/*background màu */
-	background: -o-linear-gradient(305deg, #b19cd9 0%, #d3d3d3 100%);
-	background: linear-gradient(145deg, #b19cd9 0%, #d3d3d3 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b19cd9", endColorstr="#d3d3d3", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 
 .bg-g-2,
@@ -163,9 +162,9 @@ ol {
 .site-btn.sb-line-gradient,
 .site-btn.sb-gradient {
 	/* background khung */
-	background: -o-linear-gradient(305deg, #ffcc99 0%, #a4c639 100%);
-	background: linear-gradient(145deg, #ffcc99 0%, #a4c639 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffcc99", endColorstr="#a4c639", GradientType=1);
+	background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
+	background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
 }
 
 /*---------------------
@@ -196,7 +195,7 @@ ol {
 
 .site-btn.sb-white {
 	background: #fff;
-	color: #f65d5d;
+	color: #f65db4;
 }
 
 .site-btn.sb-gradient {
@@ -1059,8 +1058,8 @@ only screen and (min-width: 576px) and (max-width: 767px),
 .hs-text h2 {
 	text-transform: uppercase;
 	font-size: 50px;
-	color: #fff;
-	font-family: "Playfair Display", serif;
+	color: #ded3d3ce;
+	font-family: 'Times New Roman', Times;
 	line-height: 1.3;
 	margin-bottom: 20px;
 }
@@ -1073,7 +1072,7 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 .hs-text p {
 	font-size: 16px;
-	color: #fff;
+	color: #d8cacad1;
 	margin-bottom: 60px;
 }
 
@@ -4358,12 +4357,4 @@ only screen and (min-width: 576px) and (max-width: 767px),
 }
 .gradient-form{
 	width: 100%;
-	background: linear-gradient(145deg, #b19cd9 0%, #d3d3d3 100%);
-
-}
-.form-outline input.form-control {
-    border-radius: 20px;
-}
-.card{
-	border-radius: 50px;
 }
