@@ -21,8 +21,8 @@ public class Booking implements Serializable{
     private LocalDate bookingDate;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "Customer_id")
+    private User Customer_id;
 
     @ManyToOne
     @JoinColumn(name = "class_id")

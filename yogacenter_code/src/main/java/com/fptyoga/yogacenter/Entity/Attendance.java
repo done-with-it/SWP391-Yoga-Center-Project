@@ -21,14 +21,18 @@ public class Attendance implements Serializable{
     private Long attendance_id;
 
     @Column(name = "attendance_date")
-    private String user_name;
+    private String attendance_date;
 
-    @Column(name = "status")
-    private String address;
+    @Column(name = "note")
+    private String note;
+
+    @ManyToOne
+    @JoinColumn(name = "Customer_id")
+    private User Customer_id;
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private Class class_attd;
+    private Class class_id;
 
 
 }
