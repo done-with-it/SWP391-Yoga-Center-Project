@@ -795,9 +795,9 @@ only screen and (min-width: 576px) and (max-width: 767px),
 	left: 0;
 	top: 0;
 	background: #f65d5d;
-	background: linear-gradient(to right, #FFFFFF, #FFEBF2, #FFD6E5, #FFC1D8, #FFACCB, #FF97BE, #FF82B1, #FF6DA4, #FF5897, #FF438A, #FF2E7D, #FF1970, #FF0263, #F5006E, #E30078, #D10083, #BF008D, #AD0098, #9B00A2);
-	background: linear-gradient(to right, #FFFFFF, #FFEBF2, #FFD6E5, #FFC1D8, #FFACCB, #FF97BE, #FF82B1, #FF6DA4, #FF5897, #FF438A, #FF2E7D, #FF1970, #FF0263, #F5006E, #E30078, #D10083, #BF008D, #AD0098, #9B00A2);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f65d5d", endColorstr="#fdb07d", GradientType=1);
+	background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
+	background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
 	opacity: 0;
 	filter: alpha(opacity=0);
 	-webkit-transition: all 0.4s;
