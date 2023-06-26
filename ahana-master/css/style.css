@@ -632,9 +632,9 @@ only screen and (min-width: 576px) and (max-width: 767px),
 @media only screen and (min-width: 576px) and (max-width: 767px),
 (max-width: 576px) {
 	.slicknav_btn {
-		background: -o-linear-gradient(305deg, #ff6600 0%, #c0f022 100%);
-		background: linear-gradient(145deg, #ff6600 0%, #c0f022 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff6600", endColorstr="#c0f022", GradientType=1);
+		background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
+		background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
 	}
 }
 
@@ -2537,10 +2537,10 @@ only screen and (min-width: 576px) and (max-width: 767px),
 	height: 100%;
 	left: 0;
 	top: 0;
-	background: #f65d5d;
-	background: -o-linear-gradient(305deg, #f65d5d 0%, #fdb07d 100%);
-	background: linear-gradient(145deg, #f65d5d 0%, #fdb07d 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f65d5d", endColorstr="#fdb07d", GradientType=1);
+	background: #bca6e6;
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 	opacity: 0;
 	filter: alpha(opacity=0);
 	-webkit-transition: all 0.4s;
@@ -4328,19 +4328,19 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 .gradient-custom-2 {
 	/* fallback for old browsers */
-	background: -o-linear-gradient(305deg, #00FFCC 0%, #00FF00 100%);
-	background: linear-gradient(145deg, #00FFCC 0%, #00FF00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00FFCC", endColorstr="#00FF00", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 
 	/* Chrome 10-25, Safari 5.1-6 */
-	background: -o-linear-gradient(305deg, #008080 0%, #00FF00 100%);
-	background: linear-gradient(145deg, #008080 0%, #00FF00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#008080", endColorstr="#00FF00", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	background: -o-linear-gradient(305deg, #008080 0%, #00FF00 100%);
-	background: linear-gradient(145deg, #008080 0%, #00FF00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#008080", endColorstr="#00FF00", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 
 	@media (min-width: 768px) {
 		.gradient-form {
@@ -4355,6 +4355,6 @@ only screen and (min-width: 576px) and (max-width: 767px),
 		}
 	}
 }
-.gradient-form{
+.gradient-form {
 	width: 100%;
 }
