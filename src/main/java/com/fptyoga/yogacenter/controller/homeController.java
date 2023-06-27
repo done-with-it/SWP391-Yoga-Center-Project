@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.fptyoga.yogacenter.Entity.Schedule;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.repository.ContentRepository;
+import com.fptyoga.yogacenter.repository.ScheduleRepository;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.ScheduleService;
 import com.fptyoga.yogacenter.service.TrainerService;
@@ -43,9 +45,17 @@ public class homeController {
     @Autowired
     private ScheduleService scheduleService;
 
-    @GetMapping("/classes")
-    public String events(Model eventModel) {
-        List<Schedule> classes = scheduleService.getAllSchedule();
+    @Autowired
+    private ScheduleRepository scheduleRepository;
+
+@GetMapping("/classes")
+    public String events(Model eventModel, @RequestParam(defaultValue = "1") int page) {
+        PageRequest pageable = PageRequest.of(page-1, 6);
+        Page<Schedule> classes = scheduleRepository.findAll(pageable);
+        eventModel.addAttribute("currentPage", page);
+        eventModel.addAttribute("totalPages", classes.getTotalPages());
+        eventModel.addAttribute("numofClasses", classes.getNumberOfElements());
+        eventModel.addAttribute("totalClasses", classes.getTotalElements());
         eventModel.addAttribute("classes", classes);
         return "classes";
     }
@@ -104,7 +114,7 @@ public class homeController {
 
     @GetMapping("/blog")
     public String blog(Model model, @RequestParam(defaultValue = "1") int page) {
-        PageRequest pageable = PageRequest.of(page - 1, 3);
+        PageRequest pageable = PageRequest.of(page-1, 3, Sort.by("createdate").descending());
         Page<Content> contents = contentRepository.findAll(pageable);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", contents.getTotalPages());
