@@ -30,18 +30,23 @@ public class homeController {
         return "redirect:/index";
     }
 
+    // @Autowired
+    // private ScheduleService scheduleService;
+
+    // @GetMapping("/events")
+    // public String events(Model eventModel) {
+    // List<Schedule> eventList = scheduleService.getAllSchedule();
+    // eventModel.addAttribute("eventList", eventList);
+    // return "events";
+    // }
+
     @Autowired
     private ScheduleService scheduleService;
 
-    @GetMapping("/events")
-    public String events(Model eventModel) {
-        List<Schedule> eventList = scheduleService.getAllSchedule();
-        eventModel.addAttribute("eventList", eventList);
-        return "events";
-    }
-
     @GetMapping("/classes")
-    public String classes() {
+    public String events(Model eventModel) {
+        List<Schedule> classes = scheduleService.getAllSchedule();
+        eventModel.addAttribute("classes", classes);
         return "classes";
     }
 
@@ -71,7 +76,7 @@ public class homeController {
         model.addAttribute("trainList", trainList);
         return "trainer";
     }
-    
+
     @Autowired
     private TrainerService trainerService;
 

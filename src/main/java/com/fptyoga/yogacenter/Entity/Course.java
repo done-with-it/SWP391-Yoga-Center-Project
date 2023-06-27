@@ -6,11 +6,19 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "course_table")
 public class Course implements Serializable {
-    
+
     @Id
     @Column(name = "course_id")
     private Long courseid;
@@ -20,7 +28,13 @@ public class Course implements Serializable {
 
     @Column(name = "status")
     private boolean status;
-    
+
+    @Column(name = "img")
+    private String img;
+
+    @Column(name = "description", columnDefinition = "VARCHAR(MAX)")
+    private String description;
+
     // @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     // private Set<Class> class2;
 

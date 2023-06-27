@@ -75,17 +75,17 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" th:each="class : ${classes}">
 							<div class="classes-item-warp">
 								<div class="classes-item">
 									<div class="ci-img">
-										<img src="img/classes/1.jpg" alt="">
+										<img th:src="${class.classid.courseid.img}" alt="">
 									</div>
 									<div class="ci-text">
-										<h4>Artistic Yoga</h4>
+										<h4 th:text = "${class.classid.courseid.coursename}"></h4>
 										<div class="ci-metas">
-											<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
-											<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
+											<div class="ci-meta"><i class="material-icons">event_available</i>[[${class.classid.date}]]</div>
+											<div class="ci-meta"><i class="material-icons">alarm_on</i>[[${class.timeid.starttime}]] - [[${class.timeid.endtime}]]</div>
 										</div>
 										<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
 									</div>
@@ -93,7 +93,7 @@
 										<div class="ci-author">
 											<img src="img/classes/author/1.jpg" alt="">
 											<div class="author-text">
-												<h6>Victoria Webb</h6>
+												<h6>[[${class.classid.trainerid.fullname}]]</h6>
 												<p>Yoga Trainer</p>
 											</div>
 										</div>
@@ -102,141 +102,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="classes-item-warp">
-								<div class="classes-item">
-									<div class="ci-img">
-										<img src="img/classes/2.jpg" alt="">
-									</div>
-									<div class="ci-text">
-										<h4>Traditional Hatha</h4>
-										<div class="ci-metas">
-											<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
-											<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-										</div>
-										<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-									</div>
-									<div class="ci-bottom">
-										<div class="ci-author">
-											<img src="img/classes/author/2.jpg" alt="">
-											<div class="author-text">
-												<h6>Victoria Webb</h6>
-												<p>Yoga Trainer</p>
-											</div>
-										</div>
-										<a href="" class="site-btn sb-gradient">book now</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="classes-item-warp">
-								<div class="classes-item">
-									<div class="ci-img">
-										<img src="img/classes/3.jpg" alt="">
-									</div>
-									<div class="ci-text">
-										<h4>Yoga Therapy</h4>
-										<div class="ci-metas">
-											<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
-											<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-										</div>
-										<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-									</div>
-									<div class="ci-bottom">
-										<div class="ci-author">
-											<img src="img/classes/author/3.jpg" alt="">
-											<div class="author-text">
-												<h6>Victoria Webb</h6>
-												<p>Yoga Trainer</p>
-											</div>
-										</div>
-										<a href="" class="site-btn sb-gradient">book now</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="classes-item-warp">
-								<div class="classes-item">
-									<div class="ci-img">
-										<img src="img/classes/1.jpg" alt="">
-									</div>
-									<div class="ci-text">
-										<h4>Artistic Yoga</h4>
-										<div class="ci-metas">
-											<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
-											<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-										</div>
-										<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-									</div>
-									<div class="ci-bottom">
-										<div class="ci-author">
-											<img src="img/classes/author/1.jpg" alt="">
-											<div class="author-text">
-												<h6>Victoria Webb</h6>
-												<p>Yoga Trainer</p>
-											</div>
-										</div>
-										<a href="" class="site-btn sb-gradient">book now</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="classes-item-warp">
-								<div class="classes-item">
-									<div class="ci-img">
-										<img src="img/classes/2.jpg" alt="">
-									</div>
-									<div class="ci-text">
-										<h4>Traditional Hatha</h4>
-										<div class="ci-metas">
-											<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
-											<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-										</div>
-										<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-									</div>
-									<div class="ci-bottom">
-										<div class="ci-author">
-											<img src="img/classes/author/2.jpg" alt="">
-											<div class="author-text">
-												<h6>Victoria Webb</h6>
-												<p>Yoga Trainer</p>
-											</div>
-										</div>
-										<a href="" class="site-btn sb-gradient">book now</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="classes-item-warp">
-								<div class="classes-item">
-									<div class="ci-img">
-										<img src="img/classes/3.jpg" alt="">
-									</div>
-									<div class="ci-text">
-										<h4>Yoga Therapy</h4>
-										<div class="ci-metas">
-											<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
-											<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-										</div>
-										<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-									</div>
-									<div class="ci-bottom">
-										<div class="ci-author">
-											<img src="img/classes/author/3.jpg" alt="">
-											<div class="author-text">
-												<h6>Victoria Webb</h6>
-												<p>Yoga Trainer</p>
-											</div>
-										</div>
-										<a href="" class="site-btn sb-gradient">book now</a>
-									</div>
-								</div>
-							</div>
-						</div>
+						
 					</div>
 					<div class="site-pagination pt-3">
 						<a href="#" class="active">1</a>

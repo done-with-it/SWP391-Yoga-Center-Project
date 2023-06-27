@@ -31,10 +31,10 @@ public class Schedule implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "time_id")
-    private Time time;
+    private Time timeid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private Room room;
+    private Room roomid;
 
 }

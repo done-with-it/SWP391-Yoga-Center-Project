@@ -8,8 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Class_table")
 public class Class implements Serializable{
     
@@ -20,6 +28,9 @@ public class Class implements Serializable{
     @Column(name = "class_name")
     private String classname;
 
+    @Column(name = "date")
+    private String date;
+
     @Column(name = "status")
     private String status;
 
@@ -28,8 +39,8 @@ public class Class implements Serializable{
     private Course courseid;
 
     @ManyToOne
-    @JoinColumn(name = "coach_id")
-    private User coachid;
+    @JoinColumn(name = "trainer_id")
+    private User trainerid;
 
     // @OneToMany(mappedBy = "class1", cascade = CascadeType.ALL)
     // private Set<Attendance> attendance;

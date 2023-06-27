@@ -12,9 +12,8 @@ import com.fptyoga.yogacenter.repository.ScheduleRepository;
 public class ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
-    
+
     public List<Schedule> getAllSchedule(){
         return scheduleRepository.findAll();
-
     }
 }
