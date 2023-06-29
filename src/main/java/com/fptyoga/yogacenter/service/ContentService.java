@@ -25,7 +25,5 @@ public class ContentService {
 
     }
 
-    public List<Content> getTopicContents(String topic){
-        return repo.findByTopic(topic);
-    }
+    
 }

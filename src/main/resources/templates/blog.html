@@ -55,8 +55,7 @@
 	<br>
 	<div>
 		<select class="circle-select">
-			<option data-display="Choose Category">Choose Category</option>
-			<option th:each="content : ${contents}" th:text="${content.topic}"></option>
+			<option data-display="Choose Category" th:each="content : ${contents}" th:text="${content.topic}"><a th:href="@{/blog(topic=${content.topic})}"></a></option>
 		</select>
 	    </div>
 	<!-- Events Section -->
