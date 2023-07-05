@@ -13,4 +13,6 @@ public interface ClassesRepository extends JpaRepository<Class, Long>{
 
     @Query("SELECT  DISTINCT c.date FROM Class c")
     List<String> findDistinctDate();
+
+
 }

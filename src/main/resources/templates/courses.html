@@ -66,7 +66,7 @@
 							<img th:src="${course.img}" alt="">
 						</div>
 						<div class="ei-text">
-							<h4><a th:href="@{/course-details}">[[${course.coursename}]]</a></h4>
+							<a th:href="@{/course-details(courseid=${course.courseid})}"><h4>[[${course.coursename}]]</h4></a>
 							<ul>
 								<li><i class="material-icons">domain</i>FPT YOGA CENTER</li>
 								<li><i class="material-icons">payments</i>[[${course.price}]]$</li>
@@ -77,11 +77,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="site-pagination pt-3">
-				<a href="#" class="active">1</a>
-				<a href="#">2</a>
-				<a href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-			</div>
+			
 
 		</div>
 		

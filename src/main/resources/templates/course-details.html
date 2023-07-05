@@ -60,31 +60,26 @@
 	<section class="classes-details-section spad overflow-hidden">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-9">
+				<div class="col-lg-1">
+
+				</div>
+				<div class="col-lg-10">
 					<div class="classes-details">
 						<div class="classes-preview">
 							<img src="img/classes/big.jpg" alt="">
 						</div>
 						<div class="row">
 							<div class="col-lg-8">
-								<h2>Yoga Therapy</h2>
-								<div class="cd-meta">
-									<p><i class="material-icons">alarm_on</i>120 Mins </p>
-								</div>
+								<h2 th:text="${courses.coursename}"></h2>
 								<div class="cd-meta">
 									<p><i class="material-icons">people_outline</i>250 People Registered</p>
 								</div>
 							</div>
 							<div class="col-lg-4 text-left text-md-right">
-								<div class="cd-price">$29</div>
+								<div class="cd-price">[[${courses.price}]]$</div>
 							</div>
 						</div>
-						<p>Yoga is the secret of many women in Vietnam and internationally. This is a very popular
-							subject to bring extremely effective exercises to help improve physique effectively and
-							reduce belly fat quickly. In order to have a perfect, toned physique, you need to arrange a
-							suitable exercise regime for yourself as well as a nutritious diet. The following is a
-							series of yoga exercises that help reduce fat effectively. 5 Moves to increase height for
-							dwarf mushrooms. Exercise regularly to get the best results.</p>
+						<p>[[${courses.description}]]</p>
 						<div class="row mb-5">
 							<div class="col-lg-5">
 								<img src="img/classes/classes-details.png" alt="">
@@ -94,15 +89,9 @@
 									who are so beguiled and demoralized by the charms of pleasure of the moment, so
 									blinded by desire, that they cannot foresee the pain.</blockquote>
 								<h3>The secret to improving her height to achieve quick results:</h3>
-								<ul>
-									<li><i class="material-icons">done_all</i>Combining 30 minutes of practice and 30
-										jumps high</li>
-									<li><i class="material-icons">done_all</i>Apply scientific nutrition, avoid obesity.
-									</li>
-									<li><i class="material-icons">done_all</i>Practice sports regularly</li>
-									<li><i class="material-icons">done_all</i>Various versions have evolved over the
-										years</li>
-								</ul>
+								<!-- <p th:each="task : ${#strings.arraySplit(courses.task(), '.')}">
+									<li><i class="material-icons">check_circle</i>[[${task}]]</li>
+								</p> -->
 							</div>
 						</div>
 						<p>Update the trend of 12 yoga exercises to help you lose weight effectively at home, help
@@ -112,7 +101,7 @@
 						<div class="row">
 							<div class="col-sm-7">
 								<div class="cd-cata">
-									<p><i class="material-icons">local_offer</i>Health & Beauty</p>
+									<!-- <p><i class="material-icons">local_offer</i>[[courses.topic]]</p> -->
 								</div>
 							</div>
 							<div class="col-sm-5 text-left text-sm-right pt-4 pt-sm-0">
@@ -127,72 +116,30 @@
 					</div>
 					<h3 class="comment-title">Other Classes</h3>
 					<div class="classes-other-slider owl-carousel">
-						<div class="classes-item">
+						<div class="classes-item" th:each="class : ${classes}">
 							<div class="ci-img">
-								<img src="img/classes/1.jpg" alt="">
+								<img th:src="${class.classid.courseid.img}" alt="">
 							</div>
 							<div class="ci-text">
-								<h4><a href="classes-details.html">Artistic Yoga</a></h4>
+								<a th:href="@{/classes(courseid=${courses.courseid})}">
+									<h4 th:text="${class.classid.courseid.coursename}"></h4>
+								</a>
 								<div class="ci-metas">
-									<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri
+									<div class="ci-meta"><i
+											class="material-icons">event_available</i>[[${class.classid.date}]]
 									</div>
-									<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
+									<div class="ci-meta"><i
+											class="material-icons">alarm_on</i>[[${class.timeid.starttime}]] -
+										[[${class.timeid.endtime}]]</div>
 								</div>
-								<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
+								<p>Embark on a journey of silence with Yoga Center: A Place of Energy and
+									Balance!</p>
 							</div>
 							<div class="ci-bottom">
 								<div class="ci-author">
-									<img src="img/classes/author/1.jpg" alt="">
+									<img th:src="${class.classid.trainerid.img}" alt="">
 									<div class="author-text">
-										<h6>Victoria Webb</h6>
-										<p>Yoga Trainer</p>
-									</div>
-								</div>
-								<a href="" class="site-btn sb-gradient">book now</a>
-							</div>
-						</div>
-						<div class="classes-item">
-							<div class="ci-img">
-								<img src="img/classes/2.jpg" alt="">
-							</div>
-							<div class="ci-text">
-								<h4>Traditional Hatha</h4>
-								<div class="ci-metas">
-									<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri
-									</div>
-									<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-								</div>
-								<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-							</div>
-							<div class="ci-bottom">
-								<div class="ci-author">
-									<img src="img/classes/author/2.jpg" alt="">
-									<div class="author-text">
-										<h6>Victoria Webb</h6>
-										<p>Yoga Trainer</p>
-									</div>
-								</div>
-								<a href="" class="site-btn sb-gradient">book now</a>
-							</div>
-						</div>
-						<div class="classes-item">
-							<div class="ci-img">
-								<img src="img/classes/3.jpg" alt="">
-							</div>
-							<div class="ci-text">
-								<h4>Yoga Therapy</h4>
-								<div class="ci-metas">
-									<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri
-									</div>
-									<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
-								</div>
-								<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
-							</div>
-							<div class="ci-bottom">
-								<div class="ci-author">
-									<img src="img/classes/author/3.jpg" alt="">
-									<div class="author-text">
-										<h6>Victoria Webb</h6>
+										<h6>[[${class.classid.trainerid.fullname}]]</h6>
 										<p>Yoga Trainer</p>
 									</div>
 								</div>
@@ -263,35 +210,24 @@
 						</div>
 					</form> -->
 				</div>
-				<div class="col-lg-3 col-md-5 col-sm-8 sidebar">
+				<div class="col-lg-1">
+					
+				</div>
+				<!-- <div class="col-lg-3 col-md-5 col-sm-8 sidebar">
 					<div class="sb-widget">
-						<h2 class="sb-title">About instructor</h2>
+						<h2 class="sb-title">About</h2>
 						<div class="classes-info">
 							<ul>
-								<li><i class="material-icons">map</i>184 Main Collins Street</li>
-								<li><i class="material-icons">event_available</i>15 January, 2019</li>
-								<li><i class="material-icons">done_all</i>Mon, Fri</li>
-								<li><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</li>
-								<li><i class="material-icons">person_outline</i>Lori Kennedy</li>
+								<li><i class="material-icons">map</i>FPT YOGA CENTER</li>
+								<li><i class="material-icons">phone</i>(+84) 922116687</li>
+								<li><i class="material-icons">person_outline</i>fpt.yoga@gmail.com</li>
 							</ul>
 						</div>
+						<a href="" class="site-btn sb-gradient">book now</a>
 					</div>
-					<div class="sb-widget">
-						<h2 class="sb-title">About instructor</h2>
-						<div class="about-instructor-widget">
-							<img src="img/classes/author/1.jpg" alt="">
-							<h4>Lori Kennedy</h4>
-							<h6>Yoga Trainer</h6>
-							<p>Yoga & Therapy Certificate of Uttarakhand University</p>
-							<div class="ai-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
+					
+					
+				</div> -->
 			</div>
 		</div>
 	</section>

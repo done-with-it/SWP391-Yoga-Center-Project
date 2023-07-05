@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -53,7 +54,8 @@ public class User implements Serializable{
     private boolean status;
 
     @Column(name = "img")
-    private String img;
+    @Lob
+    private byte[] img;
 
     @Column(name = "date_of_birth")
     private String dob;

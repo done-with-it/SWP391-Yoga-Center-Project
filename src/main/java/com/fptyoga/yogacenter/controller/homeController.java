@@ -72,6 +72,8 @@ public class homeController {
         List<User> trainList = userService.listAll(3L);
         PageRequest pageable = PageRequest.of(page - 1, 3, Sort.by("createdate").descending());
         Page<Content> contents = contentRepository.findAll(pageable);
+        List<Course> courses = courseRepository.findAll();
+        model.addAttribute("courses", courses);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", contents.getTotalPages());
         model.addAttribute("contents", contents);
@@ -134,7 +136,13 @@ public class homeController {
     }
 
     @GetMapping("/course-details")
-    public String courseDetails() {
+    public String courseDetails(@RequestParam(defaultValue = "courseid") Long courseid, Model model,
+            @RequestParam(defaultValue = "1") int page) {
+        Course courses = courseService.getCourseById(courseid);
+        PageRequest pageable = PageRequest.of(page - 1, 10);
+        Page<Schedule> classes = scheduleService.getSchedulesByCourseId(courseid, pageable);
+        model.addAttribute("classes", classes);
+        model.addAttribute("courses", courses);
         return "course-details";
     }
 
