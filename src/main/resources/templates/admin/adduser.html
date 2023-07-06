@@ -39,8 +39,8 @@
     <div class="col-sm-10">
       <h1>Add User</h1>
     </div>
-    <div class="col-sm-2"><a th:href="@{/admin/index}" class="pull-right"><img title="Back Home"
-          class="img-circle img-responsive" src="/img/home.png"></a></div>
+    <div class="col-sm-2"><a th:href="@{/admin/index}" ><img title="Back Home"
+           src="/img/logo.png"></a></div>
   </div>
   <div class="row">
     <div class="col-sm-3"><!--left col-->
@@ -70,7 +70,7 @@
       <div class="tab-content">
         <div class="tab-pane active" id="home">
           <hr>
-          <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}">
+          <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}" enctype="multipart/form-data">
             <div class="form-group">
 
               <div class="text-center">

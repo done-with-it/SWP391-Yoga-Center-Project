@@ -37,10 +37,9 @@
 <div class="container bootstrap snippet">
     <div class="row">
         <div class="col-sm-10">
-            <h1>Add User</h1>
+            <h1>Update User</h1>
         </div>
-        <div class="col-sm-2"><a th:href="@{/admin/index}" class="pull-right"><img title="Back Home"
-                    class="img-circle img-responsive" src="/img/home.png"></a></div>
+        <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
     </div>
     <div class="row">
         <div class="col-sm-3"><!--left col-->
@@ -60,7 +59,7 @@
           </div> -->
 
         </div><!--/col-3-->
-        <div th:if="${message}" class="alert alert-success text-center">[[${update}]]</div>
+        <div th:if="${update}" class="alert alert-success text-center">[[${update}]]</div>
         <div class="col-sm-11">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
@@ -70,15 +69,16 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="home">
                     <hr>
-                    <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}">
+                    <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}"
+                        enctype="multipart/form-data">
                         <input type="hidden" th:field="*{userid}">
                         <div class="form-group">
 
                             <div class="text-center">
                                 <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle"
-                                alt="avatar" width="192px" height="192px">
-                              <h6>Upload a photo</h6>
-                              <input type="file" name="file" class="text-center center-block file-upload">
+                                    alt="avatar" width="192px" height="192px">
+                                <h6>Upload a photo</h6>
+                                <input type="file" name="file" class="text-center center-block file-upload">
                             </div>
                             </hr><br>
                         </div>
@@ -133,37 +133,35 @@
 
                             <div class="col-xs-6">
                                 <h4>Role</h4>
-                                <select th:field="*{role}" class="form-control">
+                                <select th:field="*{role}">
                                     <option th:each="role : ${rolesList}" th:value="${role.roleid}"
-                                        th:text="${role.roleName}" class="active"></option>
+                                        th:if="${role.roleid != 1}" th:text="${role.roleName}" class="form-control">
+                                    </option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-
-                            <div class="col-xs-6">
-                                <h4>status</h4>
-                                <select type="" class="form-control" th:field="*{status}">
-                                    <option th:value="true">Active</option>
-                                    <option th:value="false">Inative</option>
-                                </select>
-                            </div>
+                        <!-- <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <h4>status</h4>
+                              <select type="" class="form-control" th:field="*{status}">
+                                <option th:value="true">Active</option>
+                                <option th:value="false">Inative</option>
+                              </select>
+                          </div>
+                      </div> -->
+                        <!-- <div class="form-group">
+                          
+                        <div class="col-xs-6">
+                          <h4 for="registrationdate">Create Date</h4>
+                            <input type="date" class="form-control" th:field="*{registrationdate}" id="registrationdate" th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" placeholder="registrationdate">
                         </div>
-                        <div class="form-group">
-
-                            <div class="col-xs-6">
-                                <h4 for="registrationdate">Create Date</h4>
-                                <input type="date" class="form-control" th:field="*{registrationdate}"
-                                    id="registrationdate"
-                                    th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
-                                    placeholder="registrationdate">
-                            </div>
-                        </div>
+                    </div> -->
                         <div class="form-group">
 
                             <div class="col-xs-6">
                                 <h4>Gender</h4>
-                                <div class="form-check form-check-inline active">
+                                <div class="form-check form-check-inline">
                                     <input type="radio" id="male" class="form-check-input" th:field="*{gender}"
                                         th:value="male">
                                     <label for="male" class="form-check-label">Male</label>
@@ -183,7 +181,8 @@
                             <div class="col-xs-12">
                                 <br>
                                 <button class="btn btn-lg btn-success" type="submit"><i
-                                        class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                        class="glyphicon glyphicon-ok-sign"></i>
+                                    Save</button>
                                 <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i>
                                     Reset</button>
                             </div>

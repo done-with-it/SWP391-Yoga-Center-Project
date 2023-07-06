@@ -115,7 +115,7 @@ public class admincontroller {
     }
 
     @GetMapping("/download-png")
-    public ResponseEntity<Resource> downloadTrainerPng(@RequestParam(defaultValue = "") Long userid) {
+    public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
         byte[] pngData = userService.getPngDataById(userid);
         if (pngData != null) {
             ByteArrayResource resource = new ByteArrayResource(pngData);

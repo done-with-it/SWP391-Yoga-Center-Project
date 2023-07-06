@@ -63,7 +63,8 @@
 				<div class="col-lg-6" th:each="trainer : ${trainList}">
 					<div class="trainer-item">
 						<div class="ti-img">
-							<img th:src="${trainer.img}" alt="">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
+							
 						</div>
 						<div class="ti-text">
 							<h4 th:text="${trainer.fullname}"></h4>
@@ -75,10 +76,8 @@
 							<p></p>
 						</div>
 						<div class="ti-social">
-							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 							<a href="#"><i class="fa fa-instagram"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-linkedin"></i></a>
 						</div>
 					</div>
 				</div>

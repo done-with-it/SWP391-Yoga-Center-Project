@@ -9,6 +9,7 @@
     <meta name="author" content="" />
     <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
@@ -246,9 +247,10 @@
                                         <td>[[${user.phone}]]</td>
                                         <td>[[${user.dob}]]</td>
                                         <td>[[${user.registrationdate}]]</td>
-                                        <td><img th:src="${user.img}" alt="" width="96px"></td>
-                                        <td><a th:href="@{/admin/edit/{id}(id=${user.userid})}">Edit</a>
-                                            <a th:href="@{/admin/delete/{id}(id=${user.userid})}">Delete</a>
+                                        <td><img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image" width="96px"></td>
+                                        <td>
+                                            <a th:href="@{/admin/edit/{id}(id=${user.userid})}"><i class="material-icons">edit</i></a>
+                                            <a th:href="@{/admin/delete/{id}(id=${user.userid})}"><i class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>FPT Yoga</title>
 	<meta charset="UTF-8">
@@ -7,14 +8,16 @@
 	<meta name="keywords" content="yoga, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="richtext/richtext.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style.css" />
+	
 
 
 	<!--[if lt IE 9]>
@@ -23,6 +26,7 @@
 	<![endif]-->
 
 </head>
+
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -38,16 +42,18 @@
 	<!-- Infor Model -->
 	<div th:replace="~{common :: infor-model}"></div>
 	<!-- Infor Model end -->
-	                                                                              
+
 	<!-- Page top Section -->
 	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
 					<h2>About</h2>
-					<p>Welcome to our yoga center, a haven for holistic well-being and self-discovery. 
-						Our dedicated instructors guide you through transformative practices that nurture the body, mind, and soul. 
-						Immerse yourself in a serene and supportive environment, and embark on a journey of inner peace, strength, and harmony. 
+					<p>Welcome to our yoga center, a haven for holistic well-being and self-discovery.
+						Our dedicated instructors guide you through transformative practices that nurture the body,
+						mind, and soul.
+						Immerse yourself in a serene and supportive environment, and embark on a journey of inner peace,
+						strength, and harmony.
 						Discover the transformative power of yoga with us.Namaste!
 					</p>
 				</div>
@@ -110,7 +116,7 @@
 	<!-- Service Section end -->
 
 	<!-- What we do Section -->
-	
+
 	<!-- What we do Section end -->
 
 	<!-- Trainer Section -->
@@ -125,17 +131,17 @@
 				<div class="ts-item" th:each="trainer : ${trainList}">
 					<div class="trainer-item">
 						<div class="ti-img">
-							<img th:src="${trainer.img}" alt="">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
 						</div>
 						<div class="ti-text">
-							<h4><p th:text="${trainer.fullname}"></p></h4>
+							<h4>
+								<p th:text="${trainer.fullname}"></p>
+							</h4>
 							<h6>Yoga Trainer</h6>
 							<p th:text="${trainer.email}"></p>
 							<div class="ti-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
 							</div>
 						</div>
 					</div>
@@ -156,7 +162,10 @@
 								<img src="img/classes/author/1.jpg" alt="">
 							</div>
 							<div class="ri-text text-white">
-								<p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness.</p>
+								<p>On the other hand, we denounce with righteous indignation and dislike men who are so
+									beguiled and demoralized by the charms of pleasure of the moment, so blinded by
+									desire, that they cannot foresee the pain and trouble that are bound to ensue; and
+									equal blame belongs to those who fail in their duty through weakness.</p>
 								<h4>Denise Thomas</h4>
 								<h6>Designer</h6>
 							</div>
@@ -166,7 +175,10 @@
 								<img src="img/classes/author/2.jpg" alt="">
 							</div>
 							<div class="ri-text text-white">
-								<p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness.</p>
+								<p>On the other hand, we denounce with righteous indignation and dislike men who are so
+									beguiled and demoralized by the charms of pleasure of the moment, so blinded by
+									desire, that they cannot foresee the pain and trouble that are bound to ensue; and
+									equal blame belongs to those who fail in their duty through weakness.</p>
 								<h4>Denise Thomas</h4>
 								<h6>Designer</h6>
 							</div>
@@ -176,7 +188,10 @@
 								<img src="img/classes/author/3.jpg" alt="">
 							</div>
 							<div class="ri-text text-white">
-								<p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness.</p>
+								<p>On the other hand, we denounce with righteous indignation and dislike men who are so
+									beguiled and demoralized by the charms of pleasure of the moment, so blinded by
+									desire, that they cannot foresee the pain and trouble that are bound to ensue; and
+									equal blame belongs to those who fail in their duty through weakness.</p>
 								<h4>Denise Thomas</h4>
 								<h6>Designer</h6>
 							</div>
@@ -252,7 +267,7 @@
 		</div>
 	</section> -->
 	<!-- Blog Section end -->
-     <section class="contact-page-section spad overflow-hidden">
+	<section class="contact-page-section spad overflow-hidden">
 		<div class="container">
 			<div class="contact-map"><iframe
 					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.153090727227!2d106.798699574959!3d10.875958389278917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d99f191a9a8f%3A0x2d39d67349441db7!2zTmhhzIAgVsSDbiBIb8yBYSBTaW5oIFZpw6puIMSQSFFH!5e0!3m2!1svi!2s!4v1685890848559!5m2!1svi!2s"
@@ -282,8 +297,6 @@
 					<div class="contact-social">
 						<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 						<a href="#"><i class="fa fa-instagram"></i></a>
-						<a href="#"><i class="fa fa-twitter"></i></a>
-						<a href="#"><i class="fa fa-linkedin"></i></a>
 					</div>
 				</div>
 				<div class="col-lg-8">
@@ -302,13 +315,16 @@
 								<input type="text" name="phoneNumber" placeholder="Phone Number">
 							</div>
 							<div class="col-md-12">
-								<textarea placeholder="Message" name="message"></textarea>
+								<textarea required id="about" placeholder="Message" name="message"></textarea>
 								<button type="submit" class="site-btn sb-gradient">Send message</button>
 							</div>
 						</div>
 					</form>
+					
+					
+
 				</div>
-				
+
 
 
 			</div>
@@ -324,7 +340,7 @@
 		<div th:replace="~{common :: footer}"></div>
 	</footer>
 	<!-- Footer Section end -->
-	
+
 	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
 
 	<!-- Search model -->
@@ -338,7 +354,7 @@
 		</div>
 	</div>
 	<!-- Search model end -->
-	
+
 	<!--====== Javascripts & Jquery ======-->
 	<script src="js/vendor/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -348,6 +364,11 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="richtext/jquery.richtext.js"></script>
+	<script src="richtext/jquery.richtext.min.js"></script>
+	<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-	</body>
+</body>
+
 </html>

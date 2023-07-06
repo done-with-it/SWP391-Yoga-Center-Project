@@ -38,4 +38,7 @@ public class Trainer implements Serializable{
     @Column(name = "experience")
     private float experience;
 
+    @Column(name = "biography")
+    private String biography;
+
 }

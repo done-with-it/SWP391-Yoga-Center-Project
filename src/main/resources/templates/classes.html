@@ -82,16 +82,17 @@
 											<div class="ci-meta"><i
 													class="material-icons">event_available</i>[[${class.classid.date}]]
 											</div>
-											<div class="ci-meta"><i
-													class="material-icons">alarm_on</i>[[${class.timeid.starttime}]] -
-												[[${class.timeid.endtime}]]</div>
+											<div class="ci-meta">
+												<i class="material-icons">alarm_on</i>[[${class.timeid.starttime}]] -
+												[[${class.timeid.endtime}]]
+											</div>
 										</div>
 										<p>Embark on a journey of silence with Yoga Center: A Place of Energy and
 											Balance!</p>
 									</div>
 									<div class="ci-bottom">
 										<div class="ci-author">
-											<img th:src="${class.classid.trainerid.img}" alt="">
+											<img th:src="@{/admin/download-png(userid=${class.classid.trainerid.userid})}" alt="PNG Image">
 											<div class="author-text">
 												<h6>[[${class.classid.trainerid.fullname}]]</h6>
 												<p>Yoga Trainer</p>
@@ -103,7 +104,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="site-pagination pt-3">
 						<a th:href="@{/classes(page=${currentPage - 1}, courseid=${course}, date=${dates})}"
 							th:if="${currentPage > 1}">

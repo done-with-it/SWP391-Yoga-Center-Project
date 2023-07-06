@@ -62,13 +62,11 @@
 			<div class="trainer-details">
 				<div class="trainer-info">
 					<div class="td-left">
-						<img th:src="${user.img}" alt="">
+						<img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image">
 						<div class="td-social">
 							<a th:href="@{https://www.facebook.com/phu.omen}"><i class="fa fa-facebook"
 									target="_blank"></i></a>
 							<a href="#"><i class="fa fa-instagram"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-linkedin"></i></a>
 						</div>
 					</div>
 					<div class="td-right">

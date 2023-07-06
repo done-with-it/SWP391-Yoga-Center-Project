@@ -48,10 +48,8 @@
 	<section class="hero-section">
 		<div class="hero-social-warp">
 			<div class="hero-social">
-				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-instagram"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-linkedin"></i></a>
 			</div>
 		</div>
 		<div class="arrow-buttom">
@@ -280,7 +278,7 @@
 				<div class="ts-item" th:each="trainer : ${trainList}">
 					<div class="trainer-item">
 						<div class="ti-img">
-							<img th:src="${trainer.img}" alt="">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
 						</div>
 						<div class="ti-text">
 							<h4>
@@ -289,10 +287,8 @@
 							<h6>Yoga Trainer</h6>
 							<p th:text="${trainer.email}"></p>
 							<div class="ti-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
 							</div>
 						</div>
 					</div>
@@ -356,6 +352,7 @@
 	<!-- Review Section end -->
 
 	<!-- What we do Section -->
+
 	<section class="wwd-section spad set-bg" data-setbg="img/wwd-bg.jpg">
 		<div class="container">
 			<div class="row">
@@ -437,17 +434,17 @@
 			</div>
 
 			<div class="row">
-				<div class="classes-other-slider owl-carousel" >
+				<div class="classes-slider owl-carousel">
 					<div class="pricing-item begginer" th:each="course : ${courses}">
 						<a th:href="@{/course-details(courseid=${course.courseid})}">
-						<div class="pi-top">
-							
-						</div>
-						<div class="pi-price">
-							<h3>[[${course.price}]]$</h3>
-							<p>Each Moth</p>
-						</div>
-						<h4>[[${course.coursename}]]</h4>
+							<div class="pi-top">
+
+							</div>
+							<div class="pi-price">
+								<h3>[[${course.price}]]$</h3>
+								<p>Each Moth</p>
+							</div>
+							<h4>[[${course.coursename}]]</h4>
 						</a><br>
 						<!-- <div>[[${course.description}]]</div> -->
 						<a href="" class="site-btn sb-gradient">book now</a>
