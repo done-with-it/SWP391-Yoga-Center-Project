@@ -24,8 +24,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.repository.CourseRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.ContentService;
+import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.RoleService;
 import com.fptyoga.yogacenter.service.UserService;
 
@@ -163,5 +165,20 @@ public class admincontroller {
         // Xử lý trường hợp tệp tin không tồn tại
         return ResponseEntity.notFound().build();
     }
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    // @PostMapping("/document")
+    // public String uploadDocument(Course course, Model model){
+    //     courseService.saveCourse(course);
+
+    //     model.addAttribute("message", "upload successful");
+    //     return "/admin/upload";
+    // }
+
 
 }

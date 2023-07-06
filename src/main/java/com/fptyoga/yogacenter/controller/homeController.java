@@ -12,19 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Course;
-import com.fptyoga.yogacenter.Entity.Schedule;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.repository.ClassesRepository;
 import com.fptyoga.yogacenter.repository.ContentRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
-import com.fptyoga.yogacenter.repository.ScheduleRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.ClassesService;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
-import com.fptyoga.yogacenter.service.ScheduleService;
 import com.fptyoga.yogacenter.service.TrainerService;
 import com.fptyoga.yogacenter.service.UserService;
 
@@ -32,11 +31,6 @@ import com.fptyoga.yogacenter.service.UserService;
 @RequestMapping("")
 public class homeController {
 
-    @Autowired
-    private ScheduleService scheduleService;
-
-    @Autowired
-    private ScheduleRepository scheduleRepository;
 
     @Autowired
     private CourseRepository courseRepository;
@@ -58,6 +52,10 @@ public class homeController {
 
     @Autowired
     private ClassesService classesService;
+
+    @Autowired
+    private ClassesRepository classesRepository;
+
 
     @Autowired
     private CourseService courseService;
@@ -102,23 +100,23 @@ public class homeController {
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String date) {
         List<String> classDistincts = classesService.getDistinctClass();
         PageRequest pageable = PageRequest.of(page - 1, 4);
-        Page<Schedule> classes;
+        Page<Class> classes;
 
         if (courseid == null && date.isEmpty()) {
-            classes = scheduleRepository.findAll(pageable);
+            classes = classesRepository.findAll(pageable);
             model.addAttribute("classes", classes);
         } else if (courseid != null && date.isEmpty()) {
-            classes = scheduleService.getSchedulesByCourseId(courseid, pageable);
+            classes = classesService.getClassByCourseid(courseid, pageable);
             Long course = courseid;
             model.addAttribute("course", course);
             model.addAttribute("classes", classes);
         } else if (courseid == null && !date.isEmpty()) {
-            classes = scheduleService.getSchedulesByDate(date, pageable);
+            classes = classesService.getSchedulesByDate(date, pageable);
             String dates = date;
             model.addAttribute("dates", dates);
             model.addAttribute("classes", classes);
         } else {
-            classes = scheduleService.getSchedulesByCourseIdAndDate(courseid, date, pageable);
+            classes = classesService.getSchedulesByCourseIdAndDate(courseid, date, pageable);
             model.addAttribute("course", courseid);
             model.addAttribute("dates", date);
             model.addAttribute("classes", classes);
@@ -136,11 +134,11 @@ public class homeController {
     }
 
     @GetMapping("/course-details")
-    public String courseDetails(@RequestParam(defaultValue = "courseid") Long courseid, Model model,
+    public String courseDetails(@RequestParam(defaultValue = "") Long courseid, Model model,
             @RequestParam(defaultValue = "1") int page) {
         Course courses = courseService.getCourseById(courseid);
         PageRequest pageable = PageRequest.of(page - 1, 10);
-        Page<Schedule> classes = scheduleService.getSchedulesByCourseId(courseid, pageable);
+        Page<Class> classes = classesService.getClassByCourseid(courseid, pageable);
         model.addAttribute("classes", classes);
         model.addAttribute("courses", courses);
         return "course-details";
