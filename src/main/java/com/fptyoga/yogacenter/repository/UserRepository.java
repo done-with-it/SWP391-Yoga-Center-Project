@@ -14,6 +14,6 @@ import com.fptyoga.yogacenter.Entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
     List<User> findByRole_Roleid(Long roleId);
-    User getUserByEmail(String email);
-    User findUserByEmail(String email);
+    
+    User findByEmailAndPassword(String email, String password);
 }

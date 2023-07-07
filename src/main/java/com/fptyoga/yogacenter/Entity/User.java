@@ -3,6 +3,8 @@ package com.fptyoga.yogacenter.Entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+// import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,15 +19,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_table")
-public class User implements Serializable{
-
+public class User implements Serializable {
 
     @Id
     @Column(name = "user_id")
@@ -69,7 +69,46 @@ public class User implements Serializable{
 
     // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     // private Set<Class> class1;
-    
+
     // @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL)
     // private Set<Feedback> feedbacks;
+
+    // @Override
+    // public String getPassword() {
+    //     return password;
+    // }
+
+    // @Override
+    // public String getUsername() {
+    //     return email;
+    // }
+
+    // @Override
+    // public boolean isAccountNonExpired() {
+    //     return true;
+    // }
+
+    // @Override
+    // public boolean isAccountNonLocked() {
+    //     return true;
+    // }
+
+    // @Override
+    // public boolean isCredentialsNonExpired() {
+    //     return true;
+    // }
+
+    // @Override
+    // public boolean isEnabled() {
+    //     return status;
+    // }
+
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    //     List<GrantedAuthority> authorities = new ArrayList<>();
+    //     authorities.add(new SimpleGrantedAuthority("ROLE_admin"));
+    //     // Thêm các GrantedAuthority khác nếu cần thiết
+    //     return authorities;
+    // }
+
 }

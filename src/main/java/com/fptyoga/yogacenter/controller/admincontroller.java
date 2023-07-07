@@ -116,6 +116,19 @@ public class admincontroller {
         return "admin/edit";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editProfile(@PathVariable("id") Long id, Model model) {
+        List<Role> rolesList = roleService.allRole();
+        model.addAttribute("rolesList", rolesList);
+        try {
+            User user = userRepository.findById(id).orElse(null);
+            model.addAttribute("user", user);
+            return "profile";
+        } catch (Exception e) {
+        }
+        return "profile";
+    }
+
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
         byte[] pngData = userService.getPngDataById(userid);

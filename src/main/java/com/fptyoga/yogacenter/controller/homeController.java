@@ -9,8 +9,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.Content;
@@ -27,10 +29,12 @@ import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.TrainerService;
 import com.fptyoga.yogacenter.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("")
 public class homeController {
-
 
     @Autowired
     private CourseRepository courseRepository;
@@ -55,7 +59,6 @@ public class homeController {
 
     @Autowired
     private ClassesRepository classesRepository;
-
 
     @Autowired
     private CourseService courseService;
@@ -280,8 +283,43 @@ public class homeController {
     }
 
     @GetMapping("/loginpage")
-    public String loginpage() {
+    public String loginpage(Model model) {
+        model.addAttribute("user", new User());
         return "loginpage";
+    }
+
+    @PostMapping("/loginpage")
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password,
+            RedirectAttributes redirectAttributes, HttpSession session) {
+        String error = "Error email or password!";
+        if (email.isEmpty() || password.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", error);
+            return "redirect:/loginpage";
+        }
+        User user = userService.login(email, password);
+        if (user != null) {
+            session.setAttribute("user", user);
+            return "redirect:/index";
+        } else {
+            // Sai thông tin đăng nhập, hiển thị thông báo lỗi
+            redirectAttributes.addFlashAttribute("error", error);
+            return "redirect:/loginpage";
+        }
+    }
+
+    
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        // Get the current session
+        HttpSession session = request.getSession(false);
+        
+        if (session != null) {
+            // Invalidate the session
+            session.invalidate();
+        }
+
+        // Redirect to the login page or any other desired page
+        return "redirect:/index";
     }
 
 }

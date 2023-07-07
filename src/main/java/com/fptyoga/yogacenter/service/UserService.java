@@ -91,4 +91,9 @@ public class UserService {
         return usersPerMonth;
     }
 
+    public User login(String email, String password) {
+        return repo.findByEmailAndPassword(email, password);
+    }
+
+
 }
