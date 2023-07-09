@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>FPT Yoga</title>
 	<meta charset="UTF-8">
@@ -7,14 +8,14 @@
 	<meta name="keywords" content="yoga, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style.css" />
 
 
 	<!--[if lt IE 9]>
@@ -23,6 +24,7 @@
 	<![endif]-->
 
 </head>
+
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -38,14 +40,15 @@
 	<!-- Infor Model -->
 	<div th:replace="~{common :: infor-model}"></div>
 	<!-- Infor Model end -->
-	                                                                              
+
 	<!-- Page top Section -->
 	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
-					<h2>Contact</h2>
-					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern technology, 
+					<h2>Our Courses</h2>
+					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern
+						technology,
 						we are committed to bringing you a great yoga experience and improving your overall health!</p>
 				</div>
 			</div>
@@ -54,9 +57,37 @@
 	<!-- Page top Section end -->
 
 	<!-- Contact Section -->
-	<section class="contact-page-section spad overflow-hidden">
+	<section class="events-page-section spad">
 		<div class="container">
-			<div class="contact-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.153090727227!2d106.798699574959!3d10.875958389278917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d99f191a9a8f%3A0x2d39d67349441db7!2zTmhhzIAgVsSDbiBIb8yBYSBTaW5oIFZpw6puIMSQSFFH!5e0!3m2!1svi!2s!4v1685890848559!5m2!1svi!2s" style="border:0;" allowfullscreen=""></iframe></div>
+			<div class="row">
+				<div class="col-lg-6" th:each="course : ${allCourses}">
+					<div class="event-item">
+						<div class="ei-img">
+							<img th:src="@{/staff/downloads-png(courseid=${course.courseid})}"
+                                            alt="PNG Image">
+						</div>
+						<div class="ei-text">
+							<a th:href="@{/course-details(courseid=${course.courseid})}"><h4>[[${course.coursename}]]</h4></a>
+							<ul>
+								<li><i class="material-icons">domain</i>FPT YOGA CENTER</li>
+								<li><i class="material-icons">payments</i>[[${course.price}]]$</li>
+								<li><i class="material-icons">today</i>[[${course.createdate}]]</li>
+								<li><a href="" class="site-btn sb-gradient">book now</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+		</div>
+		
+	</section>
+	<!-- <section class="contact-page-section spad overflow-hidden">
+		<div class="container">
+			<div class="contact-map"><iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.153090727227!2d106.798699574959!3d10.875958389278917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d99f191a9a8f%3A0x2d39d67349441db7!2zTmhhzIAgVsSDbiBIb8yBYSBTaW5oIFZpw6puIMSQSFFH!5e0!3m2!1svi!2s!4v1685890848559!5m2!1svi!2s"
+					style="border:0;" allowfullscreen=""></iframe></div>
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="con-info">
@@ -75,8 +106,8 @@
 					<div class="con-info">
 						<h3>Opening Hours</h3>
 						<ul>
-							<li><i class="material-icons">map</i>Mon - Fri:  6:30am - 07:45pm</li>
-							<li><i class="material-icons">map</i>Sat - Sun:  8:30am - 05:45pm</li>
+							<li><i class="material-icons">map</i>Mon - Fri: 6:30am - 07:45pm</li>
+							<li><i class="material-icons">map</i>Sat - Sun: 8:30am - 05:45pm</li>
 						</ul>
 					</div>
 					<div class="contact-social">
@@ -87,30 +118,33 @@
 					</div>
 				</div>
 				<div class="col-lg-8">
-					<form class="singup-form contact-form">
+					<form class="singup-form contact-form" th:action="@{/contact/send}" method="post">
 						<div class="row">
 							<div class="col-md-6">
-								<input type="text" placeholder="First Name">
+								<input type="text" placeholder="First Name" name="firstName">
 							</div>
 							<div class="col-md-6">
-								<input type="text" placeholder="Last Name">
+								<input type="text" placeholder="Last Name" name="lastName">
 							</div>
 							<div class="col-md-6">
-								<input type="text" placeholder="Your Email">
+								<input type="email" placeholder="Your Email" name="email">
 							</div>
 							<div class="col-md-6">
-								<input type="text" placeholder="Phone Number">
+								<input type="text" name="phoneNumber" placeholder="Phone Number">
 							</div>
 							<div class="col-md-12">
-								<textarea placeholder="Message"></textarea>
-								<a href="#" class="site-btn sb-gradient">Send message</a>
+								<textarea placeholder="Message" name="message"></textarea>
+								<button type="submit" class="site-btn sb-gradient">Send message</button>
 							</div>
 						</div>
 					</form>
 				</div>
+				
+
+
 			</div>
 		</div>
-	</section>
+	</section> -->
 	<!-- Trainers Section end -->
 
 	<!-- Gallery Section -->
@@ -122,7 +156,7 @@
 		<div th:replace="~{common :: footer}"></div>
 	</footer>
 	<!-- Footer Section end -->
-	
+
 	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
 
 	<!-- Search model -->
@@ -147,5 +181,6 @@
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
 
-	</body>
+</body>
+
 </html>

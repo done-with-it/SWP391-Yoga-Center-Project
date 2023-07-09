@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>FPT Yoga</title>
 	<meta charset="UTF-8">
@@ -7,14 +8,14 @@
 	<meta name="keywords" content="yoga, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style.css" />
 
 
 	<!--[if lt IE 9]>
@@ -23,6 +24,7 @@
 	<![endif]-->
 
 </head>
+
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -38,14 +40,15 @@
 	<!-- Infor Model -->
 	<div th:replace="~{common :: infor-model}"></div>
 	<!-- Infor Model end -->
-	                                                                              
+
 	<!-- Page top Section -->
 	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
 					<h2>Blog gird</h2>
-					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern technology, 
+					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern
+						technology,
 						we are committed to bringing you a great yoga experience and improving your overall health!</p>
 				</div>
 			</div>
@@ -54,17 +57,24 @@
 	<!-- Page top Section end -->
 	<br>
 	<div>
-		<select class="circle-select">
-			<option data-display="Choose Category" th:each="content : ${contents}" th:text="${content.topic}"><a th:href="@{/blog(topic=${content.topic})}"></a></option>
-		</select>
-	    </div>
+		<form th:action="@{/blog}" method="get">
+			<div>
+				<select class="circle-select" name="topic">
+					<option value="" data-display="Choose Topic">Choose Topic</option>
+					<option th:each="distinctTopic : ${distinctTopics}" th:value="${distinctTopic}" th:text="${distinctTopic}"></option>
+				</select>
+			</div>
+			<div class="clearfix"></div><br>
+			<button class="site-btn sb-gradient" type="submit">Filter now</button>
+		</form>
+	</div>
 	<!-- Events Section -->
 	<section class="events-page-section spad">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-4 col-md-6" th:each="content : ${contents}">
+				<div class="col-lg-4 col-md-6" th:each="content : ${contents}" th:if="${content.status != false}">
 					<div class="blog-item">
-						<img th:src="${content.img}" alt="">
+						<img th:src="@{/staff/download-png(contentid=${content.contentid})}" alt="PNG Image" width="372px" height="253px">
 						<div class="bi-text">
 							<h2><a th:href="@{/single-blog(contentid=${content.contentid})}" th:text="${content.title}"></a></h2>
 							<p th:text="${content.topic}"></p>
@@ -72,21 +82,27 @@
 						<div class="bi-footer">
 							<div class="bi-cata" th:text="${content.createdate}"></div>
 							<div class="bi-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="site-pagination pt-3">
-				<a th:href="@{/blog(page=${currentPage - 1})}" th:if="${currentPage == totalPages}"><i class="material-icons">keyboard_arrow_left</i></a>
-				<div th:each="i : ${#numbers.sequence(1, totalPages)}">					
-					<a th:href="@{/blog(page=*{i})}" th:class="${i == currentPage ? 'active' : ''}" th:text="${i}"></a>					
+				<a th:href="@{/blog(page=${currentPage - 1}, topic=${topics})}"
+					th:if="${currentPage > 1}">
+					<i class="material-icons">keyboard_arrow_left</i>
+				</a>
+				<div th:each="i : ${#numbers.sequence(1, totalPages)}">
+					<a th:href="@{/blog(page=${i}, topic=${topics})}"
+						th:class="${i == currentPage ? 'active' : ''}" th:text="${i}"></a>
 				</div>
-				<a th:href="@{/blog(page=${currentPage + 1})}" th:if="${currentPage < totalPages}"><i class="material-icons">keyboard_arrow_right</i></a>
+				<a th:href="@{/blog(page=${currentPage + 1}, topic=${topics})}"
+					th:if="${currentPage < totalPages}">
+					<i class="material-icons">keyboard_arrow_right</i>
+				</a>
 			</div>
 		</div>
 	</section>
@@ -102,7 +118,7 @@
 		<div th:replace="~{common :: footer}"></div>
 	</footer>
 	<!-- Footer Section end -->
-	
+
 	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
 
 	<!-- Search model -->
@@ -127,5 +143,6 @@
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
 
-	</body>
+</body>
+
 </html>

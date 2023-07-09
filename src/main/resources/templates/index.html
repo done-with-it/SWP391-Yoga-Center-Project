@@ -48,10 +48,8 @@
 	<section class="hero-section">
 		<div class="hero-social-warp">
 			<div class="hero-social">
-				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 				<a href="#"><i class="fa fa-instagram"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-linkedin"></i></a>
 			</div>
 		</div>
 		<div class="arrow-buttom">
@@ -93,7 +91,8 @@
 						<div class="hs-text">
 							<h2>Relieve Pain and Regain Health with Yoga!</h2>
 							<p>With special yoga methods and dedicated guidance from experienced instructors,
-								We are committed to helping you relieve pain and improve body flexibility. Specially designed yoga exercises to help relieve stress
+								We are committed to helping you relieve pain and improve body flexibility. Specially
+								designed yoga exercises to help relieve stress
 								straight, increase muscle strength and regenerate the body.</p>
 							<a href="createAccount.html" class="site-btn sb-white">Register Now</a>
 						</div>
@@ -108,6 +107,7 @@
 	<!-- Hero Section end -->
 
 	<!-- About Section -->
+
 	<section class="about-section spad">
 		<div class="container">
 			<div class="section-title text-center">
@@ -128,7 +128,8 @@
 						</div>
 						<div class="ai-text">
 							<h4>Comprehensive Reconstruction</h4>
-							<p>Yoga combines movement, breath, and posture to achieve total balance. Regular practice helps you to eliminate stress, improve sleep and bring mental relaxation.</p>
+							<p>Yoga combines movement, breath, and posture to achieve total balance. Regular practice
+								helps you to eliminate stress, improve sleep and bring mental relaxation.</p>
 						</div>
 					</div>
 					<div class="about-item">
@@ -137,7 +138,8 @@
 						</div>
 						<div class="ai-text">
 							<h4>Feel Better</h4>
-							<p>Yoga helps you create a quiet space to relax, calm down, and learn more about yourself. It is an opportunity to create spiritual balance and find inner stillness.
+							<p>Yoga helps you create a quiet space to relax, calm down, and learn more about yourself.
+								It is an opportunity to create spiritual balance and find inner stillness.
 							</p>
 						</div>
 					</div>
@@ -160,7 +162,7 @@
 	<!-- About Section end -->
 
 	<!-- Classes Section -->
-	<section class="classes-section spad">
+	<!-- <section class="classes-section spad">
 		<div class="container">
 			<div class="section-title text-center">
 				<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
@@ -178,7 +180,7 @@
 							<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
 							<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
 						</div>
-						<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
+						<p>Embark on a journey of silence with Yoga Center: A Place of Energy and Balance!</p>
 					</div>
 					<div class="ci-bottom">
 						<div class="ci-author">
@@ -201,7 +203,7 @@
 							<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
 							<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
 						</div>
-						<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
+						<p>Embark on a journey of silence with Yoga Center: A Place of Energy and Balance!</p>
 					</div>
 					<div class="ci-bottom">
 						<div class="ci-author">
@@ -224,7 +226,7 @@
 							<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
 							<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
 						</div>
-						<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
+						<p>Embark on a journey of silence with Yoga Center: A Place of Energy and Balance!</p>
 					</div>
 					<div class="ci-bottom">
 						<div class="ci-author">
@@ -247,7 +249,7 @@
 							<div class="ci-meta"><i class="material-icons">event_available</i>Mon, Wed, Fri</div>
 							<div class="ci-meta"><i class="material-icons">alarm_on</i>06:30pm - 07:45pm</div>
 						</div>
-						<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis</p>
+						<p>Embark on a journey of silence with Yoga Center: A Place of Energy and Balance!</p>
 					</div>
 					<div class="ci-bottom">
 						<div class="ci-author">
@@ -262,7 +264,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	<!-- Classes Section end -->
 
 	<!-- Trainer Section -->
@@ -277,17 +279,17 @@
 				<div class="ts-item" th:each="trainer : ${trainList}">
 					<div class="trainer-item">
 						<div class="ti-img">
-							<img th:src="${trainer.img}" alt="">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
 						</div>
 						<div class="ti-text">
-							<h4><p th:text="${trainer.fullname}"></p></h4>
+							<h4>
+								<p th:text="${trainer.fullname}"></p>
+							</h4>
 							<h6>Yoga Trainer</h6>
 							<p th:text="${trainer.email}"></p>
 							<div class="ti-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
 								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
 							</div>
 						</div>
 					</div>
@@ -351,28 +353,30 @@
 	<!-- Review Section end -->
 
 	<!-- What we do Section -->
+
 	<section class="wwd-section spad set-bg" data-setbg="img/wwd-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-6 col-lg-7 ml-auto">
 					<div class="wwd-text">
 						<h3>WHAT WE GET WHEN LEARNING YOGA?</h3>
-						<p>To be invited to the nearest Cali center and get free physical advice to learn more about the program.</p>
+						<p>To be invited to the nearest Cali center and get free physical advice to learn more about the
+							program.</p>
 						<div class="single-progress-item">
 							<p>Breathing</p>
-							<div class="progress-bar-style" data-progress="84"  data-bgcolor="#f76d63"></div>
+							<div class="progress-bar-style" data-progress="84" data-bgcolor="#f76d63"></div>
 						</div>
 						<div class="single-progress-item">
 							<p>Metabolism</p>
-							<div class="progress-bar-style" data-progress="75"  data-bgcolor="#f76d63"></div>
+							<div class="progress-bar-style" data-progress="75" data-bgcolor="#f76d63"></div>
 						</div>
 						<div class="single-progress-item">
 							<p>Flexibility</p>
-							<div class="progress-bar-style" data-progress="90"  data-bgcolor="#f76d63"></div>
+							<div class="progress-bar-style" data-progress="90" data-bgcolor="#f76d63"></div>
 						</div>
 						<div class="single-progress-item">
 							<p>Strongness</p>
-							<div class="progress-bar-style" data-progress="78"  data-bgcolor="#f76d63"></div>
+							<div class="progress-bar-style" data-progress="78" data-bgcolor="#f76d63"></div>
 						</div>
 					</div>
 				</div>
@@ -402,102 +406,49 @@
 							<img th:src="${content.img}" alt="">
 						</div>
 						<div class="ei-text">
-							<h4><a th:href="@{/single-blog(contentid=${content.contentid})}" th:text="${content.title}"></a></h4>
+							<h4><a th:href="@{/single-blog(contentid=${content.contentid})}"
+									th:text="${content.title}"></a></h4>
 							<ul>
 								<li><i class="material-icons">person</i>[[${content.author}]]</li>
 								<li><i class="material-icons">topic</i>[[${content.topic}]]</li>
-								<li><i class="material-icons">event_available</i>[[${content.createdate}]]</li>  
+								<li><i class="material-icons">event_available</i>[[${content.createdate}]]</li>
 							</ul>
 						</div>
 					</div>
-					<a th:href="@{/blog}" class="site-btn sb-gradient mt-5" style="display: flex; justify-content: center; align-items: center;">explore more</a>
+					<a th:href="@{/blog}" class="site-btn sb-gradient mt-5"
+						style="display: flex; justify-content: center; align-items: center;">explore more</a>
 				</div>
 			</div>
-			
+
 		</div>
 	</section>
 	<!-- Event Section end -->
 
 
 	<!-- Pricing Section -->
-	<section class="pricing-section spad">
+	<section class=" pricing-section spad">
 		<div class="container">
 			<div class="section-title text-center">
 				<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
 				<h2>Pricing plans</h2>
 				<p>Practice Yoga to perfect physical beauty, take care of your soul and enjoy life more fully!</p>
 			</div>
+
 			<div class="row">
-				<div class="col-lg-3 col-sm-6">
-					<div class="pricing-item begginer">
-						<div class="pi-top">
-							<h4>Begginer</h4>
-						</div>
-						<div class="pi-price">
-							<h3>80k</h3>
-							<p>Mỗi Tháng</p>
-						</div>
-						<ul>
-							<li>Take Up To 7 Classes</li>
-							<li>Available To Anyone</li>
-							<li>Towels Included</li>
-							<li>Never Expires</li>
-						</ul>
-						<!-- <a href="#" class="site-btn sb-line-gradient">Get started</a> -->
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="pricing-item entermediate">
-						<div class="pi-top">
-							<h4>Entermediate</h4>
-						</div>
-						<div class="pi-price">
-							<h3>299k</h3>
-							<p>Mỗi Tháng</p>
-						</div>
-						<ul>
-							<li>Take Up To 7 Classes</li>
-							<li>Available To Anyone</li>
-							<li>Towels Included</li>
-							<li>Never Expires</li>
-						</ul>
-						<!-- <a href="#" class="site-btn sb-line-gradient">Get started</a> -->
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="pricing-item advanced">
-						<div class="pi-top">
-							<h4>Advanced</h4>
-						</div>
-						<div class="pi-price">
-							<h3>499k</h3>
-							<p>Mỗi Tháng</p>
-						</div>
-						<ul>
-							<li>Take Up To 7 Classes</li>
-							<li>Available To Anyone</li>
-							<li>Towels Included</li>
-							<li>Never Expires</li>
-						</ul>
-						<!-- <a href="#" class="site-btn sb-line-gradient">Get started</a> -->
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="pricing-item professional">
-						<div class="pi-top">
-							<h4>Professional</h4>
-						</div>
-						<div class="pi-price">
-							<h3>999k</h3>
-							<p>Mỗi Tháng</p>
-						</div>
-						<ul>
-							<li>Take Up To 7 Classes</li>
-							<li>Available To Anyone</li>
-							<li>Towels Included</li>
-							<li>Never Expires</li>
-						</ul>
-						<!-- <a href="#" class="site-btn sb-line-gradient">Get started</a> -->
+				<div class="classes-slider owl-carousel">
+					<div class="pricing-item begginer" th:each="course : ${courses}">
+						<a th:href="@{/course-details(courseid=${course.courseid})}">
+							<div class="pi-top">
+
+							</div>
+							<div class="pi-price">
+								<h3>[[${course.price}]]$</h3>
+								<p>Each Moth</p>
+							</div>
+							<h4>[[${course.coursename}]]</h4>
+						</a><br>
+						<!-- <div>[[${course.description}]]</div> -->
+						<a href="" class="site-btn sb-gradient">book now</a>
 					</div>
 				</div>
 			</div>
@@ -511,7 +462,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="signup-map"><iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.153090727227!2d106.798699574959!3d10.875958389278917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d99f191a9a8f%3A0x2d39d67349441db7!2zTmhhzIAgVsSDbiBIb8yBYSBTaW5oIFZpw6puIMSQSFFH!5e0!3m2!1svi!2s!4v1685890848559!5m2!1svi!2s" 
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.153090727227!2d106.798699574959!3d10.875958389278917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174d99f191a9a8f%3A0x2d39d67349441db7!2zTmhhzIAgVsSDbiBIb8yBYSBTaW5oIFZpw6puIMSQSFFH!5e0!3m2!1svi!2s!4v1685890848559!5m2!1svi!2s"
 							style="border:0;" allowfullscreen=""></iframe></div>
 				</div>
 				<div class="col-lg-6">

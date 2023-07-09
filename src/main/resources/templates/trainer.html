@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>FPT Yoga</title>
 	<meta charset="UTF-8">
@@ -7,14 +8,14 @@
 	<meta name="keywords" content="yoga, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style.css" />
 
 
 	<!--[if lt IE 9]>
@@ -23,6 +24,7 @@
 	<![endif]-->
 
 </head>
+
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -38,14 +40,15 @@
 	<!-- Infor Model -->
 	<div th:replace="~{common :: infor-model}"></div>
 	<!-- Infor Model end -->
-	                                                                              
+
 	<!-- Page top Section -->
 	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
 					<h2>Our Trainers</h2>
-					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern technology, 
+					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern
+						technology,
 						we are committed to bringing you a great yoga experience and improving your overall health!</p>
 				</div>
 			</div>
@@ -57,28 +60,28 @@
 	<section class="trainers-page-section spad overflow-hidden">
 		<div class="container">
 			<div class="row">
-				    <div class="col-lg-6" th:each="trainer : ${trainList}">
-					    <div class="trainer-item">
-						    <div class="ti-img">
-							    <img th:src="${trainer.img}" alt="">
-						    </div>
-						    <div class="ti-text">
-								<h4 th:text="${trainer.fullname}"></h4>
-								<ul th:text="${trainer.phone}"></ul>
-								<ul th:text="${trainer.email}"></ul>
-								<p></p>
-								<a th:href="@{/trainer-details(userid=${trainer.userid})}" class="site-btn sb-gradient">View Detail</a>
-								<p></p>
-							</div>
-							<div class="ti-social">
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-linkedin"></i></a>
-							</div>
-					    </div>
-				   </div>
-	
+				<div class="col-lg-6" th:each="trainer : ${trainList}">
+					<div class="trainer-item">
+						<div class="ti-img">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
+							
+						</div>
+						<div class="ti-text">
+							<h4 th:text="${trainer.fullname}"></h4>
+							<ul th:text="${trainer.phone}"></ul>
+							<ul th:text="${trainer.email}"></ul>
+							<p></p>
+							<a th:href="@{/trainer-details(userid=${trainer.userid})}" class="site-btn sb-gradient">View
+								Detail</a>
+							<p></p>
+						</div>
+						<div class="ti-social">
+							<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+
 			</div>
 			<div class="site-pagination">
 				<a href="#" class="active">1</a>
@@ -99,7 +102,7 @@
 		<div th:replace="~{common :: footer}"></div>
 	</footer>
 	<!-- Footer Section end -->
-	
+
 	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
 
 	<!-- Search model -->
@@ -113,7 +116,7 @@
 		</div>
 	</div>
 	<!-- Search model end -->
-	
+
 	<!--====== Javascripts & Jquery ======-->
 	<script src="js/vendor/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -124,5 +127,6 @@
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
 
-	</body>
+</body>
+
 </html>

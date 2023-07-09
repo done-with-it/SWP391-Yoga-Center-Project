@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,13 +42,18 @@ public class Content implements Serializable{
     private LocalDate createdate;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @Column(name = "img")
-    private String img;
+    @Lob
+    private byte[] img;
 
     @JoinColumn(name = "Author")
     private String Author;
+
+    @Column(name = "data")
+    @Lob
+    private byte[] data;
 
     // Getters and setters
 }

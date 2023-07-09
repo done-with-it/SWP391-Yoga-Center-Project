@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>FPT Yoga</title>
 	<meta charset="UTF-8">
@@ -7,14 +8,14 @@
 	<meta name="keywords" content="yoga, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style.css" />
 
 
 	<!--[if lt IE 9]>
@@ -23,6 +24,7 @@
 	<![endif]-->
 
 </head>
+
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -38,14 +40,15 @@
 	<!-- Infor Model -->
 	<div th:replace="~{common :: infor-model}"></div>
 	<!-- Infor Model end -->
-	                                                                              
+
 	<!-- Page top Section -->
 	<section class="page-top-section set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
 					<h2>Trainers details</h2>
-					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern technology, 
+					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern
+						technology,
 						we are committed to bringing you a great yoga experience and improving your overall health!</p>
 				</div>
 			</div>
@@ -59,23 +62,30 @@
 			<div class="trainer-details">
 				<div class="trainer-info">
 					<div class="td-left">
-						<img th:src="${user.img}" alt="">
+						<img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image">
 						<div class="td-social">
-							<a th:href="@{https://www.facebook.com/phu.omen}"><i class="fa fa-facebook" target="_blank"></i></a>
+							<a th:href="@{https://www.facebook.com/phu.omen}"><i class="fa fa-facebook"
+									target="_blank"></i></a>
 							<a href="#"><i class="fa fa-instagram"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-linkedin"></i></a>
 						</div>
 					</div>
 					<div class="td-right">
 						<h3 th:text="${user.fullname}"></h3>
 						<h6>Yoga Trainer</h6>
 						<ul>
-							<li><strong>Experience:</strong><p>[[${trainer.experience}]] years</p></li>
-							<li><strong>Email:</strong><p th:text="${user.email}"></p></li>
-							<li><strong>Biography:</strong><p>Certification from the National Institute of Sports Medicine (NASM) USA. 25 years of sports training in the United States, Germany, Hong Kong, Malaysia, Singapore, and now Vietnam at California Fitness & Yoga Centers.</p></li>
+							<li><strong>Experience:</strong>
+								<p>[[${trainer.experience}]] years</p>
+							</li>
+							<li><strong>Email:</strong>
+								<p th:text="${user.email}"></p>
+							</li>
+							<li><strong>Biography:</strong>
+								<p>Certification from the National Institute of Sports Medicine (NASM) USA. 25 years of
+									sports training in the United States, Germany, Hong Kong, Malaysia, Singapore, and
+									now Vietnam at California Fitness & Yoga Centers.</p>
+							</li>
 						</ul>
-						<a href="#" class="site-btn sb-gradient">View classes</a>
+						<a th:href="@{/courses}" class="site-btn sb-gradient">View course</a>
 					</div>
 				</div>
 				<div class="trainer-details-text">
@@ -83,8 +93,8 @@
 					<p th:text="${trainer.description}"></p>
 					<ul>
 						<p th:each="achievement : ${#strings.arraySplit(trainer.getAchievement(), '.')}">
-						<li><i class="material-icons">check_circle</i>[[${achievement}]]</li>
-					    </p>
+							<li><i class="material-icons">check_circle</i>[[${achievement}]]</li>
+						</p>
 					</ul>
 				</div>
 			</div>
@@ -101,7 +111,7 @@
 		<div th:replace="~{common :: footer}"></div>
 	</footer>
 	<!-- Footer Section end -->
-	
+
 	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
 
 	<!-- Search model -->
@@ -126,5 +136,6 @@
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
 
-	</body>
+</body>
+
 </html>

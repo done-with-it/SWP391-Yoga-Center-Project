@@ -1,0 +1,200 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.avatar').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+        });
+    </script>
+</head>
+
+
+<hr>
+<div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-10">
+            <h1>Update User</h1>
+        </div>
+        <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3"><!--left col-->
+
+
+            <!-- <div class="text-center">
+        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+        <h6>Upload a photo</h6>
+        <input type="file" class="text-center center-block file-upload">
+      </div></hr><br> -->
+
+            <!-- <div class="panel panel-default">
+            <div class="panel-heading">Social Media</div>
+            <div class="panel-body">
+            	<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+            </div>
+          </div> -->
+
+        </div><!--/col-3-->
+        <div th:if="${update}" class="alert alert-success text-center">[[${update}]]</div>
+        <div class="col-sm-11">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+            </ul>
+
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <hr>
+                    <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}"
+                        enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{userid}">
+                        <div class="form-group">
+
+                            <div class="text-center">
+                                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle"
+                                    alt="avatar" width="192px" height="192px">
+                                <h6>Upload a photo</h6>
+                                <input type="file" name="file" class="text-center center-block file-upload">
+                            </div>
+                            </hr><br>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Full Name</h4>
+                                <input type="text" class="form-control" th:field="*{fullname}" placeholder="Full name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Date of Birth</h4>
+                                <input type="date" class="form-control" th:field="*{dob}" placeholder="mm/dd/yy">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Phone</h4>
+                                <input type="text" class="form-control" th:field="*{phone}" placeholder="Enter Phone"
+                                    required minlength="10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <h4>Address</h4>
+                                <input type="text" class="form-control" th:field="*{address}" placeholder="your city">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <h4>Email</h4>
+                                <input type="email" class="form-control" th:field="*{email}"
+                                    placeholder="you@email.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Password</h4>
+                                <input type="text" class="form-control" th:field="*{password}" placeholder="password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <!-- <div class="col-xs-6">
+                                <h4>Role</h4>
+                                <select th:field="*{role}">
+                                    <option th:each="role : ${rolesList}" th:value="${role.roleid}"
+                                        th:if="${role.roleid != 1}" th:text="${role.roleName}" class="form-control">
+                                    </option>
+                                </select>
+                            </div> -->
+                        </div>
+                        <!-- <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <h4>status</h4>
+                              <select type="" class="form-control" th:field="*{status}">
+                                <option th:value="true">Active</option>
+                                <option th:value="false">Inative</option>
+                              </select>
+                          </div>
+                      </div> -->
+                        <!-- <div class="form-group">
+                          
+                        <div class="col-xs-6">
+                          <h4 for="registrationdate">Create Date</h4>
+                            <input type="date" class="form-control" th:field="*{registrationdate}" id="registrationdate" th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" placeholder="registrationdate">
+                        </div>
+                    </div> -->
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Gender</h4>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="male" class="form-check-input" th:field="*{gender}"
+                                        th:value="male">
+                                    <label for="male" class="form-check-label">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="female" class="form-check-input" th:field="*{gender}"
+                                        th:value="female">
+                                    <label for="female" class="form-check-label">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i
+                                        class="glyphicon glyphicon-ok-sign"></i>
+                                    Save</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i>
+                                    Reset</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr>
+
+                </div><!--/tab-pane-->
+
+            </div><!--/tab-pane-->
+        </div><!--/tab-content-->
+
+    </div><!--/col-9-->
+</div><!--/row-->

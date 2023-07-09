@@ -19,8 +19,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Class_table")
-public class Class implements Serializable{
-    
+public class Class implements Serializable {
+
     @Id
     @Column(name = "class_id")
     private Long classid;
@@ -32,7 +32,7 @@ public class Class implements Serializable{
     private String date;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
@@ -41,6 +41,14 @@ public class Class implements Serializable{
     @ManyToOne
     @JoinColumn(name = "trainer_id")
     private User trainerid;
+
+    @ManyToOne()
+    @JoinColumn(name = "time_id")
+    private Time timeid;
+
+    @ManyToOne()
+    @JoinColumn(name = "room_id")
+    private Room roomid;
 
     // @OneToMany(mappedBy = "class1", cascade = CascadeType.ALL)
     // private Set<Attendance> attendance;
