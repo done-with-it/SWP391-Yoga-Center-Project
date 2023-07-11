@@ -47,25 +47,10 @@ public class admincontroller {
             List<User> userList = userService.listAll(roleid);
             model.addAttribute("userList", userList);
         } else {
-            List<User> userList = userRepository.findAll();
+            List<User> userList = userService.getUserByStatus();
             model.addAttribute("userList", userList);
         }
         return "admin/index";
-    }
-
-    @GetMapping("/401")
-    public String show401() {
-        return "admin/401";
-    }
-
-    @GetMapping("/404")
-    public String show404() {
-        return "admin/404";
-    }
-
-    @GetMapping("/500")
-    public String show500() {
-        return "admin/500";
     }
 
     @Autowired
@@ -81,16 +66,22 @@ public class admincontroller {
 
     @PostMapping("/adduser/new")
     public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
-        user.setRegistrationdate(LocalDate.now());
-        user.setStatus(true);
-        userRepository.save(user);
-        try {
-            userService.saveUser(file, user);
-        } catch (IOException e) {
-            // Xử lý lỗi nếu cần
+
+        if (userRepository.existsByEmail(user.getEmail())) {
+            ra.addFlashAttribute("existemail", "The Email already exists.");
+            return "redirect:/admin/adduser";
+        } else {
+            user.setRegistrationdate(LocalDate.now());
+            user.setStatus(true);
+            userRepository.save(user);
+            try {
+                userService.saveUser(file, user);
+            } catch (IOException e) {
+                // Xử lý lỗi nếu cần
+            }
+            ra.addFlashAttribute("update", "The user has been saved successfully.");
         }
-        ra.addFlashAttribute("message", "The user has been saved successfully.");
-        return "redirect:/admin/adduser";
+        return "admin/edit";
     }
 
     @GetMapping("/delete/{id}")
@@ -112,9 +103,8 @@ public class admincontroller {
             return "admin/edit";
         } catch (Exception e) {
         }
-        return "admin/edit";
+        return "admin/index";
     }
-
 
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
@@ -174,11 +164,10 @@ public class admincontroller {
 
     // @PostMapping("/document")
     // public String uploadDocument(Course course, Model model){
-    //     courseService.saveCourse(course);
+    // courseService.saveCourse(course);
 
-    //     model.addAttribute("message", "upload successful");
-    //     return "/admin/upload";
+    // model.addAttribute("message", "upload successful");
+    // return "/admin/upload";
     // }
-
 
 }

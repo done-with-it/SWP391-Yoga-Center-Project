@@ -74,7 +74,8 @@
 			<div class="row">
 				<div class="col-lg-4 col-md-6" th:each="content : ${contents}" th:if="${content.status != false}">
 					<div class="blog-item">
-						<img th:src="@{/staff/download-png(contentid=${content.contentid})}" alt="PNG Image" width="372px" height="253px">
+						<img th:src="@{/staff/download-png(contentid=${content.contentid})}"
+                                                alt="PNG Image" width="372px" height="253px">
 						<div class="bi-text">
 							<h2><a th:href="@{/single-blog(contentid=${content.contentid})}" th:text="${content.title}"></a></h2>
 							<p th:text="${content.topic}"></p>

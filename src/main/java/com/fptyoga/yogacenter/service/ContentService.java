@@ -29,7 +29,7 @@ public class ContentService {
     }
 
     public Page<Content> getContent(String topic, Pageable page) {
-        return repo.findByTopic(topic, page);
+        return repo.findByTopicAndStatusOrderByCreatedateDesc(topic, true, page);
     }
 
     public Content getContentsBlog(Long contentid) {
@@ -41,7 +41,7 @@ public class ContentService {
         // Kiểm tra xem tệp có tồn tại không
         if (!file.isEmpty()) {
             // Lưu tệp vào trường data của đối tượng Content
-            content.setData(file.getBytes());
+            content.setImg(file.getBytes());
 
             // Cập nhật các thông tin khác của đối tượng Content
             content.setCreatedate(LocalDate.now());
@@ -52,23 +52,24 @@ public class ContentService {
     }
 
     public byte[] getPngDataById(Long contentId) {
-    // Truy vấn cơ sở dữ liệu để lấy đối tượng Content dựa trên contentId
-    Content content = repo.findById(contentId).orElse(null);
-    
-    if (content != null) {
-        // Kiểm tra xem đối tượng Content có dữ liệu hình PNG không
-        if (content.getData() != null) {
-            return content.getData();
+        // Truy vấn cơ sở dữ liệu để lấy đối tượng Content dựa trên contentId
+        Content content = repo.findById(contentId).orElse(null);
+
+        if (content != null) {
+            // Kiểm tra xem đối tượng Content có dữ liệu hình PNG không
+            if (content.getImg() != null) {
+                return content.getImg();
+            } else {
+                // Xử lý trường hợp không có dữ liệu hình PNG
+                throw new RuntimeException("No PNG data found for contentId: " + contentId);
+            }
         } else {
-            // Xử lý trường hợp không có dữ liệu hình PNG
-            throw new RuntimeException("No PNG data found for contentId: " + contentId);
+            // Xử lý trường hợp không tìm thấy đối tượng Content với contentId tương ứng
+            throw new RuntimeException("Content not found for contentId: " + contentId);
         }
-    } else {
-        // Xử lý trường hợp không tìm thấy đối tượng Content với contentId tương ứng
-        throw new RuntimeException("Content not found for contentId: " + contentId);
+    }
+
+    public Page<Content> getAllContentsByStatus(Pageable page) {
+        return repo.findAllByStatusOrderByCreatedateDesc(true, page);
     }
 }
-
-
-}
-

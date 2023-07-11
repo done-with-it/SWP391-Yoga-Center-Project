@@ -13,7 +13,11 @@ import com.fptyoga.yogacenter.Entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
-    List<User> findByRole_Roleid(Long roleId);
+    List<User> findByRole_RoleidAndStatus(Long roleId, Boolean status);
     
     User findByEmailAndPassword(String email, String password);
+
+    List<User> findByStatus(Boolean status);
+
+    boolean existsByEmail(String email);
 }

@@ -448,7 +448,7 @@
 							<h4>[[${course.coursename}]]</h4>
 						</a><br>
 						<!-- <div>[[${course.description}]]</div> -->
-						<a href="" class="site-btn sb-gradient">book now</a>
+						<a th:href="@{/classes(courseid=${course.courseid})}" class="site-btn sb-gradient">book now</a>
 					</div>
 				</div>
 			</div>

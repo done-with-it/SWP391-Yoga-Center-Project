@@ -201,6 +201,7 @@ public class homeController {
         model.addAttribute("user", new User());
         return "profile";
     }
+
     @PostMapping("/profile/edit")
     public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
         userRepository.save(user);
@@ -223,6 +224,7 @@ public class homeController {
         }
         return "profile";
     }
+
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
         byte[] pngData = userService.getPngDataById(userid);
@@ -258,7 +260,7 @@ public class homeController {
             String topics = topic;
             model.addAttribute("topics", topics);
         } else {
-            contents = contentRepository.findAll(pageable);
+            contents = contentService.getAllContentsByStatus(pageable);
         }
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", contents.getTotalPages());
@@ -355,19 +357,46 @@ public class homeController {
         }
     }
 
-    
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         // Get the current session
         HttpSession session = request.getSession(false);
-        
+
         if (session != null) {
             // Invalidate the session
             session.invalidate();
+
         }
 
         // Redirect to the login page or any other desired page
         return "redirect:/index";
     }
 
+    @GetMapping("/createAccount")
+    public String create(Model model) {
+        model.addAttribute("user", new User());
+        return "createAccount";
+    }
+
+    @PostMapping("/createAccount/new")
+    public String createnewUser(@ModelAttribute User user, RedirectAttributes ra,
+            @RequestParam(defaultValue = "4") Role roleid,
+            @RequestParam("confirmPassword") String confirmPassword) {
+
+        if (!user.getPassword().equals(confirmPassword)) {
+            ra.addFlashAttribute("passwordMismatch", "Passwords do not match");
+            return "redirect:/createAccount";
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            ra.addFlashAttribute("existsemail", "The Email already exists.");
+            return "redirect:/createAccount";
+        } else {
+            user.setRegistrationdate(LocalDate.now());
+            user.setStatus(true);
+            user.setRole(roleid);
+            userRepository.save(user);
+            ra.addFlashAttribute("update", "The user has been saved successfully.");
+        }
+        return "createAccount";
+    }
 }

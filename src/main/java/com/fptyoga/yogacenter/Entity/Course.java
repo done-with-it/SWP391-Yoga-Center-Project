@@ -47,7 +47,6 @@ public class Course implements Serializable {
     @Column(name = "price")
     private float price;
 
-
     // @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     // private Set<Class> class2;
 

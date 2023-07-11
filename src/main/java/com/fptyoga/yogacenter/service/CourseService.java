@@ -1,7 +1,6 @@
 package com.fptyoga.yogacenter.service;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Course;
-import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.repository.CourseRepository;
 
 @Service
@@ -19,11 +16,11 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public List<Course> getAllCourse(){
+    public List<Course> getAllCourse() {
         return courseRepository.findAll();
     }
 
-     public Course getCourseById(Long courseid) {
+    public Course getCourseById(Long courseid) {
         Optional<Course> userOptional = courseRepository.findById(courseid);
         return userOptional.orElse(null);
     }

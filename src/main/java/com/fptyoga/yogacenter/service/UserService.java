@@ -25,7 +25,7 @@ public class UserService {
     private UserRepository repo;
 
     public List<User> listAll(Long role) {
-        return repo.findByRole_Roleid(role);
+        return repo.findByRole_RoleidAndStatus(role, true);
 
     }
 
@@ -95,5 +95,8 @@ public class UserService {
         return repo.findByEmailAndPassword(email, password);
     }
 
+    public List<User> getUserByStatus(){
+        return repo.findByStatus(true);
+    }
 
 }

@@ -44,17 +44,15 @@ public class Content implements Serializable{
     @Column(name = "status")
     private boolean status;
 
-    @Column(name = "img")
-    @Lob
-    private byte[] img;
 
     @JoinColumn(name = "Author")
     private String Author;
 
-    @Column(name = "data")
+    @Column(name = "img")
     @Lob
-    private byte[] data;
+    private byte[] img;
 
     // Getters and setters
+
 }
 

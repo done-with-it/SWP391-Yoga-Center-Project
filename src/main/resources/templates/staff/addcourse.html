@@ -4,7 +4,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <head>
-  <title>FPT Yoga Center</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -42,7 +42,7 @@
 <div class="container bootstrap snippet">
   <div class="row">
     <div class="col-sm-10">
-      <h1>Add New Course</h1>
+      <h1>Course</h1>
     </div>
     <div class="col-sm-2"><a th:href="@{/staff/indexCourse}"><img title="Back Home" src="/img/logo.png"></a></div>
   </div>
@@ -74,7 +74,7 @@
       <div class="tab-content">
         <div class="tab-pane active" id="home">
           <hr>
-          <form class="form" th:action="@{/staff/addcourse/new}" method="post" th:object="${course}"
+          <form class="form" th:action="@{/staff/addCourse/new}" method="post" th:object="${course}"
             enctype="multipart/form-data">
             <div class="form-group">
 

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>FPT Yoga Center</title>
+    <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet" />
@@ -38,7 +38,7 @@
                         th:src="@{/admin/download-png(userid=${session.user.userid})}" alt="PNG Image"
                         style="border-radius: 100%;" width="30px" height="30px"></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" th:href="@{/staff/indexClass}">Home</a></li>
+                    <li><a class="dropdown-item" th:href="@{/index}">Home</a></li>
                     <li><a class="dropdown-item" th:href="@{/admin/edit/{id}(id=${session.user.userid})}">Settings</a></li>
                     <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                 </ul>
@@ -59,7 +59,7 @@
                             data-bs-parent="#sidenavAccordion">
                         </div> -->
 
-                        <a class="nav-link collapsed" th:href="@{/staff/indexPost}">
+                        <a class="nav-link collapsed" th:href="@{/staff/index}">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Post
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>

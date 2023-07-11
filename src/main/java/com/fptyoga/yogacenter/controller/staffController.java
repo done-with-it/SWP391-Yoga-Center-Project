@@ -7,6 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +57,7 @@ public class staffController {
     @Autowired
     private ClassesService classesService;
 
-    @Autowired 
+    @Autowired
     private CourseRepository courseRepository;
 
     @Autowired
@@ -79,11 +82,12 @@ public class staffController {
         return "staff/indexClass";
     }
 
-    @GetMapping("/indexPost")
-    public String Post(Model model) {
-        List<Content> contents = contentRepository.findAll();
+    @GetMapping("/index")
+    public String blog(Model model, @RequestParam(defaultValue = "1") int page) {
+        PageRequest pageable = PageRequest.of(page - 1, 20, Sort.by("contentid").descending());
+        Page<Content> contents = contentService.getAllContentsByStatus(pageable);
         model.addAttribute("contents", contents);
-        return "staff/indexPost";
+        return "staff/index";
     }
 
     @GetMapping("/indexCourse")
@@ -109,23 +113,32 @@ public class staffController {
     }
 
     @GetMapping("/addblog")
-    public String addBlog(Model model) {
-        model.addAttribute("content", new Content());
+    public String addUser(Model model, @RequestParam(value = "id", required = false) Long id) {
+        Content content;
+        if (id == null || id == 0) {
+            content = new Content();
+            model.addAttribute("id", 0); // Add this line to explicitly set the ID as 0
+        } else {
+            content = contentRepository.findById(id).orElse(null);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("content", content);
         return "staff/addblog";
     }
 
-    @PostMapping("/addblog/new")
-    public String newBlog(@ModelAttribute Content content, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+    @PostMapping("/content")
+    public String setBlog(@ModelAttribute Content content,
+            RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile file) {
+
         content.setCreatedate(LocalDate.now());
         content.setStatus(true);
-        contentRepository.save(content);
         try {
             contentService.saveContent(file, content);
         } catch (IOException e) {
             // Xử lý lỗi nếu cần
         }
-        ra.addFlashAttribute("message", "The Blog has been saved successfully.");
-        return "redirect:/staff/addblog";
+        redirectAttributes.addFlashAttribute("message", "The Blog has been saved successfully.");
+        return "redirect:/staff/index";
     }
 
     @GetMapping("/delete/{id}")
@@ -142,12 +155,11 @@ public class staffController {
         try {
             Content content = contentRepository.findById(id).orElse(null);
             model.addAttribute("content", content);
-            return "staff/editPost";
+            return "staff/edit";
         } catch (Exception e) {
         }
-        return "staff/editPost";
+        return "staff/edit";
     }
-
 
     @GetMapping("/addClass")
     public String addClass(Model model) {
@@ -167,10 +179,17 @@ public class staffController {
 
     @PostMapping("/addClass/new")
     public String newClass(@ModelAttribute Class classes, RedirectAttributes ra) {
-        classes.setStatus(true);
-        classesRepository.save(classes);
-        ra.addFlashAttribute("message", "The Class has been saved successfully.");
-        return "redirect:/staff/addClass";
+
+        if (classesRepository.existsById(classes.getClassid())) {
+            ra.addFlashAttribute("existemail", "The Class ID already exists.");
+            return "redirect:/staff/addClass";
+        } else {
+            classes.setStatus(true);
+            classesRepository.save(classes);
+            ra.addFlashAttribute("message", "The Class has been saved successfully.");
+            return "redirect:/staff/indexClass";
+        }
+
     }
 
     @GetMapping("/deleteClass/{id}")
@@ -203,14 +222,15 @@ public class staffController {
         return "staff/editClass";
     }
 
-    @GetMapping("/addcourse")
-    public String addcourse(Model model) {
+    @GetMapping("/addCourse")
+    public String addCourse(Model model) {
         model.addAttribute("course", new Course());
-        return "staff/addcourse";
+        return "staff/addCourse";
     }
 
-    @PostMapping("/addcourse/new")
-    public String newCourse(@ModelAttribute Course course, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+    @PostMapping("/addCourse/new")
+    public String newCourse(@ModelAttribute Course course, RedirectAttributes ra,
+            @RequestParam("file") MultipartFile file) {
         course.setCreatedate(LocalDate.now());
         course.setStatus(true);
         try {
@@ -219,9 +239,8 @@ public class staffController {
             // Xử lý lỗi nếu cần
         }
         ra.addFlashAttribute("message", "The Course has been saved successfully.");
-        return "redirect:/staff/addcourse";
+        return "redirect:/staff/indexCourse";
     }
-
 
     @GetMapping("/downloads-png")
     public ResponseEntity<Resource> downloadPngCourse(@RequestParam(defaultValue = "") Long courseid) {
@@ -247,8 +266,8 @@ public class staffController {
         return "redirect:/staff/indexCourse";
     }
 
-    @GetMapping("/editcourse/{id}")
-    public String showEditCourse(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/editcourse")
+    public String showEditCourse(@RequestParam(defaultValue = "") Long id, Model model) {
         try {
             Course course = courseRepository.findById(id).orElse(null);
             model.addAttribute("course", course);

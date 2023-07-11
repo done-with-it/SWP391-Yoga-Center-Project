@@ -16,7 +16,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     @Query("SELECT DISTINCT c.topic FROM Content c")
     List<String> findDistinctTopics();
 
-    Page<Content> findByTopic(String topic, Pageable page);
+    Page<Content> findByTopicAndStatusOrderByCreatedateDesc(String topic, boolean status, Pageable page);
 
-    
+    Page<Content> findAllByStatusOrderByCreatedateDesc(boolean status, Pageable page);
 }

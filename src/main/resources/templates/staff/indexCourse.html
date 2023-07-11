@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>FPT Yoga Center</title>
+    <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet" />
@@ -18,7 +18,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a th:href="@{/staff/indexCourse}">
+        <a th:href="@{/staff/index}">
             <img src="/img/admin.png" alt=""></a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
@@ -38,7 +38,7 @@
                         th:src="@{/admin/download-png(userid=${session.user.userid})}" alt="PNG Image"
                         style="border-radius: 100%;" width="30px" height="30px"></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" th:href="@{/staff/indexCourse}">Home</a></li>
+                    <li><a class="dropdown-item" th:href="@{/index}">Home</a></li>
                     <li><a class="dropdown-item" th:href="@{/admin/edit/{id}(id=${session.user.userid})}">Settings</a></li>
                     <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                 </ul>
@@ -50,7 +50,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link collapsed" th:href="@{/staff/indexClass}">
+                        <a class="nav-link collapsed" th:href="@{/staff/index}">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Class
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -59,7 +59,7 @@
                             data-bs-parent="#sidenavAccordion">
                         </div> -->
 
-                        <a class="nav-link collapsed" th:href="@{/staff/indexPost}">
+                        <a class="nav-link collapsed" th:href="@{/staff/index}">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Post
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Welcome, [[${session.user.fullname}]]!</div>
+                    <div class="small">Logged in as:</div>
                 </div>
             </nav>
         </div>
@@ -90,7 +90,7 @@
                             <i class="fas fa-table me-1"></i>
                         </div>
                         <div class="card-header" style="text-align: center;">
-                            <h5><a th:href="@{/staff/addcourse}" style="color: black; font-weight: bold;">ADD NEW
+                            <h5><a th:href="@{/staff/addCourse}" style="color: black; font-weight: bold;">ADD NEW
                                     COURSE</a>
                             </h5>
                         </div>
@@ -130,7 +130,7 @@
                                         <td th:utext="${course.description}"></td>
                                         <td>[[${course.createdate}]]</td>
                                         <td>
-                                            <a th:href="@{/staff/editcourse/{id}(id=${course.courseid})}"><i
+                                            <a th:href="@{/staff/editcourse(id=${course.courseid})}"><i
                                                     class="material-icons">edit</i></a>
                                             <a th:href="@{/staff/deletecourse/{id}(id=${course.courseid})}"><i
                                                     class="material-icons">delete</i></a>
