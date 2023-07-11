@@ -47,7 +47,7 @@ public class admincontroller {
             List<User> userList = userService.listAll(roleid);
             model.addAttribute("userList", userList);
         } else {
-            List<User> userList = userRepository.findAll();
+            List<User> userList = userService.getUserByStatus();
             model.addAttribute("userList", userList);
         }
         return "admin/index";
@@ -81,17 +81,22 @@ public class admincontroller {
 
     @PostMapping("/adduser/new")
     public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
-        user.setRegistrationdate(LocalDate.now());
-        user.setStatus(true);
-        userRepository.save(user);
-        try {
-            userService.saveUser(file, user);
-        } catch (IOException e) {
-            // Xử lý lỗi nếu cần
+
+        if (userRepository.existsByEmail(user.getEmail())) {
+            ra.addFlashAttribute("existemail", "The Email already exists.");
+            return "redirect:/admin/adduser";
+        } else {
+            user.setRegistrationdate(LocalDate.now());
+            user.setStatus(true);
+            userRepository.save(user);
+            try {
+                userService.saveUser(file, user);
+            } catch (IOException e) {
+                // Xử lý lỗi nếu cần
+            }
+            ra.addFlashAttribute("update", "The user has been saved successfully.");
         }
-        ra.addFlashAttribute("message", "The user has been added successfully.");
-        ra.addFlashAttribute("update", "The user has been added successfully.");
-        return "redirect:/admin/adduser";
+        return "admin/edit";
     }
 
     @GetMapping("/delete/{id}")
@@ -113,21 +118,9 @@ public class admincontroller {
             return "admin/edit";
         } catch (Exception e) {
         }
-        return "admin/edit";
+        return "admin/index";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editProfile(@PathVariable("id") Long id, Model model) {
-        List<Role> rolesList = roleService.allRole();
-        model.addAttribute("rolesList", rolesList);
-        try {
-            User user = userRepository.findById(id).orElse(null);
-            model.addAttribute("user", user);
-            return "profile";
-        } catch (Exception e) {
-        }
-        return "profile";
-    }
 
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {

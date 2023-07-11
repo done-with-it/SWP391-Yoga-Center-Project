@@ -5283,6 +5283,11 @@ textarea.form-control-lg {
   outline: 0;
 }
 
+tbody tr td[data-stt]:before {
+  content: attr(data-stt);
+}
+
+
 .modal-dialog {
   position: relative;
   width: auto;
@@ -5321,6 +5326,7 @@ textarea.form-control-lg {
   align-items: center;
   min-height: calc(100% - var(--bs-modal-margin) * 2);
 }
+
 
 .modal-content {
   position: relative;

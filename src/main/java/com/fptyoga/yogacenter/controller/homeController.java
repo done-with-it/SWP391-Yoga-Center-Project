@@ -1,22 +1,33 @@
 package com.fptyoga.yogacenter.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Course;
+import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.repository.ClassesRepository;
@@ -152,6 +163,13 @@ public class homeController {
         return "adduser";
     }
 
+    // @GetMapping("/payment")
+    // public String ahowPayment() {
+    //     return "payment";
+    // }
+
+    
+
     @GetMapping("/about")
     public String about(Model model) {
         List<User> trainList = userService.listAll(3L);
@@ -185,9 +203,46 @@ public class homeController {
         return "schedule";
     }
 
-    @GetMapping("/event-details")
-    public String eventdetails() {
-        return "event-details";
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        model.addAttribute("user", new User());
+        return "profile";
+    }
+    @PostMapping("/profile/edit")
+    public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+        userRepository.save(user);
+        try {
+            userService.saveUser(file, user);
+        } catch (IOException e) {
+            // Xử lý lỗi nếu cần
+        }
+        ra.addFlashAttribute("update", "The user has been update successfully.");
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEdit(@PathVariable("id") Long id, Model model) {
+        try {
+            User user = userRepository.findById(id).orElse(null);
+            model.addAttribute("user", user);
+            return "profile";
+        } catch (Exception e) {
+        }
+        return "profile";
+    }
+    @GetMapping("/download-png")
+    public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
+        byte[] pngData = userService.getPngDataById(userid);
+        if (pngData != null) {
+            ByteArrayResource resource = new ByteArrayResource(pngData);
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=image.png")
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(resource);
+        }
+        // Xử lý trường hợp tệp tin không tồn tại
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/courses")
@@ -210,7 +265,7 @@ public class homeController {
             String topics = topic;
             model.addAttribute("topics", topics);
         } else {
-            contents = contentRepository.findAll(pageable);
+            contents = contentService.getAllContentsByStatus(pageable);
         }
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", contents.getTotalPages());
@@ -316,10 +371,40 @@ public class homeController {
         if (session != null) {
             // Invalidate the session
             session.invalidate();
+            
         }
 
         // Redirect to the login page or any other desired page
         return "redirect:/index";
     }
 
+    @GetMapping("/createAccount")
+    public String create(Model model) {
+        model.addAttribute("user", new User());
+        return "createAccount";
+    }
+
+    @PostMapping("/createAccount/new")
+    public String createnewUser(@ModelAttribute User user, RedirectAttributes ra,
+            @RequestParam(defaultValue = "4") Role roleid,
+            @RequestParam("confirmPassword") String confirmPassword) {
+
+        if (!user.getPassword().equals(confirmPassword)) {
+            ra.addFlashAttribute("passwordMismatch", "Passwords do not match");
+            return "redirect:/createAccount";
+        }
+        if (userRepository.existsByEmail(user.getEmail())) {
+            ra.addFlashAttribute("existsemail", "The Email already exists.");
+            return "redirect:/createAccount";
+        } else {
+            user.setRegistrationdate(LocalDate.now());
+            user.setStatus(true);
+            user.setRole(roleid);
+            userRepository.save(user);
+            ra.addFlashAttribute("update", "The user has been saved successfully.");
+        }
+        return "createAccount";
+    }
+
+    
 }

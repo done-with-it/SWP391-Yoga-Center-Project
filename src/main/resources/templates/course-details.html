@@ -115,7 +115,8 @@
 					<div class="classes-other-slider owl-carousel">
 						<div class="classes-item" th:each="class : ${classes}">
 							<div class="ci-img">
-								<img th:src="${class.courseid.img}" alt="">
+								<img th:src="@{/staff/downloads-png(courseid=${class.courseid.courseid})}"
+                                            alt="PNG Image" width="283px" height="283px">
 							</div>
 							<div class="ci-text">
 								<a th:href="@{/classes(courseid=${courses.courseid})}">

@@ -50,36 +50,45 @@
                   <h4 class="mt-1 mb-5 pb-1">We understand you</h4>
                   <h4 class="mt-1 mb-4 pb-1">Sign Up</h4>
                 </div>
-                <form>
+                <form th:action="@{/createAccount/new}" method="post" th:object="${user}">
                   <div class="form-outline mb-3">
-                    <input type="password" id="form2Example22" class="form-control" placeholder="Username" />
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Email" />
+                    <span style="color: red;">[[${existsemail}]]</span>
                   </div>
                   <div class="form-outline mb-3">
-                    <input type="password" id="form2Example22" class="form-control" placeholder="Password" />
+                    <input type="password" th:field="*{password}" id="passwordField" class="form-control" placeholder="Password"/>
+                    <input type="checkbox" onclick="togglePasswordVisibility()"><p>Show Password</p>
                   </div>
                   <div class="form-outline mb-3">
-                    <input type="password" id="form2Example33" class="form-control" placeholder="Confirm password" />
+                    <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" />
+                    <span style="color: red;">[[${passwordMismatch}]]</span>
                   </div>
                   <div class="form-outline mb-3">
-                    <input type="text" id="form2Example11" class="form-control" placeholder="Full name" />
+                    <input type="text" th:field="*{fullname}" class="form-control" placeholder="Full name" />
                   </div>
                   <div class="form-outline mb-3">
-                    <input type="password" id="form2Example33" class="form-control" placeholder="Email" />
+                    <input type="number" th:field="*{phone}" class="form-control" placeholder="Phone" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="date" th:field="*{dob}" class="form-control" placeholder="Birthday" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="text" th:field="*{address}" class="form-control" placeholder="Address" />
                   </div>
 
                   <div class="form-check form-check-inline mb-3">
-                    <input class="form-check-input custom-radio-input" type="radio" name="genderRadio" id="maleRadio"
+                    <input class="form-check-input custom-radio-input" type="radio" th:field="*{gender}"
                       value="Male" checked />
-                    <label class="form-check-label" for="maleRadio">Male</label>
+                    <label class="form-check-label">Male</label>
                   </div>
                   <div class="form-check form-check-inline mb-3">
-                    <input class="form-check-input custom-radio-input" type="radio" name="genderRadio" id="femaleRadio"
+                    <input class="form-check-input custom-radio-input" type="radio" th:field="*{gender}"
                       value="Female" />
-                    <label class="form-check-label" for="femaleRadio">Female</label>
+                    <label class="form-check-label">Female</label>
                   </div>
 
                   <div class="text-center pt-1 mb-3 pb-1">
-                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Create
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Create
                       Account</button>
                   </div>
                   <div class="d-flex align-items-center justify-content-center pb-4">
@@ -95,11 +104,21 @@
     </div>
   </section>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script>
+  <script th:inline="javascript">
     function Login() {
-      window.location.href = "loginpage.html";
+      window.location.href = /*[[@{/loginpage}]]*/ "";
     }
   </script>
+  <script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("passwordField");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+</script>
 </body>
 
 </html>

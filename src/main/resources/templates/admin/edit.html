@@ -39,7 +39,8 @@
         <div class="col-sm-10">
             <h1>Update User</h1>
         </div>
-        <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+        <div th:if="${session.user.role.roleid == 1}" class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+        <div th:if="${session.user.role.roleid == 2}" class="col-sm-2"><a th:href="@{/staff/index}"><img title="Back Home" src="/img/logo.png"></a></div>
     </div>
     <div class="row">
         <div class="col-sm-3"><!--left col-->
@@ -130,15 +131,7 @@
                         </div>
 
                         <div class="form-group">
-
-                            <!-- <div class="col-xs-6">
-                                <h4>Role</h4>
-                                <select th:field="*{role}">
-                                    <option th:each="role : ${rolesList}" th:value="${role.roleid}"
-                                        th:if="${role.roleid != 1}" th:text="${role.roleName}" class="form-control">
-                                    </option>
-                                </select>
-                            </div> -->
+                            <input type="hidden" th:field="*{role}">
                         </div>
                         <!-- <div class="form-group">
                           

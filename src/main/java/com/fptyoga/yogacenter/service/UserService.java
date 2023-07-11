@@ -25,7 +25,7 @@ public class UserService {
     private UserRepository repo;
 
     public List<User> listAll(Long role) {
-        return repo.findByRole_Roleid(role);
+        return repo.findByRole_RoleidAndStatus(role, true);
 
     }
 
@@ -61,7 +61,7 @@ public class UserService {
             }
         } else {
             // Xử lý trường hợp không tìm thấy đối tượng Content với contentId tương ứng
-            throw new RuntimeException("Content not found for contentId: " + userid);
+            throw new RuntimeException("User not found for UsertId: " + userid);
         }
     }
 
@@ -95,5 +95,8 @@ public class UserService {
         return repo.findByEmailAndPassword(email, password);
     }
 
+    public List<User> getUserByStatus(){
+        return repo.findByStatus(true);
+    }
 
 }

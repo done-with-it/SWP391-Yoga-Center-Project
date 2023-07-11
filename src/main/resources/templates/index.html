@@ -448,7 +448,7 @@
 							<h4>[[${course.coursename}]]</h4>
 						</a><br>
 						<!-- <div>[[${course.description}]]</div> -->
-						<a href="" class="site-btn sb-gradient">book now</a>
+						<a th:href="@{/classes(courseid=${course.courseid})}" class="site-btn sb-gradient">book now</a>
 					</div>
 				</div>
 			</div>
@@ -530,7 +530,6 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
-
 </body>
 
 </html>

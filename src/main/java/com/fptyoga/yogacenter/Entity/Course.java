@@ -5,7 +5,10 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +25,7 @@ public class Course implements Serializable {
 
     @Id
     @Column(name = "course_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseid;
 
     @Column(name = "course_name")
@@ -31,7 +35,8 @@ public class Course implements Serializable {
     private boolean status;
 
     @Column(name = "img")
-    private String img;
+    @Lob
+    private byte[] img;
 
     @Column(name = "description", columnDefinition = "VARCHAR(MAX)")
     private String description;
@@ -41,7 +46,6 @@ public class Course implements Serializable {
 
     @Column(name = "price")
     private float price;
-
 
     // @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     // private Set<Class> class2;

@@ -63,7 +63,8 @@
 				<div class="col-lg-6" th:each="course : ${allCourses}">
 					<div class="event-item">
 						<div class="ei-img">
-							<img th:src="${course.img}" alt="">
+							<img th:src="@{/staff/downloads-png(courseid=${course.courseid})}"
+                                            alt="PNG Image" width="222px" height="222px">
 						</div>
 						<div class="ei-text">
 							<a th:href="@{/course-details(courseid=${course.courseid})}"><h4>[[${course.coursename}]]</h4></a>
@@ -71,7 +72,7 @@
 								<li><i class="material-icons">domain</i>FPT YOGA CENTER</li>
 								<li><i class="material-icons">payments</i>[[${course.price}]]$</li>
 								<li><i class="material-icons">today</i>[[${course.createdate}]]</li>
-								<li><a href="" class="site-btn sb-gradient">book now</a></li>
+								<li><a th:href="@{/classes(courseid=${course.courseid})}" class="site-btn sb-gradient">book now</a></li>
 							</ul>
 						</div>
 					</div>

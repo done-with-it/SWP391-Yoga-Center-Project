@@ -63,7 +63,7 @@
 				<div class="col-lg-8">
 					<div class="blog-details">
 						<div class="blog-preview">
-							<img th:src="${content.img}" alt="">
+							<img th:src="@{/staff/download-png(contentid=${content.contentid})}" alt="PNG Image">
 						</div>
 						<h2 th:text="${content.title}"></h2>
 						<div class="blog-meta">
@@ -72,11 +72,11 @@
 						<div class="blog-meta">
 							<p><i class="material-icons">person</i>[[${content.author}]]</p>
 						</div>
-						<p th:text="${content.description}"></p>
+						<p th:utext="${content.description}"></p>
 
-						<blockquote>Yoga is now one of the most popular practice in the world. It is not simply the
+						<!-- <blockquote>Yoga is now one of the most popular practice in the world. It is not simply the
 							movement of the four limbs, Yoga is the product of a massive culture, a special "religion"
-							that brings great value.</blockquote>
+							that brings great value.</blockquote> -->
 						<!-- <div class="blog-gallery">
 							<div class="row">
 								<div class="col-md-4">
@@ -92,11 +92,11 @@
 								</div>
 							</div>
 						</div> -->
-						<h3>What reasons do we need to practice Yoga?</h3>
+						<!-- <h3>What reasons do we need to practice Yoga?</h3>
 						<p>Update the trend of 12 yoga exercises to help you lose weight effectively at home, help
 							strengthen your exercise ability. Besides impacting weight loss effects, it also helps to
 							repel diseases, enhance the body's resistance. Have a toned body with just 8 steps of yoga
-							every day, helping to lose weight quickly combined with a reasonable diet.</p>
+							every day, helping to lose weight quickly combined with a reasonable diet.</p> -->
 						<div class="row">
 							<div class="col-sm-7">
 								<div class="ed-cata">
