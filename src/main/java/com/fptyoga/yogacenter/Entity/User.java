@@ -50,6 +50,12 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "facebook")
+    private String facebook;
+
+    @Column(name = "instagram")
+    private String instagram;
+
     @Column(name = "status")
     private boolean status;
 
@@ -67,48 +73,6 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    // private Set<Class> class1;
-
-    // @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL)
-    // private Set<Feedback> feedbacks;
-
-    // @Override
-    // public String getPassword() {
-    //     return password;
-    // }
-
-    // @Override
-    // public String getUsername() {
-    //     return email;
-    // }
-
-    // @Override
-    // public boolean isAccountNonExpired() {
-    //     return true;
-    // }
-
-    // @Override
-    // public boolean isAccountNonLocked() {
-    //     return true;
-    // }
-
-    // @Override
-    // public boolean isCredentialsNonExpired() {
-    //     return true;
-    // }
-
-    // @Override
-    // public boolean isEnabled() {
-    //     return status;
-    // }
-
-    // @Override
-    // public Collection<? extends GrantedAuthority> getAuthorities() {
-    //     List<GrantedAuthority> authorities = new ArrayList<>();
-    //     authorities.add(new SimpleGrantedAuthority("ROLE_admin"));
-    //     // Thêm các GrantedAuthority khác nếu cần thiết
-    //     return authorities;
-    // }
+    
 
 }

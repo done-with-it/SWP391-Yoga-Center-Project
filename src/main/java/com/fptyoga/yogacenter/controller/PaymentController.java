@@ -40,7 +40,7 @@ public class PaymentController {
 
     @RequestMapping("/create_payment")
     public String payment(@RequestParam(value = "classID") Long classID, @RequestParam(value = "userID") Long userID,
-             HttpSession session)
+            HttpSession session)
             throws UnsupportedEncodingException {
 
         // ResponseEntity<?>
@@ -126,7 +126,7 @@ public class PaymentController {
         user.setUserid(userID);
         book.setClassid(classes);
         book.setCustomerid(user);
-        
+
         session.setAttribute("book", book);
 
         return "redirect:" + paymentUrl;
@@ -143,7 +143,7 @@ public class PaymentController {
             HttpSession session) {
 
         Booking book = (Booking) session.getAttribute("book");
-        long cost =Long.valueOf(amount);
+        long cost = Long.valueOf(amount);
         // Tạo một đối tượng Payment và gán giá trị từ URL
         if (responseCode.equals("00")) {
             // book.setCustomerid();
@@ -153,19 +153,21 @@ public class PaymentController {
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
             book.setAmount(cost);
+            bookingRepository.save(book);
+            Booking booked = bookingRepository.findById(book.getBookingid()).orElse(null);
+            model.addAttribute("order", booked);
         } else {
 
-            book.setStatus(true);
+            book.setStatus(false);
             book.setBookingdate(LocalDate.now());
-            book.setBankCode("error");
-            book.setBookingOrder("error");
-            book.setResponseCode("error");
-            book.setAmount(0);
+            book.setBankCode(bankCode);
+            book.setBookingOrder(order);
+            book.setResponseCode(responseCode);
+            book.setAmount(cost);
+            bookingRepository.save(book);
+            return "index";
+
         }
-        
-        bookingRepository.save(book);
-        Booking booked = bookingRepository.findById(book.getBookingid()).orElse(null);
-        model.addAttribute("order", booked);
 
         // Trả về thông báo thành công hoặc thông tin khác nếu cần thiết
         return "payment";

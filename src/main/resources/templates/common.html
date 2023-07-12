@@ -139,7 +139,7 @@
 			</li >
 			<li th:if="${session.user}">
 				<a th:if="${session.user.role.roleid == 3}" th:href="@{/schedule}">schedule</a>
-				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule}">schedule</a>
+				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule(customerid=${session.user.userid})}">schedule</a>
 			</li>
 			<!-- <li >
 				

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Course;
@@ -34,6 +35,7 @@ import com.fptyoga.yogacenter.repository.ClassesRepository;
 import com.fptyoga.yogacenter.repository.ContentRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
+import com.fptyoga.yogacenter.service.BookingService;
 import com.fptyoga.yogacenter.service.ClassesService;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
@@ -74,6 +76,9 @@ public class homeController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private BookingService bookingService;
+
     @GetMapping("")
     public String show() {
         return "redirect:/index";
@@ -93,22 +98,15 @@ public class homeController {
         return "index";
     }
 
-    // @GetMapping("/classes")
-    // public String events(Model model, @RequestParam(defaultValue = "1") int page)
-    // {
-    // PageRequest pageable = PageRequest.of(page - 1, 6);
-    // Page<Schedule> classes = scheduleRepository.findAll(pageable);
-    // List<Course> courses = courseRepository.findAll();
-    // List<User> trainList = userService.listAll(3L);
-    // model.addAttribute("trainList", trainList);
-    // model.addAttribute("courses", courses);
-    // model.addAttribute("currentPage", page);
-    // model.addAttribute("totalPages", classes.getTotalPages());
-    // model.addAttribute("numofClasses", classes.getNumberOfElements());
-    // model.addAttribute("totalClasses", classes.getTotalElements());
-    // model.addAttribute("classes", classes);
-    // return "classes";
-    // }
+    @GetMapping("/class-details")
+    public String showInfoClass(Model model, @RequestParam(defaultValue = "classid") Long classid) {
+        List<Booking> booked = bookingService.getUserInClass(classid);
+        Class classes = classesRepository.findById(classid).orElse(null);
+        model.addAttribute("classes", classes);
+        model.addAttribute("booked", booked);
+        return "class-details";
+    }
+
     @GetMapping("/classes")
     public String getClass(Model model, @RequestParam(defaultValue = "") Long courseid,
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String date) {
@@ -163,24 +161,12 @@ public class homeController {
         return "adduser";
     }
 
-    // @GetMapping("/payment")
-    // public String ahowPayment() {
-    //     return "payment";
-    // }
-
-    
-
     @GetMapping("/about")
     public String about(Model model) {
         List<User> trainList = userService.listAll(3L);
         model.addAttribute("trainList", trainList);
         return "about";
     }
-
-    // @GetMapping("/trainer")
-    // public String trainer(){
-    // return "trainer";
-    // }
 
     @GetMapping("/trainer")
     public String trainer(Model model) {
@@ -199,7 +185,9 @@ public class homeController {
     }
 
     @GetMapping("/schedule")
-    public String events() {
+    public String getSchedules(@RequestParam("customerid") Long customerid, Model model) {
+        List<Booking> booked = bookingService.getSchedule(customerid);
+        model.addAttribute("booked", booked);
         return "schedule";
     }
 
@@ -208,6 +196,7 @@ public class homeController {
         model.addAttribute("user", new User());
         return "profile";
     }
+
     @PostMapping("/profile/edit")
     public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
         userRepository.save(user);
@@ -230,6 +219,7 @@ public class homeController {
         }
         return "profile";
     }
+
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
         byte[] pngData = userService.getPngDataById(userid);
@@ -274,26 +264,6 @@ public class homeController {
 
         return "blog";
     }
-
-    // @GetMapping("/single-blog")
-    // public String singleblog(@RequestParam("contentid") Long contentid, Model
-    // model) {
-    // Content content = contentService.getContentsBlog(contentid);
-    // List<Content> listcontents =
-    // contentRepository.findAll(Sort.by("contentid").descending()).subList(0, 3);
-    // List<Content> contents = contentRepository.findAll();
-    // List<String> distinctTopics = contentService.getFilterContent();
-    // Content previousblog = contentService.getContentsBlog(contentid + 1);
-    // Content nextblog = contentService.getContentsBlog(contentid - 1);
-    // int flag = contents.size();
-    // model.addAttribute("flag", flag);
-    // model.addAttribute("listcontents", listcontents);
-    // model.addAttribute("content", content);
-    // model.addAttribute("previousblog", previousblog);
-    // model.addAttribute("nextblog", nextblog);
-    // model.addAttribute("distinctTopics", distinctTopics);
-    // return "single-blog";
-    // }
 
     @GetMapping("/single-blog")
     public String singleblog(@RequestParam("contentid") Long contentid, Model model) {
@@ -362,16 +332,15 @@ public class homeController {
         }
     }
 
-    
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         // Get the current session
         HttpSession session = request.getSession(false);
-        
+
         if (session != null) {
             // Invalidate the session
             session.invalidate();
-            
+
         }
 
         // Redirect to the login page or any other desired page
@@ -406,5 +375,4 @@ public class homeController {
         return "createAccount";
     }
 
-    
 }
