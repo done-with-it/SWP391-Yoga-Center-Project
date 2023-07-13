@@ -27,6 +27,8 @@ import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.config.Config;
 import com.fptyoga.yogacenter.repository.BookingRepository;
+import com.fptyoga.yogacenter.repository.ClassesRepository;
+import com.fptyoga.yogacenter.service.BookingService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -37,10 +39,16 @@ public class PaymentController {
 
     @Autowired
     private BookingRepository bookingRepository;
+    
+    @Autowired
+    private BookingService bookingService;
+
+    @Autowired
+    private ClassesRepository classesRepository;
 
     @RequestMapping("/create_payment")
     public String payment(@RequestParam(value = "classID") Long classID, @RequestParam(value = "userID") Long userID,
-            HttpSession session)
+            HttpSession session, Model model)
             throws UnsupportedEncodingException {
 
         // ResponseEntity<?>
@@ -127,8 +135,9 @@ public class PaymentController {
         book.setClassid(classes);
         book.setCustomerid(user);
 
+        
         session.setAttribute("book", book);
-
+        
         return "redirect:" + paymentUrl;
         // return ResponseEntity.status(HttpStatus.OK).body(book);
     }
@@ -143,6 +152,7 @@ public class PaymentController {
             HttpSession session) {
 
         Booking book = (Booking) session.getAttribute("book");
+        
         long cost = Long.valueOf(amount);
         // Tạo một đối tượng Payment và gán giá trị từ URL
         if (responseCode.equals("00")) {
@@ -154,7 +164,9 @@ public class PaymentController {
             book.setResponseCode(responseCode);
             book.setAmount(cost);
             bookingRepository.save(book);
-            Booking booked = bookingRepository.findById(book.getBookingid()).orElse(null);
+            Booking booked = bookingService.getCourse(book.getBookingid());
+            Class classes = classesRepository.findById(Long.valueOf(book.getClassid().getClassid())).orElse(null);
+            model.addAttribute("classes", classes);
             model.addAttribute("order", booked);
         } else {
 
@@ -172,4 +184,6 @@ public class PaymentController {
         // Trả về thông báo thành công hoặc thông tin khác nếu cần thiết
         return "payment";
     }
+
+    
 }

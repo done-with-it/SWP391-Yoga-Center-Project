@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.ContentService;
@@ -72,31 +74,45 @@ public class admincontroller {
     private RoleService roleService;
 
     @GetMapping("/adduser")
-    public String addUser(Model model) {
+    public String addUser(Model model, @RequestParam(value = "id", required = false) Long id) {
+        User user;
         List<Role> rolesList = roleService.allRole();
         model.addAttribute("rolesList", rolesList);
-        model.addAttribute("user", new User());
+        if (id == null || id == 0) {
+            user = new User();
+            model.addAttribute("id", 0); // Add this line to explicitly set the ID as 0
+        } else {
+            user = userRepository.findById(id).orElse(null);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("user", user);
         return "admin/adduser";
     }
 
     @PostMapping("/adduser/new")
-    public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+    public String newUser(@ModelAttribute User user,
+            @RequestParam(value = "id", required = false) Long id,
+            RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            ra.addFlashAttribute("existemail", "The Email already exists.");
-            return "redirect:/admin/adduser";
+        if (id == null || id == 0) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                ra.addFlashAttribute("existemail", "The Email already exists.");
+                return "redirect:/admin/adduser";
+            }
         } else {
             user.setRegistrationdate(LocalDate.now());
             user.setStatus(true);
-            userRepository.save(user);
             try {
                 userService.saveUser(file, user);
+                userRepository.save(user);
             } catch (IOException e) {
                 // Xử lý lỗi nếu cần
             }
-            ra.addFlashAttribute("update", "The user has been saved successfully.");
+            
+            ra.addFlashAttribute("message", "The user has been saved successfully.");
+
         }
-        return "admin/edit";
+        return "redirect:/admin/index";
     }
 
     @GetMapping("/delete/{id}")
@@ -115,12 +131,11 @@ public class admincontroller {
         try {
             User user = userRepository.findById(id).orElse(null);
             model.addAttribute("user", user);
-            return "admin/edit";
+            return "admin/adduser";
         } catch (Exception e) {
         }
         return "admin/index";
     }
-
 
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
@@ -180,11 +195,19 @@ public class admincontroller {
 
     // @PostMapping("/document")
     // public String uploadDocument(Course course, Model model){
-    //     courseService.saveCourse(course);
+    // courseService.saveCourse(course);
 
-    //     model.addAttribute("message", "upload successful");
-    //     return "/admin/upload";
+    // model.addAttribute("message", "upload successful");
+    // return "/admin/upload";
     // }
 
+    @Autowired
+    private BookingRepository bookingRepository;
 
+    @GetMapping("/booking")
+    public String booking(Model model) {
+        List<Booking> booking = bookingRepository.findAll();
+        model.addAttribute("booking", booking);
+        return "admin/booking";
+    }
 }

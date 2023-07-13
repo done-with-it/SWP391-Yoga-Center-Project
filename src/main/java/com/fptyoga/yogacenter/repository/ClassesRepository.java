@@ -20,8 +20,12 @@ public interface ClassesRepository extends JpaRepository<Class, Long>{
 
     Page<Class> findByDate(String date, Pageable page);
 
-    Page<Class> findByTrainerid(String trainerid, Pageable page);
+    Page<Class> findByTrainerid_Userid(Long trainerid, Pageable page);
 
     Page<Class> findByCourseid_CourseidAndDate(Long courseId, String date, Pageable page);
+
+    boolean existsByDateAndTimeid_Timeid(String date, Long timeid);
+
+    
 
 }

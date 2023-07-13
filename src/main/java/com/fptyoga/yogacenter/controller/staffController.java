@@ -57,7 +57,7 @@ public class staffController {
     @Autowired
     private ClassesService classesService;
 
-    @Autowired 
+    @Autowired
     private CourseRepository courseRepository;
 
     @Autowired
@@ -83,7 +83,7 @@ public class staffController {
     }
 
     @GetMapping("/index")
-    public String blog(Model model,  @RequestParam(defaultValue = "1") int page) {
+    public String blog(Model model, @RequestParam(defaultValue = "1") int page) {
         PageRequest pageable = PageRequest.of(page - 1, 20, Sort.by("contentid").descending());
         Page<Content> contents = contentService.getAllContentsByStatus(pageable);
         model.addAttribute("contents", contents);
@@ -126,14 +126,16 @@ public class staffController {
         return "staff/addblog";
     }
 
-   @PostMapping("/content")
+    @PostMapping("/content")
     public String setBlog(@ModelAttribute Content content,
             RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile file) {
 
         content.setCreatedate(LocalDate.now());
         content.setStatus(true);
+        
         try {
             contentService.saveContent(file, content);
+            contentRepository.save(content);
         } catch (IOException e) {
             // Xử lý lỗi nếu cần
         }
@@ -160,7 +162,6 @@ public class staffController {
         }
         return "staff/edit";
     }
-
 
     @GetMapping("/addClass")
     public String addClass(Model model) {
@@ -223,7 +224,8 @@ public class staffController {
     }
 
     @PostMapping("/addCourse/new")
-    public String newCourse(@ModelAttribute Course course, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+    public String newCourse(@ModelAttribute Course course, RedirectAttributes ra,
+            @RequestParam("file") MultipartFile file) {
         course.setCreatedate(LocalDate.now());
         course.setStatus(true);
         try {
@@ -234,7 +236,6 @@ public class staffController {
         ra.addFlashAttribute("message", "The Course has been saved successfully.");
         return "redirect:/staff/indexCourse";
     }
-
 
     @GetMapping("/downloads-png")
     public ResponseEntity<Resource> downloadPngCourse(@RequestParam(defaultValue = "") Long courseid) {

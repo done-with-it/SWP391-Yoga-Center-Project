@@ -218,10 +218,11 @@
 					<div class="table-title">
 						<div class="row">
 							<div class="col-sm-8">
-								<h2>[[${classes.courseid.coursename}]]</h2>
+								<h2>[[${classes.courseid.coursename}]]</h2><br>
 
-								<!-- <div>Trainer: [[${classes.trainerid.fullname}]]</div>
-								<p>Room: [[${classes.roomid.roomname}]]</p> -->
+								<b>Trainer: [[${classes.trainerid.fullname}]]</b><br>
+								<b>Date: [[${classes.date}]]</b><br>
+								<b>[[${classes.roomid.roomname}]]: [[${classes.timeid.starttime}]] - [[${classes.timeid.endtime}]]</b>
 							</div>
 							<!-- <div class="col-sm-4">
 								<div class="search-box">
@@ -236,7 +237,9 @@
 							<tr>
 								<th>#</th>
 								<th>Name</i></th>
-								<th>Phone</i></th>
+								<th>Gender</i></th>
+								<th>Date of birth</th>
+								<th>Phone</th>
 								<th>Image </i></th>
 								
 							</tr>
@@ -245,6 +248,8 @@
 							<tr>
 								<td>[[${counter.count}]]</td>
 								<td>[[${booked.customerid.fullname}]]</td>
+								<td>[[${booked.customerid.gender}]]</td>
+								<td>[[${booked.customerid.dob}]]</td>
 								<td>[[${booked.customerid.phone}]]</td>
 								<td><img th:src="@{/admin/download-png(userid=${booked.customerid.userid})}"
 									alt="PNG Image" width="72px" height="96px"></td>

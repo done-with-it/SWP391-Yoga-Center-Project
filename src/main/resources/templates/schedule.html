@@ -54,7 +54,7 @@
 	</section>
 	<!-- Page top Section end -->
 
-	<!-- <div class="container">
+	<div class="container">
 		<div class="event-filter-warp">
 			<div class="row">
 				<div class="col-xl-3">
@@ -79,14 +79,14 @@
 				</div>
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 
 	<!-- Events Section -->
 	<section class="events-page-section spad">
 		<div class="container">
-			<div class="row" th:each="booked : ${booked}">
-				<div class="col-lg-6">
+			<div  class="row" >
+				<div class="col-lg-6" th:if="${roleid == 4}" th:each="booked : ${booked}">
 					<div class="event-item">
 						<div class="ei-img">
 							<img th:src="@{/staff/downloads-png(courseid=${booked.classid.courseid.courseid})}"
@@ -96,19 +96,31 @@
 							<h4><a th:href="@{/class-details(classid=${booked.classid.classid})}">[[${booked.classid.courseid.coursename}]]</a></h4>
 							<ul>
 								<li><i class="material-icons">person</i>[[${booked.classid.trainerid.fullname}]]</li>
-								<li><i class="material-icons">event_available</i>[[${booked.classid.date}]]</li>
-								<li><i class="material-icons">map</i>[[${booked.classid.roomid.roomname}]]</li>
+								<li><i class="material-icons">alarm</i>[[${booked.classid.timeid.starttime}]] - [[${booked.classid.timeid.endtime}]]</li>
+								<li><i class="material-icons">map</i>[[${booked.classid.roomid.roomname}]] - <i class="material-icons">event_available</i>[[${booked.classid.date}]]</li>
 							</ul>
 						</div>
 					</div>
 				</div>
-				
 			</div>
-			<!-- <div class="site-pagination pt-3">
-				<a href="#" class="active">1</a>
-				<a href="#">2</a>
-				<a href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-			</div> -->
+			<div  class="row" >
+				<div class="col-lg-6" th:if="${roleid == 3}" th:each="classes : ${classes}">
+					<div class="event-item">
+						<div class="ei-img">
+							<img th:src="@{/staff/downloads-png(courseid=${classes.courseid.courseid})}"
+											alt="PNG Image" width="222px" height="186px">
+						</div>
+						<div class="ei-text">
+							<h4><a th:href="@{/class-details(classid=${classes.classid})}">[[${classes.courseid.coursename}]]</a></h4>
+							<ul>
+								<li><i class="material-icons">person</i>[[${classes.trainerid.fullname}]]</li>
+								<li><i class="material-icons">alarm</i>[[${classes.timeid.starttime}]] - [[${classes.timeid.endtime}]]</li>
+								<li><i class="material-icons">map</i>[[${classes.roomid.roomname}]] - <i class="material-icons">event_available</i>[[${classes.date}]]</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 	<!-- Events Section end -->

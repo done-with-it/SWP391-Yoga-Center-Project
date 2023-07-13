@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <h2><a th:href="@{/admin/adduser}" style="color: black; font-weight: bold;">ADD NEW USERS</a>
+                        <h2><a th:href="@{/admin/adduser(id=${0})}" style="color: black; font-weight: bold;">ADD NEW USERS</a>
                         </h2>
                     </div>
                     <div class="card mb-4">
@@ -250,7 +250,7 @@
                                         <td><img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image"
                                                 width="96px"></td>
                                         <td>
-                                            <a th:href="@{/admin/edit/{id}(id=${user.userid})}"><i
+                                            <a th:href="@{/admin/adduser(id=${user.userid})}"><i
                                                     class="material-icons">edit</i></a>
                                             <a th:href="@{/admin/delete/{id}(id=${user.userid})}"><i
                                                     class="material-icons">delete</i></a>

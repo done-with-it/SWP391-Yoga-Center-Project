@@ -185,9 +185,17 @@ public class homeController {
     }
 
     @GetMapping("/schedule")
-    public String getSchedules(@RequestParam("customerid") Long customerid, Model model) {
-        List<Booking> booked = bookingService.getSchedule(customerid);
-        model.addAttribute("booked", booked);
+    public String getSchedules(@RequestParam("userid") Long userid, Model model, @RequestParam("roleid") Long roleid,
+    @RequestParam(defaultValue = "1") int page) {
+        PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by("classid").descending());
+        if (roleid == 4) {
+            List<Booking> booked = bookingService.getSchedule(userid);
+            model.addAttribute("booked", booked);
+        } else {
+            Page<Class> classes = classesService.getSchedulesByTrainer(userid, pageable);
+            model.addAttribute("classes", classes);
+        }
+        model.addAttribute("roleid", roleid);
         return "schedule";
     }
 

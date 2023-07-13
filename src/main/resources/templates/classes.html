@@ -100,10 +100,11 @@
 												<p>Yoga Trainer</p>
 											</div>
 										</div>
-										<a th:if="${session.user}" th:href="@{/create_payment(classID=${class.classid},
-										userID=${session.user.userid})}" class="site-btn sb-gradient">book now</a>
 										<a th:if="${session.user == null}" th:href="@{/loginpage}"
 											class="site-btn sb-gradient">book now</a>
+										<a th:if="${session.user != null && session.user.role.roleid == 4}" th:href="@{/create_payment(classID=${class.classid},
+										userID=${session.user.userid})}" class="site-btn sb-gradient">book now</a>
+										
 									</div>
 								</div>
 							</div>

@@ -49,14 +49,14 @@
   <div class="row">
     <div class="col-sm-3"><!--left col-->
 
-
-      <!-- <div class="text-center">
+<!-- 
+      <div class="text-center">
         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
         <h6>Upload a photo</h6>
         <input type="file" class="text-center center-block file-upload">
-      </div></hr><br> -->
+      </div></hr><br>
 
-      <!-- <div class="panel panel-default">
+      <div class="panel panel-default">
             <div class="panel-heading">Social Media</div>
             <div class="panel-body">
             	<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
@@ -68,14 +68,18 @@
     <div class="col-sm-11">
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+        <!-- <li class="active"><a data-toggle="tab" href="#home">Home</a></li> -->
+
       </ul>
+
 
 
       <div class="tab-content">
         <div class="tab-pane active" id="home">
           <hr>
-          <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}"
+          <form class="form" th:action="@{/admin/adduser/new(id=${id})}" method="post" th:object="${user}"
             enctype="multipart/form-data">
+            <input type="hidden" name="id" th:field="*{userid}">
             <div class="form-group">
 
               <div class="text-center">
@@ -86,6 +90,7 @@
               </div>
               </hr><br>
             </div>
+            
             <div class="form-group">
 
               <div class="col-xs-6">
