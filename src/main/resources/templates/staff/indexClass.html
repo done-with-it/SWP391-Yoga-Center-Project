@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
+    <title>FPT Yoga Center</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet" />
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Welcome, [[${session.user.fullname}]]!</div>
                 </div>
             </nav>
         </div>
@@ -84,7 +84,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Staff</h1>
-
+                    <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
                     <div class="card mb-4" id="collapseClass">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>

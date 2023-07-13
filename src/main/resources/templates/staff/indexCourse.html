@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Dashboard - SB Admin</title>
+    <title>FPT Yoga Center</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet" />
@@ -39,7 +39,8 @@
                         style="border-radius: 100%;" width="30px" height="30px"></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" th:href="@{/index}">Home</a></li>
-                    <li><a class="dropdown-item" th:href="@{/admin/edit/{id}(id=${session.user.userid})}">Settings</a></li>
+                    <li><a class="dropdown-item" th:href="@{/admin/edit/{id}(id=${session.user.userid})}">Settings</a>
+                    </li>
                     <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                 </ul>
             </li>
@@ -50,7 +51,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link collapsed" th:href="@{/staff/index}">
+                        <a class="nav-link collapsed" th:href="@{/staff/indexClass}">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Class
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -76,7 +77,7 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Welcome, [[${session.user.fullname}]]!</div>
                 </div>
             </nav>
         </div>
@@ -84,7 +85,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Staff</h1>
-
+                    <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
                     <div class="card mb-4" id="collapseCourse">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
@@ -126,7 +127,7 @@
                                         <td>[[${course.price}]]</td>
                                         <!-- <td><img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image" width="96px"></td> -->
                                         <td><img th:src="@{/staff/downloads-png(courseid=${course.courseid})}"
-                                            alt="PNG Image" width="96px"></td>
+                                                alt="PNG Image" width="96px"></td>
                                         <td th:utext="${course.description}"></td>
                                         <td>[[${course.createdate}]]</td>
                                         <td>
@@ -142,7 +143,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

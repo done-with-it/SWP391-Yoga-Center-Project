@@ -44,6 +44,12 @@ public class User implements Serializable {
     @Column(name = "address", columnDefinition = "NVARCHAR(MAX)")
     private String address;
 
+    @Column(name = "facebook")
+    private String facebook;
+
+    @Column(name = "instagram")
+    private String instagram;
+
     @Column(name = "gender")
     private String gender;
 
@@ -75,40 +81,40 @@ public class User implements Serializable {
 
     // @Override
     // public String getPassword() {
-    //     return password;
+    // return password;
     // }
 
     // @Override
     // public String getUsername() {
-    //     return email;
+    // return email;
     // }
 
     // @Override
     // public boolean isAccountNonExpired() {
-    //     return true;
+    // return true;
     // }
 
     // @Override
     // public boolean isAccountNonLocked() {
-    //     return true;
+    // return true;
     // }
 
     // @Override
     // public boolean isCredentialsNonExpired() {
-    //     return true;
+    // return true;
     // }
 
     // @Override
     // public boolean isEnabled() {
-    //     return status;
+    // return status;
     // }
 
     // @Override
     // public Collection<? extends GrantedAuthority> getAuthorities() {
-    //     List<GrantedAuthority> authorities = new ArrayList<>();
-    //     authorities.add(new SimpleGrantedAuthority("ROLE_admin"));
-    //     // Thêm các GrantedAuthority khác nếu cần thiết
-    //     return authorities;
+    // List<GrantedAuthority> authorities = new ArrayList<>();
+    // authorities.add(new SimpleGrantedAuthority("ROLE_admin"));
+    // // Thêm các GrantedAuthority khác nếu cần thiết
+    // return authorities;
     // }
 
 }

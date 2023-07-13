@@ -52,9 +52,6 @@ public class Booking implements Serializable {
     private String bankCode;
 
     @Column(name = "amount")
-    private String amount;
-
-    @Column(name = "URL", columnDefinition = "VARCHAR(MAX)")
-    private String url;
+    private long amount;
 
 }

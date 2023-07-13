@@ -75,7 +75,7 @@
 								<div class="classes-item">
 									<div class="ci-img">
 										<img th:src="@{/staff/downloads-png(courseid=${class.courseid.courseid})}"
-                                            alt="PNG Image" width="283px" height="283px">
+											alt="PNG Image" width="283px" height="283px">
 									</div>
 									<div class="ci-text">
 										<h4 th:text="${class.courseid.coursename}"></h4>
@@ -93,13 +93,17 @@
 									</div>
 									<div class="ci-bottom">
 										<div class="ci-author">
-											<img th:src="@{/admin/download-png(userid=${class.trainerid.userid})}" alt="PNG Image">
+											<img th:src="@{/admin/download-png(userid=${class.trainerid.userid})}"
+												alt="PNG Image">
 											<div class="author-text">
 												<h6>[[${class.trainerid.fullname}]]</h6>
 												<p>Yoga Trainer</p>
 											</div>
 										</div>
-										<a href="" class="site-btn sb-gradient">book now</a>
+										<a th:if="${session.user}" th:href="@{/create_payment(classID=${class.classid},
+										userID=${session.user.userid})}" class="site-btn sb-gradient">book now</a>
+										<a th:if="${session.user == null}" th:href="@{/loginpage}"
+											class="site-btn sb-gradient">book now</a>
 									</div>
 								</div>
 							</div>

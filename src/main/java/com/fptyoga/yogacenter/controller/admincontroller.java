@@ -21,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
+import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
+import com.fptyoga.yogacenter.repository.TrainerRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
@@ -41,6 +45,9 @@ public class admincontroller {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TrainerRepository trainerRepository;
+
     @GetMapping("/index")
     public String trainer(Model model, @RequestParam(defaultValue = "") Long roleid) {
         if (roleid != null) {
@@ -53,35 +60,61 @@ public class admincontroller {
         return "admin/index";
     }
 
+    @GetMapping("/charts")
+    public String show401() {
+        return "admin/charts";
+    }
+
     @Autowired
     private RoleService roleService;
 
     @GetMapping("/adduser")
-    public String addUser(Model model) {
+    public String addUser(Model model, @RequestParam(value = "id", required = false) Long id) {
+        User user;
         List<Role> rolesList = roleService.allRole();
         model.addAttribute("rolesList", rolesList);
-        model.addAttribute("user", new User());
+        if (id == null || id == 0) {
+            user = new User();
+            model.addAttribute("id", 0); // Add this line to explicitly set the ID as 0
+        } else {
+            user = userRepository.findById(id).orElse(null);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("trainer", new Trainer());
         return "admin/adduser";
     }
 
     @PostMapping("/adduser/new")
-    public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+    public String newUser(@ModelAttribute User user, @ModelAttribute Trainer trainers,
+            @RequestParam(value = "id", required = false) Long id,
+            RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            ra.addFlashAttribute("existemail", "The Email already exists.");
-            return "redirect:/admin/adduser";
-        } else {
-            user.setRegistrationdate(LocalDate.now());
-            user.setStatus(true);
-            userRepository.save(user);
-            try {
-                userService.saveUser(file, user);
-            } catch (IOException e) {
-                // Xử lý lỗi nếu cần
+        if (id == null || id == 0) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                ra.addFlashAttribute("existemail", "The Email already exists.");
+                return "redirect:/admin/adduser";
             }
-            ra.addFlashAttribute("update", "The user has been saved successfully.");
         }
-        return "admin/edit";
+
+        user.setRegistrationdate(LocalDate.now());
+        user.setStatus(true);
+        try {
+            userService.saveUser(file, user);
+        } catch (IOException e) {
+            // Xử lý lỗi nếu cần
+        }
+        userRepository.save(user);
+
+        User users = new User();
+        users.setUserid(user.getUserid());
+        if (user != null && user.getRole().getRoleid() == 3) {
+            trainers.setTrainerid(users);
+            trainerRepository.save(trainers);
+        }
+
+        ra.addFlashAttribute("message", "The user has been saved successfully.");
+        return "redirect:/admin/index";
     }
 
     @GetMapping("/delete/{id}")
@@ -96,15 +129,20 @@ public class admincontroller {
     @GetMapping("/edit/{id}")
     public String showEdit(@PathVariable("id") Long id, Model model) {
         List<Role> rolesList = roleService.allRole();
+        List<User> trainers = userService.listAll(3L);
+        model.addAttribute("trainers", trainers);
         model.addAttribute("rolesList", rolesList);
         try {
+            Trainer trainer = trainerRepository.findById(id).orElse(null);
             User user = userRepository.findById(id).orElse(null);
+            model.addAttribute("trainer", trainer);
             model.addAttribute("user", user);
-            return "admin/edit";
+            return "admin/adduser";
         } catch (Exception e) {
         }
         return "admin/index";
     }
+    
 
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
@@ -170,4 +208,13 @@ public class admincontroller {
     // return "/admin/upload";
     // }
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
+    @GetMapping("/booking")
+    public String booking(Model model) {
+        List<Booking> booking = bookingRepository.findAll();
+        model.addAttribute("booking", booking);
+        return "admin/booking";
+    }
 }

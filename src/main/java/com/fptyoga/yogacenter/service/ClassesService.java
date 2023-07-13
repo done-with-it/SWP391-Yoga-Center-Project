@@ -32,7 +32,7 @@ public class ClassesService {
     }
 
     public Page<Class> getSchedulesByCourseIdAndDate(Long courseId, String date, Pageable page) {
-        return classesRepository.findByCourseidAndDate(courseId, date, page);
+        return classesRepository.findByCourseid_CourseidAndDate(courseId, date, page);
     }
 
 }

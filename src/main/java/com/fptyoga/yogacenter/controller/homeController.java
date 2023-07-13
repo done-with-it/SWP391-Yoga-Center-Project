@@ -163,6 +163,13 @@ public class homeController {
         return "adduser";
     }
 
+    // @GetMapping("/payment")
+    // public String ahowPayment() {
+    //     return "payment";
+    // }
+
+    
+
     @GetMapping("/about")
     public String about(Model model) {
         List<User> trainList = userService.listAll(3L);
@@ -201,7 +208,6 @@ public class homeController {
         model.addAttribute("user", new User());
         return "profile";
     }
-
     @PostMapping("/profile/edit")
     public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
         userRepository.save(user);
@@ -224,7 +230,6 @@ public class homeController {
         }
         return "profile";
     }
-
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
         byte[] pngData = userService.getPngDataById(userid);
@@ -357,15 +362,16 @@ public class homeController {
         }
     }
 
+    
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         // Get the current session
         HttpSession session = request.getSession(false);
-
+        
         if (session != null) {
             // Invalidate the session
             session.invalidate();
-
+            
         }
 
         // Redirect to the login page or any other desired page
@@ -399,4 +405,6 @@ public class homeController {
         }
         return "createAccount";
     }
+
+    
 }

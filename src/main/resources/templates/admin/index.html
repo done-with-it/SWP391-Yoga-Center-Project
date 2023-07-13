@@ -51,7 +51,7 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
 
-                        <a class="nav-link" th:href="@{/admin/index}">
+                        <a class="nav-link" th:href="@{/admin/charts}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
@@ -70,26 +70,32 @@
                                 <a class="nav-link" th:href="@{/admin/index(roleid=${4})}">Customer List</a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClass"
+
+                        <a class="nav-link collapsed" th:href="@{/admin/booking}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Revenue
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseClass"
                             aria-expanded="false" aria-controls="collapseClass">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Class
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseClass" aria-labelledby="headingOne"
+                        </a> -->
+                        <!-- <div class="collapse" id="collapseClass" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="">lam gi do vvoi class</a>
                                 <a class="nav-link" href="">lam gi do vvoi class</a>
                             </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePost"
+                        </div> -->
+                        <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePost"
                             aria-expanded="false" aria-controls="collapsePost">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Post
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapsePost" aria-labelledby="headingTwo"
+                        </a> -->
+                        <!-- <div class="collapse" id="collapsePost" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -121,7 +127,7 @@
                                     </nav>
                                 </div>
                             </nav>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -133,7 +139,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
-                    <div th:if="${update}" class="alert alert-success text-center">[[${update}]]</div>
+                    <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
                     <!-- <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol> -->
@@ -196,7 +202,7 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <h2><a th:href="@{/admin/adduser}" style="color: black; font-weight: bold;">ADD NEW USERS</a>
+                        <h2><a th:href="@{/admin/adduser(id=${0})}" style="color: black; font-weight: bold;">ADD NEW USERS</a>
                         </h2>
                     </div>
                     <div class="card mb-4">
@@ -216,6 +222,8 @@
                                         <th>Gender</th>
                                         <th>Phone</th>
                                         <th>Date of Birth</th>
+                                        <th>FaceBook</th>
+                                        <th>Instagram</th>
                                         <th>Registrationdate</th>
                                         <th>Image</th>
                                         <th>Edit</th>
@@ -231,6 +239,8 @@
                                         <th>Gender</th>
                                         <th>Phone</th>
                                         <th>Date of Birth</th>
+                                        <th>FaceBook</th>
+                                        <th>Instagram</th>
                                         <th>Registrationdate</th>
                                         <th>Image</th>
                                         <th>Edit</th>
@@ -246,13 +256,15 @@
                                         <td>[[${user.gender}]]</td>
                                         <td>[[${user.phone}]]</td>
                                         <td>[[${user.dob}]]</td>
+                                        <td>[[${user.facebook}]]</td>
+                                        <td>[[${user.instagram}]]</td>
                                         <td>[[${user.registrationdate}]]</td>
                                         <td><img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image"
                                                 width="96px"></td>
                                         <td>
                                             <a th:href="@{/admin/edit/{id}(id=${user.userid})}"><i
                                                     class="material-icons">edit</i></a>
-                                            <a th:href="@{/admin/delete/{id}(id=${user.userid})}"><i
+                                            <a th:href="@{/admin/delete/{id}(id=${user.userid})}" onclick="return confirmDelete();"><i
                                                     class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
@@ -276,6 +288,12 @@
             </footer>
         </div>
     </div>
+
+    <script>
+        function confirmDelete() {
+          return confirm("Do you want to delete?");
+        }
+      </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="/js/scripts.js"></script>

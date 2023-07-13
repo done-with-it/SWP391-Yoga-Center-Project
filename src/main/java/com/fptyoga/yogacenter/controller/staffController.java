@@ -132,6 +132,7 @@ public class staffController {
 
         content.setCreatedate(LocalDate.now());
         content.setStatus(true);
+        contentRepository.save(content);
         try {
             contentService.saveContent(file, content);
         } catch (IOException e) {
@@ -147,7 +148,7 @@ public class staffController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid content Id:" + id));
         content.setStatus(false);
         contentRepository.save(content);
-        return "redirect:/staff/indexPost";
+        return "redirect:/staff/index";
     }
 
     @GetMapping("/edit/{id}")
@@ -168,7 +169,7 @@ public class staffController {
         List<Time> times = timeRepository.findAll();
         List<User> trainers = userService.listAll(3L);
         List<String> classDistincts = classesService.getDistinctClass();
-        model.addAttribute("class", new Class());
+        model.addAttribute("classes", new Class());
         model.addAttribute("courses", courses);
         model.addAttribute("rooms", rooms);
         model.addAttribute("times", times);
@@ -179,17 +180,10 @@ public class staffController {
 
     @PostMapping("/addClass/new")
     public String newClass(@ModelAttribute Class classes, RedirectAttributes ra) {
-
-        if (classesRepository.existsById(classes.getClassid())) {
-            ra.addFlashAttribute("existemail", "The Class ID already exists.");
-            return "redirect:/staff/addClass";
-        } else {
-            classes.setStatus(true);
-            classesRepository.save(classes);
-            ra.addFlashAttribute("message", "The Class has been saved successfully.");
-            return "redirect:/staff/indexClass";
-        }
-
+        classes.setStatus(true);
+        classesRepository.save(classes);
+        ra.addFlashAttribute("message", "The Class has been saved successfully.");
+        return "redirect:/staff/indexClass";
     }
 
     @GetMapping("/deleteClass/{id}")
@@ -215,7 +209,7 @@ public class staffController {
         model.addAttribute("classDistincts", classDistincts);
         try {
             Class classes = classesRepository.findById(id).orElse(null);
-            model.addAttribute("class", classes);
+            model.addAttribute("classes", classes);
             return "staff/editClass";
         } catch (Exception e) {
         }

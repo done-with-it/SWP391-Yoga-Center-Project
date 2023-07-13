@@ -42,7 +42,7 @@
 <div class="container bootstrap snippet">
     <div class="row">
         <div class="col-sm-10">
-            <h1>Edit Course</h1>
+            <h1>Add New Blog</h1>
         </div>
         <div class="col-sm-2"><a th:href="@{/staff/indexCourse}"><img title="Back Home" src="/img/logo.png"></a></div>
     </div>
@@ -76,16 +76,20 @@
                     <hr>
                     <form class="form" th:action="@{/staff/addCourse/new}" method="post" th:object="${course}"
                         enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{courseid}">
                         <div class="form-group">
-                            <input type="hidden" th:field="*{courseid}">
+
                             <div class="text-center">
-                                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar" alt="avatar"
-                                    width="192px" height="192px">
-                                <h6>Upload a photo</h6>
-                                <input type="file" name="file" class="text-center center-block file-upload">
+                              <img th:if="${id == 0}" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar"
+                                alt="avatar" width="192px" height="192px">
+                              <img th:if="${id > 0}" th:field="*{img}" th:src="@{/staff/downloads-png(courseid=${id})}" alt="avatar"
+                                width="192px" class="avatar" height="192px">
+                                <input type="hidden" name="id" th:field="*{img}" />
+                              <h6>Upload a photo</h6>
+                              <input type="file" name="file" class="text-center center-block file-upload">
                             </div>
                             <br>
-                        </div>
+                          </div>
                         <hr>
                         
                         <div class="form-group">

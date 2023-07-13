@@ -67,7 +67,7 @@
                     <input type="text" th:field="*{fullname}" class="form-control" placeholder="Full name" />
                   </div>
                   <div class="form-outline mb-3">
-                    <input type="number" th:field="*{phone}" class="form-control" placeholder="Phone" />
+                    <input type="text" th:field="*{phone}" class="form-control" placeholder="Phone" minlength="10" maxlength="12"/>
                   </div>
                   <div class="form-outline mb-3">
                     <input type="date" th:field="*{dob}" class="form-control" placeholder="Birthday" />

@@ -15,5 +15,4 @@ public class AttendenceModel {
     private String note;
     private Long customer_id;
     private Long class_id;
-
 }

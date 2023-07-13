@@ -42,7 +42,7 @@
 <div class="container bootstrap snippet">
   <div class="row">
     <div class="col-sm-10">
-      <h1>Edit Class</h1>
+      <h1>Add New Class</h1>
     </div>
     <div class="col-sm-2"><a th:href="@{/staff/indexClass}"><img title="Back Home" src="/img/logo.png"></a></div>
   </div>
@@ -74,16 +74,9 @@
       <div class="tab-content">
         <div class="tab-pane active" id="home">
           <hr>
-          <form class="form" th:action="@{/staff/addClass/new}" method="post" th:object="${class}">
+          <form class="form" th:action="@{/staff/addClass/new}" method="post" th:object="${classes}">
             <hr>
-            <!-- <input type="hidden" th:field="*{classid}"> -->
-            <div class="form-group">
-
-              <div>
-                <h4>ID's Class</h4>
-                <input type="text" class="form-control" th:field="*{classid}" placeholder="id">
-              </div>
-            </div>
+            <input type="hidden" th:field="*{classid}">
             <div class="form-group">
 
               <div>
