@@ -10975,7 +10975,9 @@ body {
   color: rgba(255, 255, 255, 0.5);
 }
 .sb-topnav.navbar-light #sidebarToggle {
-  color: #212529;
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 
 .sb-sidenav {
@@ -11025,20 +11027,29 @@ body {
 }
 
 .sb-sidenav-dark {
-  background-color: #212529;
-  color: rgba(255, 255, 255, 0.5);
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
-  color: rgba(255, 255, 255, 0.25);
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon {
-  color: rgba(255, 255, 255, 0.25);
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
-  color: rgba(255, 255, 255, 0.25);
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
   color: #fff;
@@ -11050,18 +11061,23 @@ body {
   color: #fff;
 }
 .sb-sidenav-dark .sb-sidenav-footer {
-  background-color: #343a40;
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 
 .sb-sidenav-light {
-  background-color: #f8f9fa;
-  color: #212529;
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-light .sb-sidenav-menu .sb-sidenav-menu-heading {
   color: #adb5bd;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link {
-  color: #212529;
+  background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+  background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link .sb-nav-link-icon {
   color: #adb5bd;
