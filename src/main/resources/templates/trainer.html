@@ -63,7 +63,7 @@
 				<div class="col-lg-6" th:each="trainer : ${trainList}">
 					<div class="trainer-item">
 						<div class="ti-img">
-							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image" width="325px" height="325px">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
 							
 						</div>
 						<div class="ti-text">
@@ -76,18 +76,20 @@
 							<p></p>
 						</div>
 						<div class="ti-social">
-							<a th:href="${trainer.facebook}"><i class="fa fa-facebook"></i></a>
-							<a th:href="${trainer.instagram}"><i class="fa fa-instagram"></i></a>
+							<div class="ti-social">
+								<a th:href="${trainer.facebook}"><i class="fa fa-facebook"></i></a>
+								<a th:href="${trainer.instagram}"><i class="fa fa-instagram"></i></a>
+							</div>
 						</div>
 					</div>
 				</div>
 
 			</div>
-			<div class="site-pagination">
+			<!-- <div class="site-pagination">
 				<a href="#" class="active">1</a>
 				<a href="#">2</a>
 				<a href="#"><i class="material-icons">keyboard_arrow_right</i></a>
-			</div>
+			</div> -->
 		</div>
 	</section>
 

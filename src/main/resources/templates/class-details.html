@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+	<title>FPT Yoga</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Ahana Yoga HTML Template">
+	<meta name="keywords" content="yoga, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/magnific-popup.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
+
+	<!-- Main Stylesheets -->
+	<link rel="stylesheet" href="css/style.css" />
+
+	<script src="js/vendor/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/main.js"></script>
+
+	<!-- Main Stylesheets -->
+	<link rel="stylesheet" href="css/style.css" />
+	<style>
+		body {
+			color: #566787;
+			background: #f5f5f5;
+			font-family: 'Roboto', sans-serif;
+		}
+
+		.table-responsive {
+			margin: 30px 0;
+		}
+
+		.table-wrapper {
+			min-width: 1000px;
+			background: #fff;
+			padding: 20px;
+			box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+		}
+
+		.table-title {
+			padding-bottom: 10px;
+			margin: 0 0 10px;
+			min-width: 100%;
+		}
+
+		.table-title h2 {
+			margin: 8px 0 0;
+			font-size: 22px;
+		}
+
+		.search-box {
+			position: relative;
+			float: right;
+		}
+
+		.search-box input {
+			height: 34px;
+			border-radius: 20px;
+			padding-left: 35px;
+			border-color: #ddd;
+			box-shadow: none;
+		}
+
+		.search-box input:focus {
+			border-color: #3FBAE4;
+		}
+
+		.search-box i {
+			color: #a0a5b1;
+			position: absolute;
+			font-size: 19px;
+			top: 8px;
+			left: 10px;
+		}
+
+		table.table tr th,
+		table.table tr td {
+			border-color: #e9e9e9;
+		}
+
+		table.table-striped tbody tr:nth-of-type(odd) {
+			background-color: #fcfcfc;
+		}
+
+		table.table-striped.table-hover tbody tr:hover {
+			background: #f5f5f5;
+		}
+
+		table.table th i {
+			font-size: 13px;
+			margin: 0 5px;
+			cursor: pointer;
+		}
+
+		table.table td:last-child {
+			width: 130px;
+		}
+
+		table.table td a {
+			color: #a0a5b1;
+			display: inline-block;
+			margin: 0 5px;
+		}
+
+		table.table td a.view {
+			color: #03A9F4;
+		}
+
+		table.table td a.edit {
+			color: #FFC107;
+		}
+
+		table.table td a.delete {
+			color: #E34724;
+		}
+
+		table.table td i {
+			font-size: 19px;
+		}
+
+		.pagination {
+			float: right;
+			margin: 0 0 5px;
+		}
+
+		.pagination li a {
+			border: none;
+			font-size: 95%;
+			width: 30px;
+			height: 30px;
+			color: #999;
+			margin: 0 2px;
+			line-height: 30px;
+			border-radius: 30px !important;
+			text-align: center;
+			padding: 0;
+		}
+
+		.pagination li a:hover {
+			color: #666;
+		}
+
+		.pagination li.active a {
+			background: #03A9F4;
+		}
+
+		.pagination li.active a:hover {
+			background: #0397d6;
+		}
+
+		.pagination li.disabled i {
+			color: #ccc;
+		}
+
+		.pagination li i {
+			font-size: 16px;
+			padding-top: 6px
+		}
+
+		.hint-text {
+			float: left;
+			margin-top: 6px;
+			font-size: 95%;
+		}
+	</style>
+
+
+</head>
+
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header Section -->
+	<header class="header-section">
+		<div th:replace="~{common :: header-bottom}"></div>
+	</header>
+	<!-- Header Section end -->
+
+	<!-- Infor Model -->
+	<div th:replace="~{common :: infor-model}"></div>
+	<!-- Infor Model end -->
+
+	<!-- Page top Section -->
+	<section class="page-top-section page-sp set-bg" data-setbg="img/page-top-bg.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7 m-auto text-white">
+					<h2>All of Your Schedule</h2>
+					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern
+						technology,
+						we are committed to bringing you a great yoga experience and improving your overall health!</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Page top Section end -->
+
+
+
+	<!-- Events Section -->
+	<section class="events-page-section spad">
+		<div class="container-xl">
+			<div class="table-responsive">
+				<div class="table-wrapper">
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-8">
+								<h2>[[${classes.courseid.coursename}]]</h2><br>
+
+								<b>Trainer: [[${classes.trainerid.fullname}]]</b><br>
+								<b>Date: [[${classes.date}]]</b><br>
+								<b>[[${classes.roomid.roomname}]]: [[${classes.timeid.starttime}]] - [[${classes.timeid.endtime}]]</b>
+							</div>
+							<!-- <div class="col-sm-4">
+								<div class="search-box">
+									<i class="material-icons">&#xE8B6;</i>
+									<input type="text" class="form-control" placeholder="Search&hellip;">
+								</div>
+							</div> -->
+						</div>
+					</div>
+					<table class="table table-striped table-hover table-bordered" th:each="booked, counter : ${booked}">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Name</i></th>
+								<th>Gender</i></th>
+								<th>Date of birth</th>
+								<th>Phone</th>
+								<th>Image </i></th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>[[${counter.count}]]</td>
+								<td>[[${booked.customerid.fullname}]]</td>
+								<td>[[${booked.customerid.gender}]]</td>
+								<td>[[${booked.customerid.dob}]]</td>
+								<td>[[${booked.customerid.phone}]]</td>
+								<td><img th:src="@{/admin/download-png(userid=${booked.customerid.userid})}"
+									alt="PNG Image" width="72px" height="96px"></td>
+							</tr>
+							
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Events Section end -->
+
+	<!-- Gallery Section -->
+	<div th:replace="~{common :: gallery-section}"></div>
+	<!-- Gallery Section end -->
+
+	<!-- Footer Section -->
+	<footer class="footer-section">
+		<div th:replace="~{common :: footer}"></div>
+	</footer>
+	<!-- Footer Section end -->
+
+	<div class="back-to-top"><img src="img/icons/up-arrow.png" alt=""></div>
+
+	<!-- Search model -->
+	<div class="search-model set-bg" data-setbg="img/search-bg.jpg">
+		<div class="h-100 d-flex align-items-center justify-content-center">
+			<div class="search-close-switch"><i class="material-icons">close</i></div>
+			<form class="search-moderl-form">
+				<input type="text" id="search-input" placeholder="Search">
+				<button><img src="img/icons/search-2.png" alt=""></button>
+			</form>
+		</div>
+	</div>
+	<!-- Search model end -->
+
+	<!--====== Javascripts & Jquery ======-->
+
+
+</body>
+
+</html>

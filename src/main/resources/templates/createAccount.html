@@ -28,6 +28,14 @@
       height: 18px;
       margin: 0;
     }
+
+    .toggle-icon{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    }
   </style>
   <title>Registration Form</title>
 </head>
@@ -43,8 +51,8 @@
                 <div class="text-center">
                   <a class="navbar-brand" th:href="@{/index}">
                     <center>
-                      <div class="logo-for-all"><img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
-                          width="100%"></div>
+                      <a th:href="@{/index}" class="logo-for-all"><img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
+                          width="100%"></a>
                     </center>
                   </a>
                   <h4 class="mt-1 mb-5 pb-1">We understand you</h4>
@@ -55,14 +63,15 @@
                     <input type="email" th:field="*{email}" class="form-control" placeholder="Email" />
                     <span style="color: red;">[[${existsemail}]]</span>
                   </div>
-                  <div class="form-outline mb-3">
-                    <input type="password" th:field="*{password}" id="passwordField" class="form-control" placeholder="Password"/>
-                    <input type="checkbox" onclick="togglePasswordVisibility()"><p>Show Password</p>
+                  <div class="form-outline mb-3 position-relative">
+                    <input type="password" th:field="*{password}" id="passwordField" class="form-control" placeholder="Password">
+                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword" ></i>
                   </div>
-                  <div class="form-outline mb-3">
-                    <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" />
-                    <span style="color: red;">[[${passwordMismatch}]]</span>
+                  <div class="form-outline mb-3 position-relative">
+                    <input type="password" name="confirmPassword" id="passwordField"  class="form-control" placeholder="Confirm password" />
+                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword" ></i>
                   </div>
+                  <span style="color: red;">[[${passwordMismatch}]]</span>
                   <div class="form-outline mb-3">
                     <input type="text" th:field="*{fullname}" class="form-control" placeholder="Full name" />
                   </div>
@@ -104,20 +113,23 @@
     </div>
   </section>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <script th:inline="javascript">
     function Login() {
       window.location.href = /*[[@{/loginpage}]]*/ "";
     }
   </script>
   <script>
-    function togglePasswordVisibility() {
-        var passwordField = document.getElementById("passwordField");
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-        } else {
-            passwordField.type = "password";
-        }
-    }
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#passwordField');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
 </script>
 </body>
 

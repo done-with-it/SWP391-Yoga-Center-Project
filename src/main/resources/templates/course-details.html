@@ -112,7 +112,7 @@
 							</div>
 						</div>
 					</div>
-					<h3 class="comment-title">Other Classes</h3>
+					<h3 class="comment-title">Classes</h3>
 					<div class="classes-other-slider owl-carousel">
 						<div class="classes-item" th:each="class : ${classes}">
 							<div class="ci-img">
@@ -142,7 +142,7 @@
 										<p>Yoga Trainer</p>
 									</div>
 								</div>
-								<a th:if="${session.user}" th:href="@{/create_payment(classID=${class.classid},
+								<a th:if="${session.user != null && session.user.role.roleid == 4}" th:href="@{/create_payment(classID=${class.classid},
 										userID=${session.user.userid})}" class="site-btn sb-gradient">book now</a>
 								<a th:if="${session.user == null}" th:href="@{/loginpage}"
 									class="site-btn sb-gradient">book now</a>

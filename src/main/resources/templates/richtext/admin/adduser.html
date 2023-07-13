@@ -1,0 +1,223 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../richtext/richtext.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="../richtext/jquery.richtext.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      // $('#address').richText();
+
+      var readURL = function (input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            $('.avatar').attr('src', e.target.result);
+          }
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      $(".file-upload").on('change', function () {
+        readURL(this);
+      });
+    });
+  </script>
+</head>
+
+
+<hr>
+<div class="container bootstrap snippet">
+  <div class="row">
+    <div class="col-sm-10">
+      <h1 th:if="${id == null || id == 0}">Add User</h1>
+      <h1 th:if="${id>0}">Update User</h1>
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+        <li><a data-toggle="tab" href="#messages">Menu 1</a></li>
+        <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+  </div>
+  <br>
+  <br>
+  <hr>
+  <form class="form" th:action="@{/admin/adduser/new(id=${id})}" method="post" th:object="${user}"
+    enctype="multipart/form-data">
+    <input type="hidden" name="id" th:field="*{userid}" />
+    <div class="row">
+      <div class="col-sm-3"><!--left col-->
+
+
+        <div class="text-center">
+          <img th:if="${id == 0}" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle"
+            alt="avatar" width="192px" height="192px">
+          <img th:if="${id > 0}" th:field="*{img}" th:src="@{/admin/download-png(userid=${id})}" alt="avatar"
+            width="192px" class="avatar" height="192px">
+          <input type="hidden" name="id" th:field="*{img}" />
+          <h6>Upload a photo</h6>
+          <input type="file" name="file" class="text-center center-block file-upload">
+        </div>
+        </hr><br>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Social Media</div>
+          <div class="panel-body">
+            <table>
+              <tr>
+                <input type="text" class="form-control" th:field="*{facebook}" placeholder="Your facebook">
+              </tr>
+              <br>
+              <tr>
+                <input type="text" class="form-control" th:field="*{instagram}" placeholder="Your instagram">
+              </tr>
+            </table>
+
+
+          </div>
+        </div>
+
+      </div><!--/col-3-->
+      <div class="col-sm-9">
+
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="home">
+            <div class="form-group">
+
+              <div class="col-xs-6">
+                <h4>Full Name</h4>
+                <input type="text" class="form-control" th:field="*{fullname}" placeholder="Full name">
+              </div>
+            </div>
+            <div class="form-group">
+
+              <div class="col-xs-6">
+                <h4>Date of Birth</h4>
+                <input type="date" class="form-control" th:field="*{dob}" placeholder="mm/dd/yy">
+              </div>
+            </div>
+
+            <div class="form-group">
+
+              <div class="col-xs-6">
+                <h4>Phone</h4>
+                <input type="text" class="form-control" th:field="*{phone}" placeholder="Enter Phone" required
+                  minlength="10">
+              </div>
+            </div>
+
+            <div class="form-group">
+
+              <div class="col-xs-6">
+                <h4>Address</h4>
+                <input type="text" class="form-control" th:field="*{address}" placeholder="your city">
+                <!-- <textarea class="form-control" th:field="*{address}" placeholder="your city" cols="50" rows="20"></textarea> -->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-xs-6">
+                <h4>Email</h4>
+                <input type="email" class="form-control" th:field="*{email}" placeholder="you@email.com">
+                <span style="color: red;">[[${existemail}]]</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+
+              <div class="col-xs-6">
+                <h4>Password</h4>
+                <input type="text" class="form-control" th:field="*{password}" placeholder="password">
+              </div>
+            </div>
+
+            <div class="form-group" th:class="${id != null && id > 0 ? 'hidden' : ''}">
+
+              <div class="col-xs-6">
+                <h4>Role</h4>
+                <select th:field="*{role}" nam="id" >
+                  <option th:each="role : ${rolesList}" th:value="${role.roleid}" th:if="${role.roleid != 1}"
+                    th:text="${role.roleName}"  class="form-control"></option>
+                    <!-- th:selected="${user.role.roleid == role.roleid}" -->
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+
+              <div class="col-xs-6">
+                <h4>Gender</h4>
+                <div class="form-check form-check-inline">
+                  <input type="radio" id="male" class="form-check-input" th:field="*{gender}" th:value="male">
+                  <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" id="female" class="form-check-input" th:field="*{gender}" th:value="female">
+                  <label for="female" class="form-check-label">Female</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+
+            </div>
+
+            <div class="form-group">
+              <div class="col-xs-12">
+                <br>
+                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i>
+                  Save</button>
+                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+              </div>
+            </div>
+  </form>
+  <hr>
+
+</div><!--/tab-pane-->
+<div class="tab-pane" id="messages">
+
+  <h2></h2>
+
+  <hr>
+  <form class="form" th:action="@{/admin/adduser/new(id=${id})}" method="post" th:object="${trainer}"
+    enctype="multipart/form-data">
+    <input type="hidden" name="id" th:field="*{infoid}"/>
+    <div class="form-group">
+
+      <div class="col-xs-12">
+        <h4>Experience</h4>
+        <input type="text" class="form-control" th:field="*{experience}" placeholder="Full name">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-12">
+        <br>
+        <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i>
+          Save</button>
+        <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+</div><!--/tab-pane-->
+</div><!--/tab-content-->
+
+</div><!--/tab-content-->
+
+</div><!--/col-9-->
+
+</div><!--/row--><!--/row-->

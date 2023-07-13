@@ -27,8 +27,8 @@ public class ClassesService {
         return classesRepository.findByDate(date, page);
     }
 
-    public Page<Class> getSchedulesByTrainer(String trainerid, Pageable page) {
-        return classesRepository.findByTrainerid(trainerid, page);
+    public Page<Class> getSchedulesByTrainer(Long trainerid, Pageable page) {
+        return classesRepository.findByTrainerid_Userid(trainerid, page);
     }
 
     public Page<Class> getSchedulesByCourseIdAndDate(Long courseId, String date, Pageable page) {

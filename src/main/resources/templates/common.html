@@ -138,8 +138,8 @@
 				<a th:href="@{/blog}">Blog</a>
 			</li >
 			<li th:if="${session.user}">
-				<a th:if="${session.user.role.roleid == 3}" th:href="@{/schedule}">schedule</a>
-				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule}">schedule</a>
+				<a th:if="${session.user.role.roleid == 3}" th:href="@{/schedule(userid=${session.user.userid}, roleid=${session.user.role.roleid})}">schedule</a>
+				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule(userid=${session.user.userid}, roleid=${session.user.role.roleid})}">schedule</a>
 			</li>
 			<!-- <li >
 				
