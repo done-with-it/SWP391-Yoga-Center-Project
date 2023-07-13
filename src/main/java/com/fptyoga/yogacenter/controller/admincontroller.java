@@ -24,9 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
+import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
+import com.fptyoga.yogacenter.repository.TrainerRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
@@ -43,6 +45,9 @@ public class admincontroller {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TrainerRepository trainerRepository;
+
     @GetMapping("/index")
     public String trainer(Model model, @RequestParam(defaultValue = "") Long roleid) {
         if (roleid != null) {
@@ -55,19 +60,9 @@ public class admincontroller {
         return "admin/index";
     }
 
-    @GetMapping("/401")
+    @GetMapping("/charts")
     public String show401() {
-        return "admin/401";
-    }
-
-    @GetMapping("/404")
-    public String show404() {
-        return "admin/404";
-    }
-
-    @GetMapping("/500")
-    public String show500() {
-        return "admin/500";
+        return "admin/charts";
     }
 
     @Autowired
@@ -86,6 +81,7 @@ public class admincontroller {
             model.addAttribute("id", id);
         }
         model.addAttribute("user", user);
+        model.addAttribute("trainer", new Trainer());
         return "admin/adduser";
     }
 
@@ -99,19 +95,34 @@ public class admincontroller {
                 ra.addFlashAttribute("existemail", "The Email already exists.");
                 return "redirect:/admin/adduser";
             }
-        } else {
-            user.setRegistrationdate(LocalDate.now());
-            user.setStatus(true);
-            try {
-                userService.saveUser(file, user);
-                userRepository.save(user);
-            } catch (IOException e) {
-                // Xử lý lỗi nếu cần
-            }
-            
-            ra.addFlashAttribute("message", "The user has been saved successfully.");
-
         }
+
+        user.setRegistrationdate(LocalDate.now());
+        user.setStatus(true);
+        try {
+            userService.saveUser(file, user);
+        } catch (IOException e) {
+            // Xử lý lỗi nếu cần
+        }
+        userRepository.save(user);
+
+        ra.addFlashAttribute("message", "The user has been saved successfully.");
+        return "redirect:/admin/index";
+    }
+
+    @GetMapping("/edit-trainer")
+    public String editTrainer(Model model, @RequestParam(value = "id") Long id, @ModelAttribute Trainer trainers) {
+        trainers = trainerRepository.findByTrainerid_Userid(id);
+        trainers.setInfoid(trainers.getInfoid());
+        model.addAttribute("id", id);
+        model.addAttribute("trainers", trainers);
+        return "admin/edit-trainer";
+    }
+
+    @PostMapping("/updateTrainer")
+    public String updateTrainer(@RequestParam(value = "id") Long id, Model model,
+            @ModelAttribute Trainer trainers) {
+        trainerRepository.save(trainers);
         return "redirect:/admin/index";
     }
 

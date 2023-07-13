@@ -17,6 +17,7 @@ body {
 	height: 100%;
 	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
 }
 
 h1,
@@ -630,11 +631,11 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 @media only screen and (min-width: 576px) and (max-width: 767px),
 (max-width: 576px) {
-	.slicknav_btn {
-		background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
-		background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
-	}
+    .slicknav_btn {
+        background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
+        background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
+    }
 }
 
 .back-to-top {
@@ -4354,27 +4355,6 @@ only screen and (min-width: 576px) and (max-width: 767px),
 		}
 	}
 }
-.gradient-form {
-	background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
-	background: linear-gradient(145deg, #bca6e6 0%, #979292 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#979292", GradientType=1);
+.gradient-form{
 	width: 100%;
-}
-.form-check-inline {
-	display: inline-flex;
-	align-items: center;
-}
-
-Tùy chỉnh kích thước radio button .custom-radio-input {
-	width: 18px;
-	height: 18px;
-	margin: 0;
-}
-
-.toggle-icon {
-	position: absolute;
-	right: 5px;
-	top: 50%;
-	transform: translateY(-50%);
-	cursor: pointer;
 }

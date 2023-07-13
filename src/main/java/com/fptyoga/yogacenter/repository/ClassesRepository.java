@@ -26,6 +26,6 @@ public interface ClassesRepository extends JpaRepository<Class, Long>{
 
     boolean existsByDateAndTimeid_Timeid(String date, Long timeid);
 
-    
+
 
 }

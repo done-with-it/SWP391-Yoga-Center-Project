@@ -82,7 +82,7 @@
             <div class="form-group">
 
               <div class="text-center">
-                <img th:if="${id == 0}" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar"
+                <img th:if="${id == 0}" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle"
                   alt="avatar" width="192px" height="192px">
                 <img th:if="${id > 0}" th:field="*{img}" th:src="@{/staff/download-png(contentid=${id})}" alt="avatar"
                   width="192px" class="avatar" height="192px">
