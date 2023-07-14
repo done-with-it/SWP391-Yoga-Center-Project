@@ -14,12 +14,16 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public List<Booking> getSchedule(Long Customerid){
+    public List<Booking> getSchedule(Long Customerid) {
         return bookingRepository.findByCustomerid_UseridAndStatus(Customerid, true);
     }
 
-    public List<Booking> getUserInClass(Long classid){
+    public List<Booking> getUserInClass(Long classid) {
         return bookingRepository.findByClassid_ClassidAndStatus(classid, true);
+    }
+
+    public List<Booking> getHistorySchedule(Long Customerid) {
+        return bookingRepository.findByCustomerid_UseridAndStatusAndResponseCode(Customerid, false, "00");
     }
 
     public Booking getCourse(Long classid) {
@@ -27,5 +31,4 @@ public class BookingService {
         return booking.orElse(null);
     }
 
-    
 }

@@ -132,10 +132,9 @@ public class staffController {
 
         content.setCreatedate(LocalDate.now());
         content.setStatus(true);
-        
+        contentRepository.save(content);
         try {
             contentService.saveContent(file, content);
-            contentRepository.save(content);
         } catch (IOException e) {
             // Xử lý lỗi nếu cần
         }
@@ -149,7 +148,7 @@ public class staffController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid content Id:" + id));
         content.setStatus(false);
         contentRepository.save(content);
-        return "redirect:/staff/indexPost";
+        return "redirect:/staff/index";
     }
 
     @GetMapping("/edit/{id}")
@@ -210,7 +209,7 @@ public class staffController {
         model.addAttribute("classDistincts", classDistincts);
         try {
             Class classes = classesRepository.findById(id).orElse(null);
-            model.addAttribute("class", classes);
+            model.addAttribute("classes", classes);
             return "staff/editClass";
         } catch (Exception e) {
         }

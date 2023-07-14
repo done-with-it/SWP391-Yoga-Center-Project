@@ -2,6 +2,7 @@ package com.fptyoga.yogacenter.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import com.fptyoga.yogacenter.Entity.Course;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.ClassesRepository;
 import com.fptyoga.yogacenter.repository.ContentRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
@@ -78,6 +80,9 @@ public class homeController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @GetMapping("")
     public String show() {
@@ -185,11 +190,25 @@ public class homeController {
     }
 
     @GetMapping("/schedule")
-    public String getSchedules(@RequestParam("userid") Long userid, Model model, @RequestParam("roleid") Long roleid,
-    @RequestParam(defaultValue = "1") int page) {
+    public String getSchedules(@RequestParam("userid") Long userid, @RequestParam("status") int status, Model model,
+            @RequestParam("roleid") Long roleid,
+            @RequestParam(defaultValue = "1") int page) {
         PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by("classid").descending());
         if (roleid == 4) {
-            List<Booking> booked = bookingService.getSchedule(userid);
+            List<Booking> booking = bookingRepository.findAll();
+            for (Booking book : booking) {
+                if (LocalDateTime.now().isAfter(book.getExpired())) {
+                    book.setStatus(false);
+                    bookingRepository.save(book);
+                }
+            }
+            List<Booking> booked;
+            if (status == 1) {
+                booked = bookingService.getSchedule(userid);
+            } else {
+                booked = bookingService.getHistorySchedule(userid);
+            }
+
             model.addAttribute("booked", booked);
         } else {
             Page<Class> classes = classesService.getSchedulesByTrainer(userid, pageable);

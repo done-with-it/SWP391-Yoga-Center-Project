@@ -66,7 +66,9 @@
 						<div class="row">
 							<div class="col-md-6">
 								<p>Showing [[${numofClasses}]] classes of [[${totalClasses}]] classes</p>
+								<b th:if="${mess}" style="color: red;">[[${mess}]]</b>
 							</div>
+
 						</div>
 					</div>
 					<div class="row">
@@ -102,9 +104,10 @@
 										</div>
 										<a th:if="${session.user == null}" th:href="@{/loginpage}"
 											class="site-btn sb-gradient">book now</a>
-										<a th:if="${session.user != null && session.user.role.roleid == 4}" th:href="@{/create_payment(classID=${class.classid},
-										userID=${session.user.userid})}" class="site-btn sb-gradient">book now</a>
-										
+										<a th:if="${session.user != null && session.user.role.roleid == 4}"
+										th:href="@{/create_payment(classID=${class.classid}, date=${class.date}, timeid=${class.timeid.timeid}, userID=${session.user.userid})}"
+										class="site-btn sb-gradient">book now</a>
+
 									</div>
 								</div>
 							</div>

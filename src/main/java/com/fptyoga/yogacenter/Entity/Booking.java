@@ -1,7 +1,7 @@
 package com.fptyoga.yogacenter.Entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +29,10 @@ public class Booking implements Serializable {
     private Long bookingid;
 
     @Column(name = "booking_date")
-    private LocalDate bookingdate;
+    private LocalDateTime bookingdate;
+
+    @Column(name = "expired")
+    private LocalDateTime expired;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

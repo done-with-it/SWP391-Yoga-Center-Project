@@ -138,8 +138,8 @@
 				<a th:href="@{/blog}">Blog</a>
 			</li >
 			<li th:if="${session.user}">
-				<a th:if="${session.user.role.roleid == 3}" th:href="@{/schedule(userid=${session.user.userid}, roleid=${session.user.role.roleid})}">schedule</a>
-				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule(userid=${session.user.userid}, roleid=${session.user.role.roleid})}">schedule</a>
+				<a th:if="${session.user.role.roleid == 3}" th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">schedule</a>
+				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">schedule</a>
 			</li>
 			<!-- <li >
 				
@@ -258,32 +258,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-3 col-sm-6">
+		<div class="col-lg-4 col-sm-6">
 			<div class="footer-widget pl-0 pl-lg-5">
-				<h2 class="fw-title">Company</h2>
+				<!-- <h2 class="fw-title">Company</h2>
 				<ul>
 					<li><a href="#">Online Education</a></li>
 					<li><a href="#">Gallery</a></li>
 					<li><a href="#">Special Issues</a></li>
 					<li><a href="#">Privacy Policy</a></li>
 					<li><a href="#">Contact Us</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-lg-2 col-sm-6">
-			<div class="footer-widget">
-				<h2 class="fw-title">About Us</h2>
-				<ul>
-					<li><a href="#">Our Vision</a></li>
-					<li><a href="#">Our Mission</a></li>
-					<li><a href="#">Meet The Team</a></li>
-					<li><a href="#">Introduce</a></li>
-					<li><a href="#">Customer Service</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-lg-4 col-sm-6">
-			<div class="footer-widget pl-0 pl-lg-5">
+				</ul> -->
 				<h2 class="fw-title">Open time</h2>
 				<ul>
 					<li><i class="material-icons">alarm_on</i>Mon - Fri: 6:30am - 07:45pm</li>
@@ -293,6 +277,23 @@
 					<input type="text" placeholder="Your Email">
 					<button><img src="img/icons/send.png" alt=""></button>
 				</form>
+			</div>
+		</div>
+		<div class="col-lg-1 col-sm-6">
+			<!-- <div class="footer-widget">
+				<h2 class="fw-title">About Us</h2>
+				<ul>
+					<li><a href="#">Our Vision</a></li>
+					<li><a href="#">Our Mission</a></li>
+					<li><a href="#">Meet The Team</a></li>
+					<li><a href="#">Introduce</a></li>
+					<li><a href="#">Customer Service</a></li>
+				</ul>
+			</div> -->
+		</div>
+		<div class="col-lg-4 col-sm-6">
+			<div class="footer-widget pl-0 pl-lg-5">
+				<img src="img/fpt.png" alt="">
 			</div>
 		</div>
 	</div>

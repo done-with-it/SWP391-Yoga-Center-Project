@@ -10,14 +10,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../richtext/richtext.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../richtext/jquery.richtext.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script>
         $(document).ready(function () {
 
-            $('#description').richText();
 
             var readURL = function (input) {
                 if (input.files && input.files[0]) {
@@ -42,9 +37,12 @@
 <div class="container bootstrap snippet">
     <div class="row">
         <div class="col-sm-10">
-            <h1>Add New Blog</h1>
+            <h1>Update User</h1>
         </div>
-        <div class="col-sm-2"><a th:href="@{/staff/indexCourse}"><img title="Back Home" src="/img/logo.png"></a></div>
+        <div th:if="${session.user.role.roleid == 1}" class="col-sm-2"><a th:href="@{/admin/index}"><img
+                    title="Back Home" src="/img/logo.png"></a></div>
+        <div th:if="${session.user.role.roleid == 2}" class="col-sm-2"><a th:href="@{/staff/index}"><img
+                    title="Back Home" src="/img/logo.png"></a></div>
     </div>
     <div class="row">
         <div class="col-sm-3"><!--left col-->
@@ -64,7 +62,7 @@
           </div> -->
 
         </div><!--/col-3-->
-        <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
+        <div th:if="${update}" class="alert alert-success text-center">[[${update}]]</div>
         <div class="col-sm-11">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
@@ -74,49 +72,72 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="home">
                     <hr>
-                    <form class="form" th:action="@{/staff/addCourse/new}" method="post" th:object="${course}"
+                    <form class="form" th:action="@{/admin/adduser/new}" method="post" th:object="${user}"
                         enctype="multipart/form-data">
-                        <input type="hidden" th:field="*{courseid}">
+                        <input type="hidden" th:field="*{userid}">
                         <div class="form-group">
 
                             <div class="text-center">
-                              <img th:if="${id == 0}" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar"
-                                alt="avatar" width="192px" height="192px">
-                              <img th:if="${id > 0}" th:field="*{img}" th:src="@{/staff/downloads-png(courseid=${id})}" alt="avatar"
-                                width="192px" class="avatar" height="192px">
+                                <img th:if="${id == 0}" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                                    class="avatar" alt="avatar" width="192px" height="192px">
+                                <img th:if="${id > 0}" th:field="*{img}" th:src="@{/admin/download-png(userid=${id})}"
+                                    alt="avatar" width="192px" class="avatar" height="192px">
                                 <input type="hidden" name="id" th:field="*{img}" />
-                              <h6>Upload a photo</h6>
-                              <input type="file" name="file" class="text-center center-block file-upload">
+                                <h6>Upload a photo</h6>
+                                <input type="file" name="file" class="text-center center-block file-upload">
                             </div>
                             <br>
-                          </div>
+                        </div>
                         <hr>
-                        
                         <div class="form-group">
 
-                            <div>
-                                <h4>Course's name</h4>
-                                <input type="text" class="form-control" th:field="*{coursename}" placeholder="ex: Yoga...">
+                            <div class="col-xs-6">
+                                <h4>Full Name</h4>
+                                <input type="text" class="form-control" th:field="*{fullname}" placeholder="Full name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Date of Birth</h4>
+                                <input type="date" class="form-control" th:field="*{dob}" placeholder="mm/dd/yy">
                             </div>
                         </div>
 
                         <div class="form-group">
 
-                            <div>
-                                <h4>Price</h4>
-                                <input type="text" class="form-control" th:field="*{price}"
-                                    placeholder="ex: 49" required>
+                            <div class="col-xs-6">
+                                <h4>Phone</h4>
+                                <input type="text" class="form-control" th:field="*{phone}" placeholder="Enter Phone"
+                                    required minlength="10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <h4>Address</h4>
+                                <input type="text" class="form-control" th:field="*{address}" placeholder="your city">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <h4>Email</h4>
+                                <input type="email" class="form-control" th:field="*{email}"
+                                    placeholder="you@email.com">
                             </div>
                         </div>
 
                         <div class="form-group">
 
-                            <div>
-                                <h4>Description</h4>
-                                <!-- <input type="text" class="form-control" th:field="*{address}" placeholder="your city"> -->
-                                <textarea class="form-control" th:field="*{description}" placeholder="Course's content"
-                                    cols="50" rows="20"></textarea>
+                            <div class="col-xs-6">
+                                <h4>Password</h4>
+                                <input type="text" class="form-control" th:field="*{password}" placeholder="password">
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" th:field="*{role}">
                         </div>
                         <!-- <div class="form-group">
                           
@@ -135,6 +156,27 @@
                             <input type="date" class="form-control" th:field="*{registrationdate}" id="registrationdate" th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" placeholder="registrationdate">
                         </div>
                     </div> -->
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                <h4>Gender</h4>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="male" class="form-check-input" th:field="*{gender}"
+                                        th:value="male">
+                                    <label for="male" class="form-check-label">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="female" class="form-check-input" th:field="*{gender}"
+                                        th:value="female">
+                                    <label for="female" class="form-check-label">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" th:if="${roleid == 3}">
+                            <div class="col-xs-6">
+                                ahihi
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-xs-12">
