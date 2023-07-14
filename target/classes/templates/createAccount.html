@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gradient-form {
+      background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
+      background: linear-gradient(145deg, #bca6e6 0%, #979292 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#979292", GradientType=1);
+    }
+
+    .gradient-custom-2 {
+      background-image:
+    }
+
+    .form-check-inline {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    Tùy chỉnh kích thước radio button
+    .custom-radio-input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+  </style>
+  <title>Registration Form</title>
+</head>
+
+<body>
+  <section class="h-100 gradient-form">
+    <div class="container py-4 h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100" style="border-radius: 50px;">
+        <div class="col-xl-5">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="card-body p-md-5 mx-md-4">
+                <div class="text-center">
+                  <a class="navbar-brand" th:href="@{/index}">
+                    <center>
+                      <div class="logo-for-all"><img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
+                          width="100%"></div>
+                    </center>
+                  </a>
+                  <h4 class="mt-1 mb-5 pb-1">We understand you</h4>
+                  <h4 class="mt-1 mb-4 pb-1">Sign Up</h4>
+                </div>
+                <form>
+                  <div class="form-outline mb-3">
+                    <input type="password" id="form2Example22" class="form-control" placeholder="Username" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="password" id="form2Example22" class="form-control" placeholder="Password" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="password" id="form2Example33" class="form-control" placeholder="Confirm password" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="text" id="form2Example11" class="form-control" placeholder="Full name" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="password" id="form2Example33" class="form-control" placeholder="Email" />
+                  </div>
+
+                  <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input custom-radio-input" type="radio" name="genderRadio" id="maleRadio"
+                      value="Male" checked />
+                    <label class="form-check-label" for="maleRadio">Male</label>
+                  </div>
+                  <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input custom-radio-input" type="radio" name="genderRadio" id="femaleRadio"
+                      value="Female" />
+                    <label class="form-check-label" for="femaleRadio">Female</label>
+                  </div>
+
+                  <div class="text-center pt-1 mb-3 pb-1">
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Create
+                      Account</button>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center pb-4">
+                    <p class="mb-0 me-7">Already have an account? </p>
+                    <button type="button" class="btn btn-outline-danger" onclick="Login()">Log in</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function Login() {
+      window.location.href = "loginpage.html";
+    }
+  </script>
+</body>
+
+</html>

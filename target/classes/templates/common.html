@@ -1,0 +1,243 @@
+    <div class="infor-model-warp" th:fragment="infor-model">
+		<div class="infor-model d-flex align-items-center">
+			<div class="infor-close">
+				<i class="material-icons">close</i>
+			</div>
+			<div class="infor-middle">
+				<a href="#" class="infor-logo">
+					<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
+				</a>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+				<div class="insta-imgs">
+					<div class="insta-item">
+						<div class="insta-img">
+							<img src="img/infor/1.jpg" alt="">
+							<div class="insta-hover">
+								<i class="fa fa-instagram"></i>
+								<p>fpt.yoga</p>
+							</div>
+						</div>
+					</div>
+					<div class="insta-item">
+						<div class="insta-img">
+							<img src="img/infor/2.jpg" alt="">
+							<div class="insta-hover">
+								<i class="fa fa-instagram"></i>
+								<p>fpt.yoga</p>
+							</div>
+						</div>
+					</div>
+					<div class="insta-item">
+						<div class="insta-img">
+							<img src="img/infor/3.jpg" alt="">
+							<div class="insta-hover">
+								<i class="fa fa-instagram"></i>
+								<p>fpt.yoga</p>
+							</div>
+						</div>
+					</div>
+					<div class="insta-item">
+						<div class="insta-img">
+							<img src="img/infor/4.jpg" alt="">
+							<div class="insta-hover">
+								<i class="fa fa-instagram"></i>
+								<p>fpt.yoga</p>
+							</div>
+						</div>
+					</div>
+					<div class="insta-item">
+						<div class="insta-img">
+							<img src="img/infor/5.jpg" alt="">
+							<div class="insta-hover">
+								<i class="fa fa-instagram"></i>
+								<p>fpt.yoga</p>
+							</div>
+						</div>
+					</div>
+					<div class="insta-item">
+						<div class="insta-img">
+							<img src="img/infor/6.jpg" alt="">
+							<div class="insta-hover">
+								<i class="fa fa-instagram"></i>
+								<p>fpt.yoga</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<form class="infor-form">
+					<input type="text" placeholder="Your Email">
+					<button><img src="img/icons/send.png" alt=""></button>
+				</form>
+				<div class="insta-social">
+					<a href="#"><i class="fa fa-instagram"></i></a>
+					<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="header-bottom" th:fragment="header-bottom">
+        <a th:href="@{/index}" class="site-logo">
+            <img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt=""with="0%">
+        </a>
+        <div class="hb-right">
+            <div class="hb-switch" >
+                <a th:href="@{/loginpage}"><img src="img/icons/login.png" alt=""></a>
+            </div>
+            <div class="hb-switch" id="infor-switch">
+                <img src="img/icons/bars.png" alt="">
+            </div>
+        </div>
+        <div class="container">
+            <ul class="main-menu">
+                <li>
+					<a th:href="@{/about}">About</a>
+				</li>
+                <li>
+					<a th:href="@{/classes}">Classes</a>
+                </li>
+				<li>
+					<a th:href="@{/courses}">Course</a>
+				</li>
+                <li>
+					<a th:href="@{/trainer}">trainers</a>
+                </li>
+                <li>
+					<a th:href="@{/schedule}">schedule</a>
+                </li>
+                <li>
+					<a th:href="@{/blog}">Blog</a>
+                </li>
+                
+                    <!-- <ul class="sub-menu">
+                        <li><a href="#">Thông Tin Tài Khoản</a></li>
+                        <li><a href="#">Lớp Học</a></li>
+                        <li><a href="#">Đăng Xuất</a></li>
+                        <li><a href="#"></a></li>
+                    </ul> -->
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="gallery-section" th:fragment="gallery-section">
+		<div class="gallery-slider owl-carousel">
+			<div class="gs-item">
+				<img src="img/gallery/1.jpg" alt="">
+				<div class="gs-hover">
+					<i class="fa fa-instagram"></i>
+					<p>fpt.yoga</p>
+				</div>
+			</div>
+			<div class="gs-item">
+				<img src="img/gallery/2.jpg" alt="">
+				<div class="gs-hover">
+					<i class="fa fa-instagram"></i>
+					<p>fpt.yoga</p>
+				</div>
+			</div>
+			<div class="gs-item">
+				<img src="img/gallery/3.jpg" alt="">
+				<div class="gs-hover">
+					<i class="fa fa-instagram"></i>
+					<p>fpt.yoga</p>
+				</div>
+			</div>
+			<div class="gs-item">
+				<img src="img/gallery/4.jpg" alt="">
+				<div class="gs-hover">
+					<i class="fa fa-instagram"></i>
+					<p>fpt.yoga</p>
+				</div>
+			</div>
+			<div class="gs-item">
+				<img src="img/gallery/5.jpg" alt="">
+				<div class="gs-hover">
+					<i class="fa fa-instagram"></i>
+					<p>fpt.yoga</p>
+				</div>
+			</div>
+			<div class="gs-item">
+				<img src="img/gallery/6.jpg" alt="">
+				<div class="gs-hover">
+					<i class="fa fa-instagram"></i>
+					<p>fpt.yoga</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="container" th:fragment="footer">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget">
+                    <div class="about-widget">
+                        <img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
+                        <p>We Understand You</p>
+                        <ul>
+                            <li><i class="material-icons">phone</i>(+84) 922116687</li>
+                            <li><i class="material-icons">email</i>fpt.yoga@gmail.com</li>
+                            <li><i class="material-icons">map</i>VRG2+9GJ, Đ. Quảng Trường Sáng Tạo, Đông Hoà, Dĩ An, Bình Dương, Việt Nam</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget pl-0 pl-lg-5">
+                    <h2 class="fw-title">Company</h2>
+                    <ul>
+                        <li><a href="#">Online Education</a></li>
+                        <li><a href="#">Gallery</a></li>
+                        <li><a href="#">Special Issues</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="footer-widget">
+                    <h2 class="fw-title">About Us</h2>
+                    <ul>
+                        <li><a href="#">Our Vision</a></li>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Meet The Team</a></li>
+                        <li><a href="#">Introduce</a></li>
+                        <li><a href="#">Customer Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="footer-widget pl-0 pl-lg-5">
+                    <h2 class="fw-title">Open time</h2>
+                    <ul>
+                        <li><i class="material-icons">alarm_on</i>Mon - Fri:  6:30am - 07:45pm</li>
+                        <li><i class="material-icons">alarm_on</i>Sat - Sun:  8:30am - 05:45pm</li>
+                    </ul>
+                    <form class="infor-form">
+                        <input type="text" placeholder="Your Email">
+                        <button><img src="img/icons/send.png" alt=""></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-social">
+                        <a th:href="@{https://www.facebook.com/GreenSea.prj}" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-8 text-md-right">
+                    <div class="copyright">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+                        website is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+						th:href="@{https://www.facebook.com/GreenSea.prj}" target="_blank">FPT Yoga</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
