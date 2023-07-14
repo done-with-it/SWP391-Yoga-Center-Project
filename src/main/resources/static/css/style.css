@@ -4328,19 +4328,19 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 .gradient-custom-2 {
 	/* fallback for old browsers */
-	background: -o-linear-gradient(305deg, #00FFCC 0%, #00FF00 100%);
-	background: linear-gradient(145deg, #00FFCC 0%, #00FF00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00FFCC", endColorstr="#00FF00", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 
 	/* Chrome 10-25, Safari 5.1-6 */
-	background: -o-linear-gradient(305deg, #008080 0%, #00FF00 100%);
-	background: linear-gradient(145deg, #008080 0%, #00FF00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#008080", endColorstr="#00FF00", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	background: -o-linear-gradient(305deg, #008080 0%, #00FF00 100%);
-	background: linear-gradient(145deg, #008080 0%, #00FF00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#008080", endColorstr="#00FF00", GradientType=1);
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 
 	@media (min-width: 768px) {
 		.gradient-form {
