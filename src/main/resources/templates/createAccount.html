@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+<<<<<<< HEAD
+  <style>
+    .gradient-form {
+      background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
+      background: linear-gradient(145deg, #bca6e6 0%, #979292 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#979292", GradientType=1);
+    }
+
+    .gradient-custom-2 {
+      background-image:
+    }
+
+    .form-check-inline {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    Tùy chỉnh kích thước radio button
+    .custom-radio-input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+
+    .toggle-icon{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    }
+  </style>
+=======
+  
+>>>>>>> 8e0635d1bd06e08b9e7cc10c7460f18b50589d09
+  <title>Registration Form</title>
+</head>
+
+<body>
+  <section class="h-100 gradient-form">
+    <div class="container py-4 h-50">
+      <div class="row d-flex justify-content-center align-items-center h-100" style="border-radius: 50px;">
+        <div class="col-xl-5">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="card-body p-md-5 mx-md-4">
+                <div class="text-center">
+                  <a class="navbar-brand" th:href="@{/index}">
+                    <center>
+<<<<<<< HEAD
+                      <a th:href="@{/index}" class="logo-for-all"><img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
+                          width="100%"></a>
+=======
+                      <a th:src="@{/index}" class="logo-for-all"><img
+                          src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" width="100%"></a>
+>>>>>>> 8e0635d1bd06e08b9e7cc10c7460f18b50589d09
+                    </center>
+                  </a>
+                  <h4 class="mt-1 mb-5 pb-1">We understand you</h4>
+                  <h4 class="mt-1 mb-4 pb-1">Sign Up</h4>
+                </div>
+                <form th:action="@{/createAccount/new}" method="post" th:object="${user}">
+                  <div class="form-outline mb-3">
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Email" />
+                    <span style="color: red;">[[${existsemail}]]</span>
+                  </div>
+                  <div class="form-outline mb-3 position-relative">
+<<<<<<< HEAD
+                    <input type="password" th:field="*{password}" id="passwordField" class="form-control" placeholder="Password">
+                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword" ></i>
+                  </div>
+                  <div class="form-outline mb-3 position-relative">
+                    <input type="password" name="confirmPassword" id="passwordField"  class="form-control" placeholder="Confirm password" />
+                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword" ></i>
+=======
+                    <input type="password" th:field="*{password}" id="passwordField" class="form-control"
+                      placeholder="Password">
+                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword"></i>
+                  </div>
+                  <div class="form-outline mb-3 position-relative">
+                    <input type="password" name="confirmPassword" id="confirmPasswordField" class="form-control"
+                      placeholder="Confirm password" />
+                    <i class="far fa-eye position-absolute toggle-icon" id="toggleConfirmPassword"></i>
+>>>>>>> 8e0635d1bd06e08b9e7cc10c7460f18b50589d09
+                  </div>
+                  <span style="color: red;">[[${passwordMismatch}]]</span>
+                  <div class="form-outline mb-3">
+                    <input type="text" th:field="*{fullname}" class="form-control" placeholder="Full name" />
+                  </div>
+                  <div class="form-outline mb-3">
+<<<<<<< HEAD
+                    <input type="text" th:field="*{phone}" class="form-control" placeholder="Phone" minlength="10" maxlength="12"/>
+=======
+                    <input type="text" th:field="*{phone}" class="form-control" placeholder="Phone" minlength="10"
+                      maxlength="12" />
+>>>>>>> 8e0635d1bd06e08b9e7cc10c7460f18b50589d09
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="date" th:field="*{dob}" class="form-control" placeholder="Birthday" />
+                  </div>
+                  <div class="form-outline mb-3">
+                    <input type="text" th:field="*{address}" class="form-control" placeholder="Address" />
+                  </div>
+
+                  <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input custom-radio-input" type="radio" th:field="*{gender}" value="Male"
+                      checked />
+                    <label class="form-check-label">Male</label>
+                  </div>
+                  <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input custom-radio-input" type="radio" th:field="*{gender}"
+                      value="Female" />
+                    <label class="form-check-label">Female</label>
+                  </div>
+
+                  <div class="text-center pt-1 mb-3 pb-1">
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Create
+                      Account</button>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center pb-4">
+                    <p class="mb-0 me-7">Already have an account? </p>
+                    <button type="button" class="btn btn-outline-danger" onclick="Login()">Log in</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <script th:inline="javascript">
+    function Login() {
+      window.location.href = /*[[@{/loginpage}]]*/ "";
+    }
+  </script>
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#passwordField');
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const confirmPassword = document.querySelector('#confirmPasswordField');
+    togglePassword.addEventListener('click', function (e) {
+      // toggle the type attribute
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      // toggle the eye slash icon
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    toggleConfirmPassword.addEventListener('click', function (e) {
+      // toggle the type attribute
+      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      confirmPassword.setAttribute('type', type);
+      // toggle the eye slash icon
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+</body>
+
+</html>
