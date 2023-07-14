@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File</title>
+
+    <link rel="stylesheet" href="../richtext/richtext.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../richtext/jquery.richtext.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+    <script>
+		$(document).ready(function() {
+			$('.content').richText();
+		});
+	</script>
+    
+</head>
+<body>
+    <h2>Upload File</h2>
+    
+
+    
+    <form th:action="@{/admin/upload}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".png">
+        <button type="submit">Upload</button>
+    </form>
+
+    <img th:src="@{/admin/download-png(contentId=${8})}" alt="PNG Image">
+    
+    <div class="page-wrapper box-content">
+
+        <textarea class="content" name="example"></textarea>
+    
+    </div>
+
+
+
+</body>
+</html>
