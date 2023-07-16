@@ -21,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fptyoga.yogacenter.Entity.Booking;
@@ -35,7 +34,6 @@ import com.fptyoga.yogacenter.service.BookingService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@SessionAttributes("user")
 
 public class PaymentController {
 
@@ -48,6 +46,9 @@ public class PaymentController {
     @Autowired
     private ClassesRepository classesRepository;
 
+    @Autowired
+    private HttpSession session;
+
     /**
      * @param classID
      * @param userID
@@ -59,7 +60,7 @@ public class PaymentController {
     @RequestMapping("/create_payment")
     public String payment(@RequestParam(value = "classID") Long classID, @RequestParam(value = "date") String date,
             @RequestParam(value = "timeid") Long timeid, @RequestParam(value = "userID") Long userID,
-            HttpSession session, RedirectAttributes ra)
+            RedirectAttributes ra, @RequestParam(value = "duration") Long duration)
             throws UnsupportedEncodingException {
 
         if (bookingRepository.countDuplicateClassIdsWithStatusTrue(classID) > 25) {
@@ -67,20 +68,13 @@ public class PaymentController {
             return "redirect:/classes";
         } else {
 
-            if (bookingRepository.existsByUserIdDateAndTimeIdAndStatus(userID, date, timeid)) {
-                ra.addFlashAttribute("mess",
-                        "You had booked this class or booked the same class time, please choose another class !");
-                return "redirect:/classes";
-            } else {
-                // ResponseEntity<?>
+            if (bookingRepository.existsByUserIdAndClassidDateAndTimeIdAndStatus(userID, date, timeid, classID)
+                    || !bookingRepository.existsByUserIdDateAndTimeIdAndStatus(userID, date, timeid)) {
                 String orderType = "billpayment";
-                // long amount = Integer.parseInt(req.getParameter("amount"))*100;
-                // String bankCode = req.getParameter("bankCode");
 
                 long amount = 460000 * 100;
 
                 String vnp_TxnRef = Config.getRandomNumber(8);
-                // String vnp_IpAddr = Config.getIpAddress(req);
                 String vnp_TmnCode = Config.vnp_TmnCode;
 
                 Map<String, String> vnp_Params = new HashMap<>();
@@ -92,20 +86,9 @@ public class PaymentController {
                 vnp_Params.put("vnp_BankCode", "NCB");
                 vnp_Params.put("vnp_Locale", "vn");
 
-                // if (bankCode != null && !bankCode.isEmpty()) {
-                // vnp_Params.put("vnp_BankCode", bankCode);
-                // }
-
                 vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-                vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+                vnp_Params.put("vnp_OrderInfo", "Order info:" + vnp_TxnRef);
                 vnp_Params.put("vnp_OrderType", orderType);
-
-                // String locate = req.getParameter("language");
-                // if (locate != null && !locate.isEmpty()) {
-                // vnp_Params.put("vnp_Locale", locate);
-                // } else {
-                // vnp_Params.put("vnp_Locale", "vn");
-                // }
 
                 vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
                 vnp_Params.put("vnp_IpAddr", Config.vnp_IpAddr);
@@ -154,16 +137,29 @@ public class PaymentController {
 
                 User user = new User();
                 user.setUserid(userID);
-                
+
+                if (bookingRepository.existsByUserIdAndClassidDateAndTimeIdAndStatus(userID, date, timeid, classID)) {
+                    book = bookingRepository.findByUserIdAndClassidDateAndTimeIdAndStatus(userID, date, timeid,
+                            classID);
+                    session.setAttribute("expired", book.getExpired());
+                    book.setStatus(false);
+                    bookingRepository.save(book);
+                } else{
+                    session.removeAttribute("expired");
+                }
+
                 book.setClassid(classes);
                 book.setCustomerid(user);
-
                 session.setAttribute("book", book);
+                session.setAttribute("duration", duration);
 
                 return "redirect:" + paymentUrl;
+            } else {
+                ra.addFlashAttribute("mess",
+                        "You had booked the same class time, please choose another class !");
+                return "redirect:/classes";
             }
 
-            // return ResponseEntity.status(HttpStatus.OK).body(book);
         }
 
     }
@@ -175,25 +171,33 @@ public class PaymentController {
     public String processPayment(@RequestParam("vnp_Amount") String amount,
             @RequestParam("vnp_BankCode") String bankCode,
             @RequestParam("vnp_ResponseCode") String responseCode,
-            @RequestParam("vnp_OrderInfo") String order, Model model,
-            HttpSession session) {
+            @RequestParam("vnp_OrderInfo") String order, Model model) {
 
         Booking book = (Booking) session.getAttribute("book");
+
+        Long duration = (Long) session.getAttribute("duration");
+
+        LocalDateTime expired = (LocalDateTime) session.getAttribute("expired");
+
+
 
         long cost = Long.valueOf(amount);
         // Tạo một đối tượng Payment và gán giá trị từ URL
         if (responseCode.equals("00")) {
-            // book.setCustomerid();
             book.setStatus(true);
-
             book.setBookingdate(LocalDateTime.now());
-            LocalDateTime expired = book.getBookingdate().plusMinutes(2);
-            book.setExpired(expired);
-            
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
             book.setAmount(cost);
+            if (expired != null) {
+                expired = expired.plusMinutes(duration.longValue());
+                book.setExpired(expired);
+            } else {
+                expired = book.getBookingdate().plusMinutes(duration.longValue());
+                book.setExpired(expired);
+            }
+
             bookingRepository.save(book);
             Booking booked = bookingService.getCourse(book.getBookingid());
             Class classes = classesRepository.findById(Long.valueOf(book.getClassid().getClassid())).orElse(null);
@@ -203,8 +207,6 @@ public class PaymentController {
 
             book.setStatus(false);
             book.setBookingdate(LocalDateTime.now());
-            LocalDateTime expired = book.getBookingdate().plusMinutes(2);
-            book.setExpired(expired);
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
@@ -214,8 +216,8 @@ public class PaymentController {
 
         }
 
-        // Trả về thông báo thành công hoặc thông tin khác nếu cần thiết
         return "payment";
     }
+
 
 }

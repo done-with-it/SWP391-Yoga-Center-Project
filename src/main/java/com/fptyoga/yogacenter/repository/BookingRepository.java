@@ -26,8 +26,18 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     @Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.customerid.userid = :userid AND b.classid.date = :date AND b.classid.timeid.timeid = :timeid AND b.status = true")
     boolean existsByUserIdDateAndTimeIdAndStatus(Long userid, String date, Long timeid);
 
+    @Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.classid.classid = :classid AND b.customerid.userid = :userid AND b.classid.date = :date AND b.classid.timeid.timeid = :timeid AND b.status = true")
+    boolean existsByUserIdAndClassidDateAndTimeIdAndStatus(Long userid, String date, Long timeid, Long classid);
+
+    @Query("SELECT b FROM Booking b WHERE b.classid.classid = :classid AND b.customerid.userid = :userid AND b.classid.date = :date AND b.classid.timeid.timeid = :timeid AND b.status = true")
+    Booking findByUserIdAndClassidDateAndTimeIdAndStatus(Long userid, String date, Long timeid, Long classid);
+
     @Modifying
     @Query("UPDATE Booking b SET b.status = false WHERE b.bookingdate < :endDate AND b.status = true")
     void updateStatusAfter2Minutes(LocalDateTime endDate);
+
+    boolean existsByClassid_ClassidAndCustomerid_Userid(Long classid, Long customerid);
+
+    Booking findByClassid_ClassidAndCustomerid_Userid(Long classid, Long customerid);
 
 }

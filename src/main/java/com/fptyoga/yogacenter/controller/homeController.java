@@ -3,6 +3,8 @@ package com.fptyoga.yogacenter.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +92,7 @@ public class homeController {
     }
 
     @GetMapping("/index")
-    public String index(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String index(Model model, @RequestParam(defaultValue = "1") int page, HttpSession session) {
         List<User> trainList = userService.listAll(3L);
         PageRequest pageable = PageRequest.of(page - 1, 3, Sort.by("createdate").descending());
         Page<Content> contents = contentRepository.findAll(pageable);
@@ -193,7 +195,7 @@ public class homeController {
     public String getSchedules(@RequestParam("userid") Long userid, @RequestParam("status") int status, Model model,
             @RequestParam("roleid") Long roleid,
             @RequestParam(defaultValue = "1") int page) {
-        PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by("classid").descending());
+        PageRequest pageable = PageRequest.of(page - 1, 6);
         if (roleid == 4) {
             List<Booking> booking = bookingRepository.findAll();
             for (Booking book : booking) {
@@ -203,10 +205,12 @@ public class homeController {
                 }
             }
             List<Booking> booked;
-            if (status == 1) {
+            if (status == 1 || status == 3) {
                 booked = bookingService.getSchedule(userid);
             } else {
                 booked = bookingService.getHistorySchedule(userid);
+                Collections.sort(booked, Comparator.comparing(Booking::getBookingid));
+                Collections.reverse(booked);
             }
 
             model.addAttribute("booked", booked);
@@ -214,6 +218,7 @@ public class homeController {
             Page<Class> classes = classesService.getSchedulesByTrainer(userid, pageable);
             model.addAttribute("classes", classes);
         }
+        model.addAttribute("status", status);
         model.addAttribute("roleid", roleid);
         return "schedule";
     }
@@ -233,7 +238,7 @@ public class homeController {
             // Xử lý lỗi nếu cần
         }
         ra.addFlashAttribute("update", "The user has been update successfully.");
-        return "redirect:/profile";
+        return "redirect:/index";
     }
 
     @GetMapping("/edit/{id}")
@@ -392,14 +397,14 @@ public class homeController {
         if (userRepository.existsByEmail(user.getEmail())) {
             ra.addFlashAttribute("existsemail", "The Email already exists.");
             return "redirect:/createAccount";
-        } else {
+        }
             user.setRegistrationdate(LocalDate.now());
             user.setStatus(true);
             user.setRole(roleid);
             userRepository.save(user);
             ra.addFlashAttribute("update", "The user has been saved successfully.");
-        }
-        return "createAccount";
+        
+        return "redirect:/loginpage";
     }
 
 }

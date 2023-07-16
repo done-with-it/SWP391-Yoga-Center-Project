@@ -107,18 +107,19 @@
             <a class="nav-link active ms-0"
                 href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details"
                 target="__blank">Profile</a>
-            <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page"
+            <!-- <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page"
                 target="__blank">Billing</a>
             <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page"
                 target="__blank">Security</a>
             <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"
-                target="__blank">Notifications</a>
+                target="__blank">Notifications</a> -->
         </nav>
         <hr class="mt-0 mb-4">
         <br>
         <div th:if="${update}" class="alert alert-success text-center">[[${update}]]</div>
         <form class="form" th:action="@{/profile/edit}" method="post" th:object="${user}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{userid}">
+            <input type="hidden" th:field="*{role}">
             <div class="row">
 
                 <div class="col-xl-4">
@@ -126,9 +127,10 @@
                         <div class="card-header">Profile Picture</div>
                         <div class="card-body text-center">
                             <img th:if="${id == 0}" src="http://bootdey.com/img/Content/avatar/avatar1.png"
-                                                    class="img-account-profile rounded-circle mb-2" alt="img-account-profile" width="192px" height="192px">
+                                class="img-account-profile rounded-circle mb-2" alt="img-account-profile" width="192px"
+                                height="192px">
                             <img th:if="${id > 0}" th:field="*{img}" th:src="@{/admin/download-png(userid=${id})}"
-                                                    alt="img-account-profile" width="192px" class="avatar" height="192px">
+                                alt="img-account-profile" width="192px" class="avatar" height="192px">
                             <input type="hidden" name="id" th:field="*{img}" />
                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
 
@@ -137,13 +139,15 @@
                         <div class="card-footer">
                             <table>
                                 <tr>
-                                  <input type="text" class="form-control" th:field="*{facebook}" placeholder="Your facebook">
+                                    <input type="text" class="form-control" th:field="*{facebook}"
+                                        placeholder="Your facebook">
                                 </tr>
                                 <br>
                                 <tr>
-                                  <input type="text" class="form-control" th:field="*{instagram}" placeholder="Your instagram">
+                                    <input type="text" class="form-control" th:field="*{instagram}"
+                                        placeholder="Your instagram">
                                 </tr>
-                              </table>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -168,7 +172,8 @@
 
                                 <div class="col-md-6">
                                     <label class="small mb-1">Password</label>
-                                    <input class="form-control" id="inputLastName" type="password" th:field="*{password}">                                      
+                                    <input class="form-control" id="inputLastName" type="password"
+                                        th:field="*{password}">
                                 </div>
                             </div>
 
@@ -204,8 +209,9 @@
                             </div>
 
                             <button class="btn btn-primary" type="submit">Save changes</button>
-
+                            <a class="btn btn-primary" th:href="@{/index}">Home</a>
                         </div>
+
                     </div>
                 </div>
 

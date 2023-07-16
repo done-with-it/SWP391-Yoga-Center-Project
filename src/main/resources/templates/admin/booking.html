@@ -234,7 +234,7 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr th:each="book, iterStat : ${booking}">
+                                    <tr th:each="book, iterStat : ${booking}" th:if="${book.status == true}">
                                         <td th:text="${iterStat.count}"></td>
                                         <td>[[${book.customerid.fullname}]]</td>
                                         <td>[[${book.classid.classname}]]</td>
@@ -243,8 +243,8 @@
                                         <td>[[${book.amount}]]</td>
                                         <td>[[${book.bookingdate}]]</td>
                                         <td>
-                                            <span th:if="${book.status}">Đã thanh toán</span>
-                                            <span th:unless="${book.status}">Chưa thanh toán</span>
+                                            <span th:if="${book.status}">successful transaction</span>
+                                            
                                         </td>
                                     </tr>
                                 </tbody>

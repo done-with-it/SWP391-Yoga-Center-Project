@@ -247,7 +247,7 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr th:each="user, iterStat : ${userList}" th:if="${user.status != false}">
+                                    <tr th:each="user, iterStat : ${userList}">
                                         <td th:text="${iterStat.count}"></td>
                                         <td>[[${user.fullname}]]</td>
                                         <td>[[${user.email}]]</td>
