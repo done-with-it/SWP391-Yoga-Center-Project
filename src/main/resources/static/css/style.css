@@ -435,7 +435,8 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 .header-bottom .hb-right {
 	float: right;
-	padding-top: 15px;
+	padding-right: 70px;
+	padding-top: 14px;
 }
 
 .header-bottom .hb-switch {
