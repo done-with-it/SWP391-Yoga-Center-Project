@@ -26,10 +26,12 @@ import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.dto.MonthlyTotal;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
 import com.fptyoga.yogacenter.repository.TrainerRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
+import com.fptyoga.yogacenter.service.BookingService;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.RoleService;
@@ -48,8 +50,16 @@ public class admincontroller {
     @Autowired
     private TrainerRepository trainerRepository;
 
+    @Autowired
+    private BookingService bookingService;
     @GetMapping("/index")
     public String trainer(Model model, @RequestParam(defaultValue = "") Long roleid) {
+        
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+
+        List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+        model.addAttribute("monthlyTotals", monthlyTotals);
         if (roleid != null) {
             List<User> userList = userService.listAll(roleid);
             model.addAttribute("userList", userList);
@@ -61,9 +71,51 @@ public class admincontroller {
     }
 
     @GetMapping("/charts")
-    public String show401() {
+    public String chart(Model model) {
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+
+        List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+        model.addAttribute("monthlyTotals", monthlyTotals);
         return "admin/charts";
     }
+
+    @GetMapping("/accountDeleted")
+    public String accountDeleted(Model model, @RequestParam(defaultValue = "") Long roleid) {
+        
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+
+        List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+        model.addAttribute("monthlyTotals", monthlyTotals);
+        if (roleid != null) {
+            List<User> userList = userService.listAllUserFalse(roleid);
+            model.addAttribute("userList", userList);
+        } else {
+            List<User> userList = userService.getUserByStatusFalse();
+            model.addAttribute("userList", userList);
+        }
+        return "admin/accountDeleted";
+    }
+
+    @GetMapping("/updatedTrue/{id}")
+    public String updatedTrue(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        user.setStatus(true);
+        userRepository.save(user);
+        return "redirect:/admin/accountDeleted";
+    }
+
+    // @GetMapping("/books")
+    // public String revenue(Model model) {
+    //     List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+    //     model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+
+    //     List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+    //     model.addAttribute("monthlyTotals", monthlyTotals);
+    //     return "admin/booking";
+    // }
 
     @Autowired
     private RoleService roleService;
@@ -86,7 +138,7 @@ public class admincontroller {
     }
 
     @PostMapping("/adduser/new")
-    public String newUser(@ModelAttribute User user, @ModelAttribute Trainer trainers,
+    public String newUser(@ModelAttribute User user,
             @RequestParam(value = "id", required = false) Long id,
             RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
 
@@ -106,14 +158,23 @@ public class admincontroller {
         }
         userRepository.save(user);
 
-        User users = new User();
-        users.setUserid(user.getUserid());
-        if (user != null && user.getRole().getRoleid() == 3) {
-            trainers.setTrainerid(users);
-            trainerRepository.save(trainers);
-        }
-
         ra.addFlashAttribute("message", "The user has been saved successfully.");
+        return "redirect:/admin/index";
+    }
+
+    @GetMapping("/edit-trainer")
+    public String editTrainer(Model model, @RequestParam(value = "id") Long id, @ModelAttribute Trainer trainers) {
+        trainers = trainerRepository.findByTrainerid_Userid(id);
+        trainers.setInfoid(trainers.getInfoid());
+        model.addAttribute("id", id);
+        model.addAttribute("trainers", trainers);
+        return "admin/edit-trainer";
+    }
+
+    @PostMapping("/updateTrainer")
+    public String updateTrainer(@RequestParam(value = "id") Long id, Model model,
+            @ModelAttribute Trainer trainers) {
+        trainerRepository.save(trainers);
         return "redirect:/admin/index";
     }
 
@@ -129,20 +190,15 @@ public class admincontroller {
     @GetMapping("/edit/{id}")
     public String showEdit(@PathVariable("id") Long id, Model model) {
         List<Role> rolesList = roleService.allRole();
-        List<User> trainers = userService.listAll(3L);
-        model.addAttribute("trainers", trainers);
         model.addAttribute("rolesList", rolesList);
         try {
-            Trainer trainer = trainerRepository.findById(id).orElse(null);
             User user = userRepository.findById(id).orElse(null);
-            model.addAttribute("trainer", trainer);
             model.addAttribute("user", user);
             return "admin/adduser";
         } catch (Exception e) {
         }
         return "admin/index";
     }
-    
 
     @GetMapping("/download-png")
     public ResponseEntity<Resource> downloadPng(@RequestParam(defaultValue = "") Long userid) {
@@ -213,6 +269,12 @@ public class admincontroller {
 
     @GetMapping("/booking")
     public String booking(Model model) {
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+
+        List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+        model.addAttribute("monthlyTotals", monthlyTotals);
+
         List<Booking> booking = bookingRepository.findAll();
         model.addAttribute("booking", booking);
         return "admin/booking";

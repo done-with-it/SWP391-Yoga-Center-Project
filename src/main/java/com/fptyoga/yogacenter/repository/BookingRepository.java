@@ -16,16 +16,29 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByCustomerid_UseridAndStatus(Long customerid, boolean status);
 
+    List<Booking> findByCustomerid_UseridAndStatusAndResponseCode(Long customerid, boolean status, String responseCode);
+
     List<Booking> findByClassid_ClassidAndStatus(Long classid, boolean status);
 
     @Query("SELECT COUNT(b.classid) FROM Booking b WHERE b.status = true AND b.classid.classid = :classId")
     int countDuplicateClassIdsWithStatusTrue(@Param("classId") Long classId);
 
-    @Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.customerid.userid = :userid AND b.classid.date = :date AND b.classid.timeid.timeid = :timeid")
-    boolean existsByUserIdDateAndTimeId(Long userid, String date, Long timeid);
+    @Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.customerid.userid = :userid AND b.classid.date = :date AND b.classid.timeid.timeid = :timeid AND b.status = true")
+    boolean existsByUserIdDateAndTimeIdAndStatus(Long userid, String date, Long timeid);
 
     @Modifying
     @Query("UPDATE Booking b SET b.status = false WHERE b.bookingdate < :endDate AND b.status = true")
     void updateStatusAfter2Minutes(LocalDateTime endDate);
 
+    @Query("SELECT MONTH(b.bookingdate) AS month, SUM(b.amount) AS totalAmount " +
+            "FROM Booking b " +
+            "WHERE b.responseCode = '00' " +
+            "GROUP BY MONTH(b.bookingdate)")
+    List<Object[]> getMonthlyBookingAmount();
+
+    @Query("SELECT MONTH(b.bookingdate) AS month, SUM(b.amount) AS totalAmount " +
+           "FROM Booking b " +
+           "WHERE MONTH(b.bookingdate) >= :startMonth AND MONTH(b.bookingdate) <= :endMonth " +
+           "GROUP BY MONTH(b.bookingdate)")
+    List<Object[]> findTotalAmountByMonth(int startMonth, int endMonth);
 }

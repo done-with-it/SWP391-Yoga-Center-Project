@@ -67,7 +67,7 @@ public class PaymentController {
             return "redirect:/classes";
         } else {
 
-            if (bookingRepository.existsByUserIdDateAndTimeId(userID, date, timeid)) {
+            if (bookingRepository.existsByUserIdDateAndTimeIdAndStatus(userID, date, timeid)) {
                 ra.addFlashAttribute("mess",
                         "You had booked this class or booked the same class time, please choose another class !");
                 return "redirect:/classes";
@@ -187,7 +187,7 @@ public class PaymentController {
             book.setStatus(true);
 
             book.setBookingdate(LocalDateTime.now());
-            LocalDateTime expired = book.getBookingdate().plusMinutes(2);
+            LocalDateTime expired = book.getBookingdate().plusMinutes(5);
             book.setExpired(expired);
             
             book.setBankCode(bankCode);
@@ -203,6 +203,8 @@ public class PaymentController {
 
             book.setStatus(false);
             book.setBookingdate(LocalDateTime.now());
+            LocalDateTime expired = book.getBookingdate().plusMinutes(5);
+            book.setExpired(expired);
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);

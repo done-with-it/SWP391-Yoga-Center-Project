@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
 <head>
 	<title>FPT Yoga</title>
 	<meta charset="UTF-8">
@@ -7,15 +8,15 @@
 	<meta name="keywords" content="yoga, html">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-	<link rel="stylesheet" href="css/nice-select.css"/>
-	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
-	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/owl.carousel.min.css" />
+	<link rel="stylesheet" href="css/nice-select.css" />
+	<link rel="stylesheet" href="css/jquery-ui.min.css" />
+	<link rel="stylesheet" href="css/slicknav.min.css" />
 
 	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/style.css" />
 
 
 	<!--[if lt IE 9]>
@@ -24,6 +25,7 @@
 	<![endif]-->
 
 </head>
+
 <body>
 	<!-- Page Preloder -->
 	<div id="preloder">
@@ -39,14 +41,15 @@
 	<!-- Infor Model -->
 	<div th:replace="~{common :: infor-model}"></div>
 	<!-- Infor Model end -->
-	                                                                              
+
 	<!-- Page top Section -->
 	<section class="page-top-section page-sp set-bg" data-setbg="img/page-top-bg.jpg">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 m-auto text-white">
 					<h2>All of Your Schedule</h2>
-					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern technology, 
+					<p>Welcome to FPT Yoga! We are an innovative yoga brand that combines tradition and modern
+						technology,
 						we are committed to bringing you a great yoga experience and improving your overall health!</p>
 				</div>
 			</div>
@@ -57,25 +60,12 @@
 	<div class="container">
 		<div class="event-filter-warp">
 			<div class="row">
-				<div class="col-xl-3">
-					<p>Showing 8 classes of 30 classes</p>
-				</div>
 				<div class="col-xl-9">
-					<form class="event-filter-form">
-						<div class="ef-item">
-							<input type="text" placeholder="Event Date" class="event-date">
-							<i class="material-icons">event_available</i>
-						</div>
-						<div class="ef-item">
-							<input type="text" placeholder="Search">
-							<i class="material-icons">search</i>
-						</div>
-						<div class="ef-item">
-							<input type="text" placeholder="Location">
-							<i class="material-icons">map</i>
-						</div>
-						<button class="site-btn sb-gradient">Find Event</button>
-					</form>
+					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
+						th:href="@{/schedule(userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}">History</a>
+
+					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
+						th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">Now</a>
 				</div>
 			</div>
 		</div>
@@ -85,37 +75,49 @@
 	<!-- Events Section -->
 	<section class="events-page-section spad">
 		<div class="container">
-			<div  class="row" >
+			<div class="row">
 				<div class="col-lg-6" th:if="${roleid == 4}" th:each="booked : ${booked}">
 					<div class="event-item">
 						<div class="ei-img">
 							<img th:src="@{/staff/downloads-png(courseid=${booked.classid.courseid.courseid})}"
-											alt="PNG Image" width="222px" height="186px">
+								alt="PNG Image" width="222px" height="186px">
 						</div>
 						<div class="ei-text">
-							<h4><a th:href="@{/class-details(classid=${booked.classid.classid})}">[[${booked.classid.courseid.coursename}]]</a></h4>
+							<h4>
+								<a th:if="${booked.status == true}"
+									th:href="@{/class-details(classid=${booked.classid.classid})}">[[${booked.classid.courseid.coursename}]]</a>
+								<a th:if="${booked.status == false}"
+									th:href="@{/create_payment(classID=${booked.classid.classid}, date=${booked.classid.date}, timeid=${booked.classid.timeid.timeid}, userID=${session.user.userid})}">[[${booked.classid.courseid.coursename}]]</a>
+							</h4>
 							<ul>
 								<li><i class="material-icons">person</i>[[${booked.classid.trainerid.fullname}]]</li>
-								<li><i class="material-icons">alarm</i>[[${booked.classid.timeid.starttime}]] - [[${booked.classid.timeid.endtime}]]</li>
-								<li><i class="material-icons">map</i>[[${booked.classid.roomid.roomname}]] - <i class="material-icons">event_available</i>[[${booked.classid.date}]]</li>
+								<li><i class="material-icons">alarm</i>[[${booked.classid.timeid.starttime}]] -
+									[[${booked.classid.timeid.endtime}]]</li>
+								<li><i class="material-icons">map</i>[[${booked.classid.roomid.roomname}]] - <i
+										class="material-icons">event_available</i>[[${booked.classid.date}]]</li>
+								<div th:if="${booked.status == false}" style="color: red;">Expired</div>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div  class="row" >
+			<div class="row">
 				<div class="col-lg-6" th:if="${roleid == 3}" th:each="classes : ${classes}">
 					<div class="event-item">
 						<div class="ei-img">
-							<img th:src="@{/staff/downloads-png(courseid=${classes.courseid.courseid})}"
-											alt="PNG Image" width="222px" height="186px">
+							<img th:src="@{/staff/downloads-png(courseid=${classes.courseid.courseid})}" alt="PNG Image"
+								width="222px" height="186px">
 						</div>
 						<div class="ei-text">
-							<h4><a th:href="@{/class-details(classid=${classes.classid})}">[[${classes.courseid.coursename}]]</a></h4>
+							<h4><a
+									th:href="@{/class-details(classid=${classes.classid})}">[[${classes.courseid.coursename}]]</a>
+							</h4>
 							<ul>
 								<li><i class="material-icons">person</i>[[${classes.trainerid.fullname}]]</li>
-								<li><i class="material-icons">alarm</i>[[${classes.timeid.starttime}]] - [[${classes.timeid.endtime}]]</li>
-								<li><i class="material-icons">map</i>[[${classes.roomid.roomname}]] - <i class="material-icons">event_available</i>[[${classes.date}]]</li>
+								<li><i class="material-icons">alarm</i>[[${classes.timeid.starttime}]] -
+									[[${classes.timeid.endtime}]]</li>
+								<li><i class="material-icons">map</i>[[${classes.roomid.roomname}]] - <i
+										class="material-icons">event_available</i>[[${classes.date}]]</li>
 							</ul>
 						</div>
 					</div>
@@ -159,5 +161,6 @@
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/main.js"></script>
 
-	</body>
+</body>
+
 </html>

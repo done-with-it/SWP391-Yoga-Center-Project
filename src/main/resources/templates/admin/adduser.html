@@ -45,9 +45,8 @@
       <h1 th:if="${id == null || id == 0}">Add User</h1>
       <h1 th:if="${id>0}">Update User</h1>
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-        <li><a data-toggle="tab" href="#messages">Menu 1</a></li>
-        <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
+        <li class="active"><a data-toggle="tab" th:href="@{/admin/adduser(id=${id})}">Home</a></li>
+
       </ul>
     </div>
     <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
@@ -83,6 +82,10 @@
               <br>
               <tr>
                 <input type="text" class="form-control" th:field="*{instagram}" placeholder="Your instagram">
+              </tr>
+              <tr>
+                <br>
+                <!-- <button><a th:href="@{/admin/edit-trainer(id=${id})}">Trainer</a></button> -->
               </tr>
             </table>
 
@@ -149,10 +152,10 @@
 
               <div class="col-xs-6">
                 <h4>Role</h4>
-                <select th:field="*{role}" nam="id" >
+                <select th:field="*{role}" nam="id">
                   <option th:each="role : ${rolesList}" th:value="${role.roleid}" th:if="${role.roleid != 1}"
-                    th:text="${role.roleName}"  class="form-control"></option>
-                    <!-- th:selected="${user.role.roleid == role.roleid}" -->
+                    th:text="${role.roleName}" class="form-control"></option>
+                  <!-- th:selected="${user.role.roleid == role.roleid}" -->
                 </select>
               </div>
             </div>
@@ -187,32 +190,7 @@
   <hr>
 
 </div><!--/tab-pane-->
-<div class="tab-pane" id="messages">
 
-  <h2></h2>
-
-  <hr>
-  <form class="form" th:action="@{/admin/adduser/new(id=${id})}" method="post" th:object="${trainer}"
-    enctype="multipart/form-data">
-    <input type="hidden" name="id" th:field="*{infoid}"/>
-    <div class="form-group">
-
-      <div class="col-xs-12">
-        <h4>Experience</h4>
-        <input type="text" class="form-control" th:field="*{experience}" placeholder="Full name">
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <br>
-        <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i>
-          Save</button>
-        <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
-      </div>
-    </div>
-  </form>
-
-</div>
 </div><!--/tab-pane-->
 </div><!--/tab-content-->
 

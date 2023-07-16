@@ -190,19 +190,25 @@ public class homeController {
     }
 
     @GetMapping("/schedule")
-    public String getSchedules(@RequestParam("userid") Long userid, Model model, @RequestParam("roleid") Long roleid,
+    public String getSchedules(@RequestParam("userid") Long userid, @RequestParam("status") int status, Model model,
+            @RequestParam("roleid") Long roleid,
             @RequestParam(defaultValue = "1") int page) {
         PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by("classid").descending());
         if (roleid == 4) {
             List<Booking> booking = bookingRepository.findAll();
             for (Booking book : booking) {
-                if(LocalDateTime.now().isAfter(book.getExpired())){
+                if (LocalDateTime.now().isAfter(book.getExpired())) {
                     book.setStatus(false);
                     bookingRepository.save(book);
                 }
             }
-            List<Booking> booked = bookingService.getSchedule(userid);
-            
+            List<Booking> booked;
+            if (status == 1) {
+                booked = bookingService.getSchedule(userid);
+            } else {
+                booked = bookingService.getHistorySchedule(userid);
+            }
+
             model.addAttribute("booked", booked);
         } else {
             Page<Class> classes = classesService.getSchedulesByTrainer(userid, pageable);
@@ -227,7 +233,7 @@ public class homeController {
             // Xử lý lỗi nếu cần
         }
         ra.addFlashAttribute("update", "The user has been update successfully.");
-        return "redirect:/profile";
+        return "redirect:/index";
     }
 
     @GetMapping("/edit/{id}")
@@ -386,14 +392,14 @@ public class homeController {
         if (userRepository.existsByEmail(user.getEmail())) {
             ra.addFlashAttribute("existsemail", "The Email already exists.");
             return "redirect:/createAccount";
-        } else {
+        }
             user.setRegistrationdate(LocalDate.now());
             user.setStatus(true);
             user.setRole(roleid);
             userRepository.save(user);
             ra.addFlashAttribute("update", "The user has been saved successfully.");
-        }
-        return "createAccount";
+        
+        return "redirect:/loginpage";
     }
 
 }
