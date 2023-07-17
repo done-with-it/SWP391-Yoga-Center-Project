@@ -29,6 +29,7 @@ import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Course;
+import com.fptyoga.yogacenter.Entity.Feedback;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
@@ -36,6 +37,7 @@ import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.ClassesRepository;
 import com.fptyoga.yogacenter.repository.ContentRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
+import com.fptyoga.yogacenter.repository.FeedbacKRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.BookingService;
 import com.fptyoga.yogacenter.service.ClassesService;
@@ -84,6 +86,9 @@ public class homeController {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private FeedbacKRepository feedbacKRepository;
+
     @GetMapping("")
     public String show() {
         return "redirect:/index";
@@ -100,6 +105,8 @@ public class homeController {
         model.addAttribute("totalPages", contents.getTotalPages());
         model.addAttribute("contents", contents);
         model.addAttribute("trainList", trainList);
+
+        model.addAttribute("feedbacks", new Feedback());
         return "index";
     }
 
@@ -400,6 +407,14 @@ public class homeController {
             ra.addFlashAttribute("update", "The user has been saved successfully.");
         
         return "redirect:/loginpage";
+    }
+
+    @PostMapping("/request")
+    public String viewRequest(@ModelAttribute Feedback feedback,RedirectAttributes redirectAttributes){
+        feedback.setStatus(false);
+        feedback.setDate(LocalDate.now());
+        feedbacKRepository.save(feedback);
+        return "redirect:/index";
     }
 
 }

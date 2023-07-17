@@ -33,12 +33,18 @@ public class Feedback implements Serializable{
     private String content;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customerid;
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "fullname", columnDefinition = "NVARCHAR(50)")
+    private String fullname;
+
+    @Column(name = "email")
+    private String email;
+
 }

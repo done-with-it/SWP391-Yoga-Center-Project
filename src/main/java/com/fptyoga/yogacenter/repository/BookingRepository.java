@@ -36,9 +36,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "GROUP BY MONTH(b.bookingdate)")
     List<Object[]> getMonthlyBookingAmount();
 
-    @Query("SELECT MONTH(b.bookingdate) AS month, SUM(b.amount) AS totalAmount " +
-           "FROM Booking b " +
-           "WHERE MONTH(b.bookingdate) >= :startMonth AND MONTH(b.bookingdate) <= :endMonth " +
-           "GROUP BY MONTH(b.bookingdate)")
-    List<Object[]> findTotalAmountByMonth(int startMonth, int endMonth);
+    // @Query("SELECT MONTH(b.bookingdate) AS month, SUM(b.amount) AS totalAmount " +
+    //        "FROM Booking b " +
+    //        "WHERE MONTH(b.bookingdate) >= :startMonth AND MONTH(b.bookingdate) <= :endMonth " +
+    //        "GROUP BY MONTH(b.bookingdate)")
+    // List<Object[]> findTotalAmountByMonth(int startMonth, int endMonth);
+    
 }

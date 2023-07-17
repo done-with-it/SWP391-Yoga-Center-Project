@@ -26,6 +26,10 @@ var myLineChart = new Chart(ctx, {
         time: {
           unit: 'month'
         },
+        ticks: {
+          
+          maxTicksLimit: 10
+        },
         gridLines: {
           display: false
         },
