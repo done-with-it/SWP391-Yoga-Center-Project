@@ -98,15 +98,7 @@ public class UserService {
     }
 
     public List<User> getUserByStatus(){
-        return repo.findByStatus(true);
-    }
-
-    public List<User> listAllUserFalse(Long role) {
-        return repo.findByRole_RoleidAndStatus(role, false);
-
-    }
-    public List<User> getUserByStatusFalse(){
-        return repo.findByStatus(false);
+        return repo.findByStatusAndRole_RoleidNot(true, 1l);
     }
 
     public List<MonthlyTotal> getMonthlyUser() {
@@ -120,6 +112,14 @@ public class UserService {
         }
 
         return monthlyUser;
+    }
+
+    public List<User> listAllUserFalse(Long role) {
+        return repo.findByRole_RoleidAndStatus(role, false);
+
+    }
+    public List<User> getUserByStatusFalse(){
+        return repo.findByStatus(false);
     }
 
 }

@@ -275,7 +275,7 @@ public class admincontroller {
         List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
         model.addAttribute("monthlyTotals", monthlyTotals);
 
-        List<Booking> booking = bookingRepository.findAll();
+        List<Booking> booking = bookingService.getRevenue();
         model.addAttribute("booking", booking);
         return "admin/booking";
     }

@@ -8,7 +8,8 @@
 				<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
 			</a>
 			<div th:if="${session.user}">
-				<p>Welcome, [[${session.user.fullname}]]!</p>
+
+				<p>Welcome, [[${session.user.fullname}]]! </p>
 			</div>
 			<p>Revitalize Your Mind, Body, and Spirit with FPT Yoga.</p>
 			<div class="insta-imgs">
@@ -91,8 +92,13 @@
 			<div>
 				<ul class="main-menu" th:if="${session.user}">
 					<li>
-						<img th:if="${session.user}" th:src="@{/admin/download-png(userid=${session.user.userid})}"
-							alt="PNG Image" style="border-radius: 100%;" width="40px" height="40px">
+						<div>
+							<img th:if="${session.user.img == null}" src="img/unknow.png" alt="avatar" class="avatar" style="border-radius: 100%;" width="30px" height="30px">
+							<img th:if="${session.user.img != null}" th:src="@{/admin/download-png(userid=${session.user.userid})}"
+							alt="avatar" class="avatar" style="border-radius: 100%;" width="40px" height="40px">
+						</div>
+
+
 						<ul class="sub-menu">
 							<li th:if="${session.user.role.roleid == 4 || session.user.role.roleid == 3}"><a
 									th:href="@{/edit/{id}(id=${session.user.userid})}">Profile</a>
@@ -117,11 +123,6 @@
 	</div>
 	<div class="container">
 		<ul class="main-menu">
-			<!-- <li >
-				<a th:href="@{/index}" class="site-logo">
-					<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="" with="0%">
-				</a>
-			</li> -->
 			<li>
 				<a th:href="@{/about}">About</a>
 			</li>
@@ -136,61 +137,13 @@
 			</li>
 			<li>
 				<a th:href="@{/blog}">Blog</a>
-			</li >
+			</li>
 			<li th:if="${session.user}">
-				<a th:if="${session.user.role.roleid == 3}" th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">schedule</a>
-				<a th:if="${session.user.role.roleid == 4}" th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">schedule</a>
+				<a th:if="${session.user.role.roleid == 3}"
+					th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">schedule</a>
+				<a th:if="${session.user.role.roleid == 4}"
+					th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">schedule</a>
 			</li>
-			<!-- <li >
-				
-			</li>
-			<li >
-				
-			</li>
-			<li >
-				
-			</li>
-			<li >
-				
-			</li>
-			<li >
-				<a th:href="@{/loginpage}" th:if="${session.user == null}">
-					<img src="img/icons/login.png" alt=""></a>
-				</a>
-				<div>
-					<ul class="main-menu" th:if="${session.user}">
-						<li>
-							<img th:if="${session.user}" th:src="@{/admin/download-png(userid=${session.user.userid})}"
-								alt="PNG Image" style="border-radius: 100%;" width="40px" height="40px">
-							<ul class="sub-menu">
-								<li th:if="${session.user.role.roleid == 4 || session.user.role.roleid == 3}"><a
-										th:href="@{/edit/{id}(id=${session.user.userid})}">Profile</a></li>
-								<li><a th:href="@{/logout}">Logout</a></li>
-								<li th:if="${session.user.role.roleid == 2}"><a th:href="@{/staff/index}">Staff
-										Dashboard</a>
-								</li>
-								<li th:if="${session.user.role.roleid == 1}"><a th:href="@{/admin/index}">Admin
-										Dashboard</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</li>
-			<li >
-				<div class="hb-switch" id="infor-switch">
-					<img src="img/icons/bars.png" alt="">
-				</div>
-			</li> -->
-			
-
-			<!-- <ul class="sub-menu">
-                        <li><a href="#">Thông Tin Tài Khoản</a></li>
-                        <li><a href="#">Lớp Học</a></li>
-                        <li><a href="#">Đăng Xuất</a></li>
-                        <li><a href="#"></a></li>
-                    </ul> -->
-
 		</ul>
 	</div>
 </div>
@@ -260,14 +213,6 @@
 		</div>
 		<div class="col-lg-4 col-sm-6">
 			<div class="footer-widget pl-0 pl-lg-5">
-				<!-- <h2 class="fw-title">Company</h2>
-				<ul>
-					<li><a href="#">Online Education</a></li>
-					<li><a href="#">Gallery</a></li>
-					<li><a href="#">Special Issues</a></li>
-					<li><a href="#">Privacy Policy</a></li>
-					<li><a href="#">Contact Us</a></li>
-				</ul> -->
 				<h2 class="fw-title">Open time</h2>
 				<ul>
 					<li><i class="material-icons">alarm_on</i>Mon - Fri: 6:30am - 07:45pm</li>
@@ -280,16 +225,6 @@
 			</div>
 		</div>
 		<div class="col-lg-1 col-sm-6">
-			<!-- <div class="footer-widget">
-				<h2 class="fw-title">About Us</h2>
-				<ul>
-					<li><a href="#">Our Vision</a></li>
-					<li><a href="#">Our Mission</a></li>
-					<li><a href="#">Meet The Team</a></li>
-					<li><a href="#">Introduce</a></li>
-					<li><a href="#">Customer Service</a></li>
-				</ul>
-			</div> -->
 		</div>
 		<div class="col-lg-4 col-sm-6">
 			<div class="footer-widget pl-0 pl-lg-5">
@@ -308,12 +243,10 @@
 			</div>
 			<div class="col-md-8 text-md-right">
 				<div class="copyright">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 					Copyright &copy;
 					<script>document.write(new Date().getFullYear());</script> All rights reserved | This
 					website is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
 						th:href="@{https://www.facebook.com/GreenSea.prj}" target="_blank">FPT Yoga</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 				</div>
 			</div>
 		</div>

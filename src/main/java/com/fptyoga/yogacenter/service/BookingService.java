@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fptyoga.yogacenter.Entity.Booking;
-import com.fptyoga.yogacenter.Entity.Feedback;
-import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.dto.MonthlyTotal;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 
@@ -48,17 +46,7 @@ public class BookingService {
         return monthlyBookingAmounts;
     }
 
-    // public List<MonthlyTotal> getMonthlyTotals(int startMonth, int endMonth) {
-    //     List<Object[]> results = bookingRepository.findTotalAmountByMonth(startMonth, endMonth);
-    //     List<MonthlyTotal> monthlyTotals = new ArrayList<>();
-
-    //     for (Object[] result : results) {
-    //         int month = (int) result[0];
-    //         long totalAmount = (long) result[1];
-    //         monthlyTotals.add(new MonthlyTotal(month, totalAmount));
-    //     }
-
-    //     return monthlyTotals;
-    // }
-    
+    public List<Booking> getRevenue(){
+        return bookingRepository.findByResponseCode("00");
+    }
 }

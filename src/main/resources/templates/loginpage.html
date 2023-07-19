@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .gradient-form {
       background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
@@ -32,7 +33,7 @@
                   <a class="navbar-brand" th:href="@{/index}">
                     <center>
                       <div class="logo-for-all"><img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
-                          width="100%"></div>
+                          width="80%"></div>
                     </center>
                   </a>
                   <h4 class="mt-1 mb-5 pb-1">We understand you</h4>
@@ -40,7 +41,7 @@
                 </div>
                 <form th:action="@{/loginpage}" method="post" th:object="${user}">
                   <div class="form-outline mb-4">
-                    <input type="email" class="form-control" th:field="*{email}" placeholder="email address">
+                    <input type="email" class="form-control" th:field="*{email}" placeholder="Email Address">
                   </div>
                   <div class="form-outline mb-4">
                     <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
@@ -52,7 +53,7 @@
                       <input type="checkbox" name="remember" value="true">Remember Me
                     </div> -->
                   <div class="col text-right">
-                    <!-- <a class="text-muted" href="#!">Forgot password?</a> -->
+                    <a class="text-muted" href="#!">Forgot password?</a>
                   </div>
 
 
@@ -61,10 +62,23 @@
                       in</button>
                   </div>
                   <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-1">Don't have an account??</p>
+                    <p class="mb-0 me-5 m-2">Don't have an account?</p>
                     <a th:href="@{/createAccount}" class="btn btn-outline-danger">Create new account</a>
                   </div>
                 </form>
+                <a th:href="@{/oauth2/authorization/google}" style="text-align: center;">
+                  <img src="img/google.png" alt="" with="20px" height="20px">
+                </a>
+                
+                <!-- <div id="g_id_onload"
+                  data-client_id="933177251061-45c56o95nq3k15bjof6uivk4ovdlth5c.apps.googleusercontent.com"
+                  data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost:8080/login/oauth2/code/google"
+                  data-itp_support="true">
+                </div>
+
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                  data-text="signin_with" data-size="large" data-logo_alignment="left">
+                </div> -->
 
               </div>
             </div>

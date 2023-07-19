@@ -20,13 +20,15 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     List<User> findByStatus(Boolean status);
 
-    
-
-    boolean existsByEmail(String email);
+    List<User> findByStatusAndRole_RoleidNot(boolean status, Long role);
 
     @Query("SELECT MONTH(u.registrationdate) AS month, COUNT(u.userid) AS totalAmount " +
             "FROM User u " +
             "WHERE u.role.roleName = 'customers' AND u.status = true " +
             "GROUP BY MONTH(u.registrationdate)")
     List<Object[]> getMonthlyUser();
+
+    boolean existsByEmail(String email);
+
+    User findByEmail(String email);
 }

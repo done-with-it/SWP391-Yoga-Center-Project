@@ -3,6 +3,8 @@ package com.fptyoga.yogacenter.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +37,7 @@ import com.fptyoga.yogacenter.Entity.Feedback;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.Validator.EmailValidationUtil;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.ClassesRepository;
 import com.fptyoga.yogacenter.repository.ContentRepository;
@@ -89,13 +94,48 @@ public class homeController {
     @Autowired
     private FeedbacKRepository feedbacKRepository;
 
-    @GetMapping("")
-    public String show() {
+    // @GetMapping("")
+    // public String show() {
+    // return "redirect:/index";
+    // }
+
+    @GetMapping
+    public String home(Model model, RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal OAuth2User oa2User, HttpSession session) {
+
+        if (oa2User != null && userRepository.existsByEmail(oa2User.getAttribute("email"))) {
+            String email = oa2User.getAttribute("email");
+            User user = userRepository.findByEmail(email);
+            session.setAttribute("user", user);
+        } else if (oa2User != null && !userRepository.existsByEmail(oa2User.getAttribute("email"))) {
+            String email = oa2User.getAttribute("email");
+            String name = oa2User.getAttribute("name");
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setFullname(name);
+            newUser.setPassword("0000");
+            Role role = new Role();
+            role.setRoleid(4l);
+            newUser.setRole(role);
+            userRepository.save(newUser);
+            session.setAttribute("user", newUser);
+            return "redirect:/index";
+        }
         return "redirect:/index";
     }
 
+    // @PostMapping("/login")
+    // public String login(HttpSession session){
+    // String email = (String) session.getAttribute("email");
+    // if (userRepository.existsByEmail(email)) {
+    // User user = userRepository.findByEmail(email);
+    // session.setAttribute("user", user);
+    // }
+    // return "index";
+    // }
+
     @GetMapping("/index")
-    public String index(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String index(Model model, @RequestParam(defaultValue = "1") int page, HttpSession session) {
         List<User> trainList = userService.listAll(3L);
         PageRequest pageable = PageRequest.of(page - 1, 3, Sort.by("createdate").descending());
         Page<Content> contents = contentRepository.findAll(pageable);
@@ -105,7 +145,6 @@ public class homeController {
         model.addAttribute("totalPages", contents.getTotalPages());
         model.addAttribute("contents", contents);
         model.addAttribute("trainList", trainList);
-
         model.addAttribute("feedbacks", new Feedback());
         return "index";
     }
@@ -200,7 +239,7 @@ public class homeController {
     public String getSchedules(@RequestParam("userid") Long userid, @RequestParam("status") int status, Model model,
             @RequestParam("roleid") Long roleid,
             @RequestParam(defaultValue = "1") int page) {
-        PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by("classid").descending());
+        PageRequest pageable = PageRequest.of(page - 1, 6);
         if (roleid == 4) {
             List<Booking> booking = bookingRepository.findAll();
             for (Booking book : booking) {
@@ -210,10 +249,12 @@ public class homeController {
                 }
             }
             List<Booking> booked;
-            if (status == 1) {
+            if (status == 1 || status == 3) {
                 booked = bookingService.getSchedule(userid);
             } else {
                 booked = bookingService.getHistorySchedule(userid);
+                Collections.sort(booked, Comparator.comparing(Booking::getBookingid));
+                Collections.reverse(booked);
             }
 
             model.addAttribute("booked", booked);
@@ -221,8 +262,17 @@ public class homeController {
             Page<Class> classes = classesService.getSchedulesByTrainer(userid, pageable);
             model.addAttribute("classes", classes);
         }
+        model.addAttribute("status", status);
         model.addAttribute("roleid", roleid);
         return "schedule";
+    }
+
+    @PostMapping("/request")
+    public String viewRequest(@ModelAttribute Feedback feedback, RedirectAttributes redirectAttributes) {
+        feedback.setStatus(false);
+        feedback.setDate(LocalDate.now());
+        feedbacKRepository.save(feedback);
+        return "redirect:/index";
     }
 
     @GetMapping("/profile")
@@ -392,29 +442,27 @@ public class homeController {
             @RequestParam(defaultValue = "4") Role roleid,
             @RequestParam("confirmPassword") String confirmPassword) {
 
-        if (!user.getPassword().equals(confirmPassword)) {
-            ra.addFlashAttribute("passwordMismatch", "Passwords do not match");
+        boolean isValid = EmailValidationUtil.isValidEmail(user.getEmail());
+        if (!isValid) {
+            ra.addFlashAttribute("existsemail", "The Email not valid");
             return "redirect:/createAccount";
-        }
-        if (userRepository.existsByEmail(user.getEmail())) {
-            ra.addFlashAttribute("existsemail", "The Email already exists.");
-            return "redirect:/createAccount";
-        }
+        } else {
+            if (!user.getPassword().equals(confirmPassword)) {
+                ra.addFlashAttribute("passwordMismatch", "Passwords do not match");
+                return "redirect:/createAccount";
+            }
+            if (userRepository.existsByEmail(user.getEmail())) {
+                ra.addFlashAttribute("existsemail", "The Email already exists.");
+                return "redirect:/createAccount";
+            }
             user.setRegistrationdate(LocalDate.now());
             user.setStatus(true);
             user.setRole(roleid);
             userRepository.save(user);
             ra.addFlashAttribute("update", "The user has been saved successfully.");
-        
-        return "redirect:/loginpage";
-    }
+        }
 
-    @PostMapping("/request")
-    public String viewRequest(@ModelAttribute Feedback feedback,RedirectAttributes redirectAttributes){
-        feedback.setStatus(false);
-        feedback.setDate(LocalDate.now());
-        feedbacKRepository.save(feedback);
-        return "redirect:/index";
+        return "redirect:/loginpage";
     }
 
 }
