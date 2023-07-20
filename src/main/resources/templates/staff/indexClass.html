@@ -39,7 +39,8 @@
                         style="border-radius: 100%;" width="30px" height="30px"></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" th:href="@{/index}">Home</a></li>
-                    <li><a class="dropdown-item" th:href="@{/admin/edit/{id}(id=${session.user.userid})}">Settings</a></li>
+                    <li><a class="dropdown-item" th:href="@{/admin/edit/{id}(id=${session.user.userid})}">Settings</a>
+                    </li>
                     <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                 </ul>
             </li>
@@ -73,6 +74,33 @@
                             Course
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseBooking" aria-expanded="false" aria-controls="collapseBooking">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Class Booking
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseBooking" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav" th:each="class : ${classes}">
+                                <a class="nav-link"
+                                    th:href="@{/staff/classBooking(classid=${class.classid})}">[[${class.classname}]]</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            View Request
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseAccounts" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Requesting</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Requested</a>
+                            </nav>
+                        </div>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -90,7 +118,8 @@
                             <i class="fas fa-table me-1"></i>
                         </div>
                         <div class="card-header" style="text-align: center;">
-                            <h5><a th:href="@{/staff/addClass}" style="color: black; font-weight: bold;">Add New Class</a>
+                            <h5><a th:href="@{/staff/addClass}" style="color: black; font-weight: bold;">Add New
+                                    Class</a>
                             </h5>
                         </div>
                         <div class="card-body">
@@ -144,7 +173,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

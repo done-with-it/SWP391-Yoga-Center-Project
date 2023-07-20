@@ -57,17 +57,17 @@
 	</section>
 	<!-- Page top Section end -->
 
-	<div class="container">
+	<div class="container" th:if="${roleid == 4}">
 		<div class="event-filter-warp">
 			<div class="row">
 				<div class="col-xl-9">
-					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
+					<a  class="site-btn sb-gradient"
 						th:href="@{/schedule(userid=${session.user.userid}, status=${3}, roleid=${session.user.role.roleid})}">Schedule</a>
 
-					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
+					<a class="site-btn sb-gradient"
 						th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">Booking</a>
 
-					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
+					<a class="site-btn sb-gradient"
 						th:href="@{/schedule(userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}">History</a>
 
 				</div>

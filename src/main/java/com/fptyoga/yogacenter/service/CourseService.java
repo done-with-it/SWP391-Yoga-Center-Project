@@ -55,4 +55,7 @@ public class CourseService {
             throw new RuntimeException("User not found for course: " + courseid);
         }
     }
+    public int totalCourse(){
+        return courseRepository.CountCourseWithStatusTrue();
+    }
 }

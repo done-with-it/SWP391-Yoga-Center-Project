@@ -47,6 +47,9 @@ public class Course implements Serializable {
     @Column(name = "price")
     private float price;
 
+    @Column(name = "exchange")
+    private float exchange;
+
     @Column(name = "duration")
     private Long duration;
 

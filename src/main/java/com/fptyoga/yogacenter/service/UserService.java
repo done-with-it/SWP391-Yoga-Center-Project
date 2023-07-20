@@ -2,17 +2,21 @@ package com.fptyoga.yogacenter.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.dto.MonthlyTotal;
 import com.fptyoga.yogacenter.repository.UserRepository;
 
 import jakarta.persistence.EntityManager;
@@ -92,11 +96,37 @@ public class UserService {
     }
 
     public User login(String email, String password) {
-        return repo.findByEmailAndPassword(email, password);
+        return repo.findByEmailAndPasswordAndStatus(email, password, true);
     }
 
     public List<User> getUserByStatus(){
-        return repo.findByStatus(true);
+        return repo.findByStatusAndRole_RoleidNot(true, 1l);
+    }
+
+    public List<MonthlyTotal> getMonthlyUser() {
+        List<Object[]> results = repo.getMonthlyUser();
+        List<MonthlyTotal> monthlyUser = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Integer month = (Integer) result[0];
+            Long totalAmount = (Long) result[1];
+            monthlyUser.add(new MonthlyTotal(month, totalAmount));
+        }
+
+        return monthlyUser;
+    }
+
+    public List<User> listAllUserFalse(Long role) {
+        return repo.findByRole_RoleidAndStatus(role, false);
+
+    }
+    public List<User> getUserByStatusFalse(){
+        return repo.findByStatus(false);
+    }
+
+
+    public long countUsersByRoleAndStatus() {
+        return repo.countByRoleAndStatus();
     }
 
 }

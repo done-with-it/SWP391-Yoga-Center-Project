@@ -105,7 +105,7 @@
 										<a th:if="${session.user == null}" th:href="@{/loginpage}"
 											class="site-btn sb-gradient">book now</a>
 										<a th:if="${session.user != null && session.user.role.roleid == 4}"
-											th:href="@{/create_payment(classID=${class.classid}, date=${class.date}, timeid=${class.timeid.timeid}, userID=${session.user.userid}, duration=${class.courseid.duration})}"
+											th:href="@{/create_payment(classID=${class.classid}, date=${class.date}, timeid=${class.timeid.timeid}, userID=${session.user.userid}, duration=${class.courseid.duration}, price=${class.courseid.price * class.courseid.exchange})}"
 											onclick="return confirmBookClass();" class="site-btn sb-gradient">book
 											now</a>
 

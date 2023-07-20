@@ -40,4 +40,14 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     Booking findByClassid_ClassidAndCustomerid_Userid(Long classid, Long customerid);
 
+    @Query("SELECT MONTH(b.bookingdate) AS month, SUM(b.amount) AS totalAmount " +
+            "FROM Booking b " +
+            "WHERE b.responseCode = '00'" +
+            "GROUP BY MONTH(b.bookingdate)")
+    List<Object[]> getMonthlyBookingAmount();
+
+    List<Booking> findByResponseCode(String responsecode);
+
+    @Query("SELECT SUM(b.amount) FROM Booking b WHERE b.responseCode = '00' ")
+    long sumAmountWithResponseCode();
 }

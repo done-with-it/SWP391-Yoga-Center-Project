@@ -59,7 +59,7 @@ public class PaymentController {
      */
     @RequestMapping("/create_payment")
     public String payment(@RequestParam(value = "classID") Long classID, @RequestParam(value = "date") String date,
-            @RequestParam(value = "timeid") Long timeid, @RequestParam(value = "userID") Long userID,
+            @RequestParam(value = "timeid") Long timeid, @RequestParam(value = "userID") Long userID, @RequestParam(value = "price") float price,
             RedirectAttributes ra, @RequestParam(value = "duration") Long duration)
             throws UnsupportedEncodingException {
 
@@ -72,7 +72,11 @@ public class PaymentController {
                     || !bookingRepository.existsByUserIdDateAndTimeIdAndStatus(userID, date, timeid)) {
                 String orderType = "billpayment";
 
-                long amount = 460000 * 100;
+
+
+
+                long amount = Math.round(price) * 100;
+                
 
                 String vnp_TxnRef = Config.getRandomNumber(8);
                 String vnp_TmnCode = Config.vnp_TmnCode;
@@ -189,7 +193,8 @@ public class PaymentController {
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
-            book.setAmount(cost);
+            book.setAmount(cost/100);
+            
             if (expired != null) {
                 expired = expired.plusMinutes(duration.longValue());
                 book.setExpired(expired);
@@ -210,9 +215,9 @@ public class PaymentController {
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
-            book.setAmount(cost);
+            book.setAmount(cost/100);
             bookingRepository.save(book);
-            return "index";
+            return "redirect:/index";
 
         }
 
