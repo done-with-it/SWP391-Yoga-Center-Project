@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
@@ -32,6 +35,7 @@ import com.fptyoga.yogacenter.repository.CourseRepository;
 import com.fptyoga.yogacenter.repository.TrainerRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 import com.fptyoga.yogacenter.service.BookingService;
+import com.fptyoga.yogacenter.service.ClassesService;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.RoleService;
@@ -52,13 +56,42 @@ public class admincontroller {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private ContentService contentService;
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
+
+    @Autowired
+    private ClassesService classesService;
+
     @GetMapping("/index")
     public String trainer(Model model, @RequestParam(defaultValue = "") Long roleid) {
-        
-        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
-        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
 
+        int countClass = classesService.totalClasses();
+        long CountCustomer = userService.countUsersByRoleAndStatus();
+        long SumAmout = bookingService.TotalAmount();
+        int countCourse = courseService.totalCourse();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        String formattedNumber = numberFormat.format(SumAmout);
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
         List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+
+        model.addAttribute("countCourse", countCourse);
+        model.addAttribute("countClass", countClass);
+        model.addAttribute("CountCustomer", CountCustomer);
+        model.addAttribute("formattedNumber", formattedNumber);
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
         model.addAttribute("monthlyTotals", monthlyTotals);
         if (roleid != null) {
             List<User> userList = userService.listAll(roleid);
@@ -82,11 +115,21 @@ public class admincontroller {
 
     @GetMapping("/accountDeleted")
     public String accountDeleted(Model model, @RequestParam(defaultValue = "") Long roleid) {
-        
-        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
-        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
 
+        int countClass = classesService.totalClasses();
+        long CountCustomer = userService.countUsersByRoleAndStatus();
+        long SumAmout = bookingService.TotalAmount();
+        int countCourse = courseService.totalCourse();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        String formattedNumber = numberFormat.format(SumAmout);
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
         List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+
+        model.addAttribute("countCourse", countCourse);
+        model.addAttribute("countClass", countClass);
+        model.addAttribute("CountCustomer", CountCustomer);
+        model.addAttribute("formattedNumber", formattedNumber);
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
         model.addAttribute("monthlyTotals", monthlyTotals);
         if (roleid != null) {
             List<User> userList = userService.listAllUserFalse(roleid);
@@ -109,16 +152,13 @@ public class admincontroller {
 
     // @GetMapping("/books")
     // public String revenue(Model model) {
-    //     List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
-    //     model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+    // List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+    // model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
 
-    //     List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
-    //     model.addAttribute("monthlyTotals", monthlyTotals);
-    //     return "admin/booking";
+    // List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+    // model.addAttribute("monthlyTotals", monthlyTotals);
+    // return "admin/booking";
     // }
-
-    @Autowired
-    private RoleService roleService;
 
     @GetMapping("/adduser")
     public String addUser(Model model, @RequestParam(value = "id", required = false) Long id) {
@@ -215,9 +255,6 @@ public class admincontroller {
         return ResponseEntity.notFound().build();
     }
 
-    @Autowired
-    private ContentService contentService;
-
     @GetMapping("/upload")
     public String uploadFile(Model model) {
         model.addAttribute("content", new Content());
@@ -250,12 +287,6 @@ public class admincontroller {
         return ResponseEntity.notFound().build();
     }
 
-    @Autowired
-    private CourseService courseService;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
     // @PostMapping("/document")
     // public String uploadDocument(Course course, Model model){
     // courseService.saveCourse(course);
@@ -264,18 +295,26 @@ public class admincontroller {
     // return "/admin/upload";
     // }
 
-    @Autowired
-    private BookingRepository bookingRepository;
-
     @GetMapping("/booking")
     public String booking(Model model) {
-        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
-        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
-
-        List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
-        model.addAttribute("monthlyTotals", monthlyTotals);
 
         List<Booking> booking = bookingService.getRevenue();
+        int countClass = classesService.totalClasses();
+        long CountCustomer = userService.countUsersByRoleAndStatus();
+        long SumAmout = bookingService.TotalAmount();
+        int countCourse = courseService.totalCourse();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        String formattedNumber = numberFormat.format(SumAmout);
+        List<MonthlyTotal> monthlyTotalsUser = userService.getMonthlyUser();
+        List<MonthlyTotal> monthlyTotals = bookingService.getMonthlyBookingAmount();
+
+        model.addAttribute("countCourse", countCourse);
+        model.addAttribute("countClass", countClass);
+        model.addAttribute("CountCustomer", CountCustomer);
+        model.addAttribute("formattedNumber", formattedNumber);
+        model.addAttribute("monthlyTotalsUser", monthlyTotalsUser);
+        model.addAttribute("monthlyTotals", monthlyTotals);
+
         model.addAttribute("booking", booking);
         return "admin/booking";
     }

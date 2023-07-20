@@ -48,4 +48,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByResponseCode(String responsecode);
 
+    @Query("SELECT SUM(b.amount) FROM Booking b WHERE b.responseCode = '00' ")
+    long sumAmountWithResponseCode();
 }

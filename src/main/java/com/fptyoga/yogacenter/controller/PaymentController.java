@@ -217,7 +217,7 @@ public class PaymentController {
             book.setResponseCode(responseCode);
             book.setAmount(cost/100);
             bookingRepository.save(book);
-            return "index";
+            return "redirect:/index";
 
         }
 

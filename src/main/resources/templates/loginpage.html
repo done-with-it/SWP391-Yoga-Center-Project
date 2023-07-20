@@ -45,7 +45,7 @@
                   </div>
                   <div class="form-outline mb-4">
                     <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
-                    <span style="color: red;">[[${error}]]</span>
+                    <span style="color: red;">[[${message}]]</span>
                   </div>
 
                   <!-- <div class="row">
@@ -53,7 +53,7 @@
                       <input type="checkbox" name="remember" value="true">Remember Me
                     </div> -->
                   <div class="col text-right">
-                    <a class="text-muted" href="#!">Forgot password?</a>
+                    <a class="text-muted" th:href="@{/forgot}">Forgot password?</a>
                   </div>
 
 
@@ -66,10 +66,14 @@
                     <a th:href="@{/createAccount}" class="btn btn-outline-danger">Create new account</a>
                   </div>
                 </form>
-                <a th:href="@{/oauth2/authorization/google}" style="text-align: center;">
-                  <img src="img/google.png" alt="" with="20px" height="20px">
-                </a>
-                
+                <p style="text-align: center;">Or</p>
+                <div style="text-align: center;">
+                  <a th:href="@{/oauth2/authorization/google}">
+                    <img src="img/google.png" alt="" with="40px" height="40px">
+                  </a>
+                </div>
+
+
                 <!-- <div id="g_id_onload"
                   data-client_id="933177251061-45c56o95nq3k15bjof6uivk4ovdlth5c.apps.googleusercontent.com"
                   data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost:8080/login/oauth2/code/google"

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        .gradient-form {
+            background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
+            background: linear-gradient(145deg, #bca6e6 0%, #979292 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#979292", GradientType=1);
+        }
+    </style>
+    <title>FPT Yoga</title>
+</head>
+
+<body>
+    <section class="h-100 gradient-form">
+        <div class="container py-4 h-30">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="border-radius: 50px;">
+                <div class="col-xl-5">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="card-body p-md-5 mx-md-4">
+                                <div class="text-center">
+                                    <a class="navbar-brand" th:href="@{/index}">
+                                        <div>
+                                            <div class="logo-for-all"><img
+                                                    src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
+                                                    width="80%"></div>
+                                        </div>
+                                    </a>
+                                    <h4 class="mt-1 mb-4 pb-1">Vertify</h4>
+                                </div>
+                                <form th:action="@{/verify-code}" method="post">
+                                    <input type="text" name="verifyCode" placeholder="Enter verify code"
+                                        class="form-control"><br>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">Verify</button>
+                                    <span style="color: red;">[[${message}]]</span>
+                                </form>
+                                <a th:href="@{/resend}">Resend verify code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

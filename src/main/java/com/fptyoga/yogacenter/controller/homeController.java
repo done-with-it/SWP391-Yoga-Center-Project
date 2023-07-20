@@ -44,6 +44,7 @@ import com.fptyoga.yogacenter.repository.ContentRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
 import com.fptyoga.yogacenter.repository.FeedbacKRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
+import com.fptyoga.yogacenter.service.AccountService;
 import com.fptyoga.yogacenter.service.BookingService;
 import com.fptyoga.yogacenter.service.ClassesService;
 import com.fptyoga.yogacenter.service.ContentService;
@@ -93,6 +94,9 @@ public class homeController {
 
     @Autowired
     private FeedbacKRepository feedbacKRepository;
+
+    @Autowired
+    private AccountService accountService;
 
     // @GetMapping("")
     // public String show() {
@@ -243,7 +247,8 @@ public class homeController {
         if (roleid == 4) {
             List<Booking> booking = bookingRepository.findAll();
             for (Booking book : booking) {
-                if (LocalDateTime.now().isAfter(book.getExpired())) {
+                LocalDateTime expired = book.getExpired();
+                if (expired != null && LocalDateTime.now().isAfter(expired)) {
                     book.setStatus(false);
                     bookingRepository.save(book);
                 }
@@ -440,7 +445,7 @@ public class homeController {
     @PostMapping("/createAccount/new")
     public String createnewUser(@ModelAttribute User user, RedirectAttributes ra,
             @RequestParam(defaultValue = "4") Role roleid,
-            @RequestParam("confirmPassword") String confirmPassword) {
+            @RequestParam("confirmPassword") String confirmPassword, HttpSession session) {
 
         boolean isValid = EmailValidationUtil.isValidEmail(user.getEmail());
         if (!isValid) {
@@ -455,14 +460,126 @@ public class homeController {
                 ra.addFlashAttribute("existsemail", "The Email already exists.");
                 return "redirect:/createAccount";
             }
+
             user.setRegistrationdate(LocalDate.now());
-            user.setStatus(true);
+            user.setStatus(false);
             user.setRole(roleid);
             userRepository.save(user);
-            ra.addFlashAttribute("update", "The user has been saved successfully.");
+            session.setAttribute("email", user.getEmail());
+            accountService.sendVerificationEmail(user.getEmail());
         }
+
+        return "redirect:/verify-code";
+    }
+
+    @GetMapping("/forgot")
+    public String forgotPassword() {
+        return "forgotPassword";
+    }
+
+    @PostMapping("/forgotPassword")
+    public String InputEmail(@ModelAttribute User user, HttpSession session) {
+        session.setAttribute("email", user.getEmail());
+        accountService.sendVerificationEmail(user.getEmail());
+        return "redirect:/code";
+    }
+
+    @GetMapping("/confirmpassword")
+    public String confirm() {
+        return "confirmpassword";
+    }
+
+    @PostMapping("/confirmpassword/new")
+    public String confirmPassword(@ModelAttribute User user, RedirectAttributes ra,
+            @RequestParam("confirmPassword") String confirmPassword, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (!user.getPassword().equals(confirmPassword)) {
+            ra.addFlashAttribute("passwordMismatch", "Passwords do not match");
+            return "redirect:/confirmpassword";
+        }
+        User existingUser = userRepository.findByEmail(email);
+        if (existingUser == null) {
+            // Handle the case when the user with the given email doesn't exist
+            // (You may want to display an error message or redirect to an error page)
+            return "redirect:/confirmpassword";
+        }
+
+        // Update the password of the fetched user
+        existingUser.setPassword(user.getPassword());
+
+        // Save the updated user back to the database
+        userRepository.save(existingUser);
 
         return "redirect:/loginpage";
     }
 
+    @GetMapping("/code")
+    public String showCode() {
+        return "code";
+    }
+
+    @PostMapping("/code")
+    public String Code(@RequestParam("verifyCode") String verifyCode, RedirectAttributes ra,
+            HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (accountService.verifyCodeIsValid(verifyCode)) {
+            // Mã verify code hợp lệ, thực hiện xác thực tài khoản tại đây
+            User user = userRepository.findByEmail(email);
+            user.setStatus(true);
+            userRepository.save(user);
+            // Thông báo cho người dùng rằng tài khoản đã được xác thực thành công
+            ra.addFlashAttribute("message", "Account has been successfully verified!");
+
+        } else {
+            // Mã verify code không hợp lệ hoặc đã hết hạn
+            // Thông báo cho người dùng biết rằng mã không hợp lệ
+            ra.addFlashAttribute("message",
+                    "The authentication code is invalid or has expired. Please check again or request to resend the code.");
+            return "redirect:/code";
+        }
+
+        return "redirect:/confirmpassword";
+    }
+    @GetMapping("/verify-code")
+    public String showVerifyPage() {
+    return "verify-code";
+    }
+    // Xử lý mã verify code khi người dùng gửi form
+    @PostMapping("/verify-code")
+    public String verifyCode(@RequestParam("verifyCode") String verifyCode,
+    RedirectAttributes ra,
+    HttpSession session) {
+    String email = (String) session.getAttribute("email");
+    if (accountService.verifyCodeIsValid(verifyCode)) {
+    // Mã verify code hợp lệ, thực hiện xác thực tài khoản tại đây
+    User user = userRepository.findByEmail(email);
+    user.setStatus(true);
+    userRepository.save(user);
+    // Thông báo cho người dùng rằng tài khoản đã được xác thực thành công
+    ra.addFlashAttribute("message", "Account has been successfully verified!");
+
+    } else {
+    // Mã verify code không hợp lệ hoặc đã hết hạn
+    // Thông báo cho người dùng biết rằng mã không hợp lệ
+    ra.addFlashAttribute("message","The authentication code is invalid or has expired. Please check again or request to resend the code.");
+    return "redirect:/vertify-code";
+    }
+
+    return "redirect:/loginpage";
+    }
+
+    @GetMapping("/resend")
+    public String resendVerifyCode(RedirectAttributes ra, HttpSession session) {
+        // Kiểm tra xem email có tồn tại trong hệ thống hay không
+        String email = (String) session.getAttribute("email");
+        if (userRepository.existsByEmail(email)) {
+            // Gửi lại mã verify code
+            accountService.resendVerificationEmail(email);
+            ra.addFlashAttribute("message", "The verification code has been sent back successfully.");
+        } else {
+            ra.addFlashAttribute("message", "Email does not exist in the system.");
+        }
+
+        return "redirect:/verify-code";
+    }
 }

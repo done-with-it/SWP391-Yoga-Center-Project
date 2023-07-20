@@ -2,12 +2,14 @@ package com.fptyoga.yogacenter.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,7 +96,7 @@ public class UserService {
     }
 
     public User login(String email, String password) {
-        return repo.findByEmailAndPassword(email, password);
+        return repo.findByEmailAndPasswordAndStatus(email, password, true);
     }
 
     public List<User> getUserByStatus(){
@@ -120,6 +122,11 @@ public class UserService {
     }
     public List<User> getUserByStatusFalse(){
         return repo.findByStatus(false);
+    }
+
+
+    public long countUsersByRoleAndStatus() {
+        return repo.countByRoleAndStatus();
     }
 
 }

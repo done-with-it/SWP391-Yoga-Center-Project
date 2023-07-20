@@ -26,6 +26,6 @@ public interface ClassesRepository extends JpaRepository<Class, Long>{
 
     boolean existsByDateAndTimeid_Timeid(String date, Long timeid);
 
-    
-
+    @Query("SELECT COUNT(c.classid) FROM Class c WHERE c.status = true")
+    int countClassesWithStatusTrue();
 }

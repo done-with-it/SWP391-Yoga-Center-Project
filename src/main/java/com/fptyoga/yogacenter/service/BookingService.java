@@ -11,6 +11,7 @@ import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.dto.MonthlyTotal;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 
+
 @Service
 public class BookingService {
     @Autowired
@@ -48,5 +49,9 @@ public class BookingService {
 
     public List<Booking> getRevenue(){
         return bookingRepository.findByResponseCode("00");
+    }
+
+    public long TotalAmount() {
+        return bookingRepository.sumAmountWithResponseCode();
     }
 }
