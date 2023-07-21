@@ -112,12 +112,13 @@ public class homeController {
             User user = userRepository.findByEmail(email);
             session.setAttribute("user", user);
         } else if (oa2User != null && !userRepository.existsByEmail(oa2User.getAttribute("email"))) {
-            String email = oa2User.getAttribute("email");
-            String name = oa2User.getAttribute("name");
             User newUser = new User();
+            String email = oa2User.getAttribute("email");
             newUser.setEmail(email);
-            newUser.setFullname(name);
+            newUser.setFullname("New User");
             newUser.setPassword("0000");
+            newUser.setRegistrationdate(LocalDate.now());
+            newUser.setStatus(true);
             Role role = new Role();
             role.setRoleid(4l);
             newUser.setRole(role);
@@ -220,6 +221,7 @@ public class homeController {
     public String about(Model model) {
         List<User> trainList = userService.listAll(3L);
         model.addAttribute("trainList", trainList);
+        model.addAttribute("feedbacks", new Feedback());
         return "about";
     }
 
@@ -287,15 +289,24 @@ public class homeController {
     }
 
     @PostMapping("/profile/edit")
-    public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
-        userRepository.save(user);
+    public String newUser(@ModelAttribute User user, RedirectAttributes ra, @RequestParam("file") MultipartFile file,
+            Model model) {
+        user.setStatus(true);
+        user.setRegistrationdate(LocalDate.now());
+        // String dateOfBirth = user.getDob();
+        // int age = AgeCalculator.calculateAge(dateOfBirth);
+        // model.addAttribute("age", age);
+        int age = userService.calculateAge(user.getDob());
+        model.addAttribute("age", age);
+
         try {
             userService.saveUser(file, user);
         } catch (IOException e) {
             // Xử lý lỗi nếu cần
         }
+        userRepository.save(user);
         ra.addFlashAttribute("update", "The user has been update successfully.");
-        return "redirect:/index";
+        return "redirect:/profile";
     }
 
     @GetMapping("/edit/{id}")
@@ -407,7 +418,7 @@ public class homeController {
             RedirectAttributes redirectAttributes, HttpSession session) {
         String error = "Error email or password!";
         if (email.isEmpty() || password.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", error);
+            redirectAttributes.addFlashAttribute("message", error);
             return "redirect:/loginpage";
         }
         User user = userService.login(email, password);
@@ -416,7 +427,7 @@ public class homeController {
             return "redirect:/index";
         } else {
             // Sai thông tin đăng nhập, hiển thị thông báo lỗi
-            redirectAttributes.addFlashAttribute("error", error);
+            redirectAttributes.addFlashAttribute("message", error);
             return "redirect:/loginpage";
         }
     }
@@ -478,7 +489,11 @@ public class homeController {
     }
 
     @PostMapping("/forgotPassword")
-    public String InputEmail(@ModelAttribute User user, HttpSession session) {
+    public String InputEmail(@ModelAttribute User user, HttpSession session, RedirectAttributes ra) {
+        if (!userRepository.existsByEmail(user.getEmail())) {
+            ra.addFlashAttribute("message", "Email doesn't exist. Please register new account!");
+            return "redirect:/loginpage";
+        }
         session.setAttribute("email", user.getEmail());
         accountService.sendVerificationEmail(user.getEmail());
         return "redirect:/code";
@@ -506,6 +521,7 @@ public class homeController {
 
         // Update the password of the fetched user
         existingUser.setPassword(user.getPassword());
+        existingUser.setRegistrationdate(user.getRegistrationdate());
 
         // Save the updated user back to the database
         userRepository.save(existingUser);
@@ -540,32 +556,35 @@ public class homeController {
 
         return "redirect:/confirmpassword";
     }
+
     @GetMapping("/verify-code")
     public String showVerifyPage() {
-    return "verify-code";
+        return "verify-code";
     }
+
     // Xử lý mã verify code khi người dùng gửi form
     @PostMapping("/verify-code")
     public String verifyCode(@RequestParam("verifyCode") String verifyCode,
-    RedirectAttributes ra,
-    HttpSession session) {
-    String email = (String) session.getAttribute("email");
-    if (accountService.verifyCodeIsValid(verifyCode)) {
-    // Mã verify code hợp lệ, thực hiện xác thực tài khoản tại đây
-    User user = userRepository.findByEmail(email);
-    user.setStatus(true);
-    userRepository.save(user);
-    // Thông báo cho người dùng rằng tài khoản đã được xác thực thành công
-    ra.addFlashAttribute("message", "Account has been successfully verified!");
+            RedirectAttributes ra,
+            HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (accountService.verifyCodeIsValid(verifyCode)) {
+            // Mã verify code hợp lệ, thực hiện xác thực tài khoản tại đây
+            User user = userRepository.findByEmail(email);
+            user.setStatus(true);
+            userRepository.save(user);
+            // Thông báo cho người dùng rằng tài khoản đã được xác thực thành công
+            ra.addFlashAttribute("message", "Account has been successfully verified!");
 
-    } else {
-    // Mã verify code không hợp lệ hoặc đã hết hạn
-    // Thông báo cho người dùng biết rằng mã không hợp lệ
-    ra.addFlashAttribute("message","The authentication code is invalid or has expired. Please check again or request to resend the code.");
-    return "redirect:/vertify-code";
-    }
+        } else {
+            // Mã verify code không hợp lệ hoặc đã hết hạn
+            // Thông báo cho người dùng biết rằng mã không hợp lệ
+            ra.addFlashAttribute("message",
+                    "The authentication code is invalid or has expired. Please check again or request to resend the code.");
+            return "redirect:/vertify-code";
+        }
 
-    return "redirect:/loginpage";
+        return "redirect:/loginpage";
     }
 
     @GetMapping("/resend")

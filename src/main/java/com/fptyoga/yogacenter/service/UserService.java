@@ -3,6 +3,7 @@ package com.fptyoga.yogacenter.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,6 +128,11 @@ public class UserService {
 
     public long countUsersByRoleAndStatus() {
         return repo.countByRoleAndStatus();
+    }
+
+    public int calculateAge(LocalDate dob) {
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(dob, currentDate).getYears();
     }
 
 }

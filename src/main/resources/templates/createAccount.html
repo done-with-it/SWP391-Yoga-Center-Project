@@ -69,9 +69,9 @@
                     <i class="far fa-eye position-absolute toggle-icon" id="togglePassword"></i>
                   </div>
                   <div class="form-outline mb-3 position-relative">
-                    <input type="password" name="confirmPassword" id="passwordField" class="form-control"
+                    <input type="password" name="confirmPassword" id="confirmPasswordField" class="form-control"
                       placeholder="Confirm password" />
-                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword"></i>
+                    <i class="far fa-eye position-absolute toggle-icon" id="toggleConfirmPassword"></i>
                   </div>
                   <span style="color: red;">[[${passwordMismatch}]]</span>
                   <div class="form-outline mb-3">
@@ -123,18 +123,27 @@
       window.location.href = /*[[@{/loginpage}]]*/ "";
     }
   </script>
-  <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#passwordField');
+ <script>
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#passwordField');
+  const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+  const confirmPassword = document.querySelector('#confirmPasswordField');
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
 
-    togglePassword.addEventListener('click', function (e) {
-      // toggle the type attribute
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      // toggle the eye slash icon
-      this.classList.toggle('fa-eye-slash');
-    });
-  </script>
+  toggleConfirmPassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmPassword.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+</script>
 </body>
 
 </html>

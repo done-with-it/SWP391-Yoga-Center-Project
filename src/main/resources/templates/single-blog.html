@@ -237,7 +237,7 @@
 						<h2 class="sb-title">Latest post</h2>
 						<div class="latest-post-widget">
 							<div class="lp-item" th:each="content : ${listcontents}">
-								<div class="lp-thumb set-bg" th:data-setbg="${content.img}"></div>
+								<div class="lp-thumb set-bg" th:data-setbg="@{/staff/download-png(contentid=${content.contentid})}"></div>
 								<div class="lp-text">
 									<h3><a th:href="@{/single-blog(contentid=${content.contentid})}"
 											th:text="${content.title}"></a></h3>

@@ -14,6 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,9 +41,11 @@ public class User implements Serializable {
     private Long userid;
 
     @Column(name = "password")
+    @NotBlank(message = "Password must not be empty")
     private String password;
 
     @Column(name = "fullname", columnDefinition = "NVARCHAR(50)")
+    @Size(max = 50, message = "Fullname must be less than or equal to 50 characters")
     private String fullname;
 
     @Column(name = "email")
@@ -53,6 +58,8 @@ public class User implements Serializable {
     private String gender;
 
     @Column(name = "phone")
+    @Pattern(regexp = "^0\\d{8,11}$", message = "Phone must start with 0 and have 9 to 12 digits")
+    @Size(min = 9, max = 12, message = "Phone must have 9 to 12 digits")
     private String phone;
 
     @Column(name = "facebook")
@@ -69,7 +76,7 @@ public class User implements Serializable {
     private byte[] img;
 
     @Column(name = "date_of_birth")
-    private String dob;
+    private LocalDate dob;
 
     @Column(name = "registration_date")
     private LocalDate registrationdate;

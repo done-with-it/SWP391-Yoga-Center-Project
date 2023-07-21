@@ -108,7 +108,7 @@
 		<div class="container">
 			<div class="section-title text-center">
 				<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
-				<h2>WELCOME TO FPT YOGA</h2>
+				<h2>WELCOME TO FPT YOGA [[${name}]]</h2>
 				<p>Practice Yoga to perfect your physical beauty, take care of your soul and enjoy life more fully!</p>
 			</div>
 			<div class="row">
@@ -401,7 +401,7 @@
 				<div class="col-xl-6">
 					<div class="event-item" th:each="content : ${contents}">
 						<div class="ei-img">
-							<img th:src="${content.img}" alt="">
+							<img th:src="@{/staff/download-png(contentid=${content.contentid})}" alt="">
 						</div>
 						<div class="ei-text">
 							<h4><a th:href="@{/single-blog(contentid=${content.contentid})}"
@@ -465,9 +465,8 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="singup-text">
-						<h3>Sign Up for Our Classes</h3>
-						<p>To be invited to the nearest Cali center and get free physical advice to learn more about the
-							program.</p>
+						<h3>Any Question</h3>
+						<p>You can ask us any questions if you want to learn about FPT Yoga Center</p>
 					</div>
 					<form class="singup-form" th:action="@{/request}" th:object="${feedbacks}" method="post">
 						<div class="row">

@@ -91,14 +91,14 @@
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            View Request
+                            View Question
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAccounts" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Requesting</a>
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Requested</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Answering</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Answered</a>
                             </nav>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Course</th>
                                         <th>Room</th>
@@ -139,7 +139,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Course</th>
                                         <th>Room</th>

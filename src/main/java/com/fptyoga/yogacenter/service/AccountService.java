@@ -14,7 +14,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
-public class AccountService  {
+public class AccountService {
 
     @Autowired
     private JavaMailSender mailSender;
@@ -35,7 +35,7 @@ public class AccountService  {
         return verifyCode.toString();
     }
 
-     // Hàm gửi email chứa verify code tới địa chỉ email của người dùng
+    // Hàm gửi email chứa verify code tới địa chỉ email của người dùng
     public void sendVerificationEmail(String userEmail) {
         String verifyCode = generateVerifyCode();
 
@@ -47,8 +47,32 @@ public class AccountService  {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(userEmail);
-            helper.setSubject("Xác thực tài khoản");
-            helper.setText("Mã xác thực của bạn là: " + verifyCode);
+            helper.setSubject("Account Verification");
+            helper.setText("Your authentication code is: " + verifyCode);
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Hàm gửi email chứa bill tới địa chỉ email của người dùng
+    public void sendBill(String email, String orderInfo, long price, String Class, String course,
+            String expired, String name) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(email);
+            helper.setSubject("FPT YOGA BILL");
+            helper.setText("Dear " + name + ","
+                    + "\n" + orderInfo
+                    + "\nCourse: " + course
+                    + "\nClass:" + Class
+                    + "\nPrice:" + price
+                    + "\nExpire on:" + expired
+                    + "\nThank you for using our service!"
+                    + "\nFPT Yoga,");
 
             mailSender.send(message);
         } catch (MessagingException e) {
@@ -89,5 +113,7 @@ public class AccountService  {
         // Mã hợp lệ
         return true;
     }
+
     
+
 }

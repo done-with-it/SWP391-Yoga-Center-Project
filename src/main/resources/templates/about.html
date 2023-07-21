@@ -300,23 +300,20 @@
 					</div>
 				</div>
 				<div class="col-lg-8">
-					<form class="singup-form contact-form" th:action="@{/contact/send}" method="post">
+					<form class="singup-form" th:action="@{/request}" th:object="${feedbacks}" method="post">
 						<div class="row">
 							<div class="col-md-6">
-								<input type="text" placeholder="First Name" name="firstName">
+								<input type="text" th:field="*{fullname}" placeholder="Your FullName">
 							</div>
 							<div class="col-md-6">
-								<input type="text" placeholder="Last Name" name="lastName">
-							</div>
-							<div class="col-md-6">
-								<input type="email" placeholder="Your Email" name="email">
-							</div>
-							<div class="col-md-6">
-								<input type="text" name="phoneNumber" placeholder="Phone Number">
+								<input type="text" th:field="*{phone}" placeholder="Phone Number">
 							</div>
 							<div class="col-md-12">
-								<textarea required id="about" placeholder="Message" name="message"></textarea>
-								<button type="submit" class="site-btn sb-gradient">Send message</button>
+								<input type="text" th:field="*{email}" placeholder="Your Email">
+							</div>
+							<div class="col-md-12">
+								<textarea th:field="*{content}" placeholder="Message"></textarea>
+								<button type="submit" class="site-btn sb-gradient">Get started</button>
 							</div>
 						</div>
 					</form>

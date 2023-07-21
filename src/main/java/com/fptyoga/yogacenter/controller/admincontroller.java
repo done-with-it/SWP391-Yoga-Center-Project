@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Role;
 import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.Validator.EmailValidationUtil;
 import com.fptyoga.yogacenter.dto.MonthlyTotal;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
@@ -40,6 +42,8 @@ import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.RoleService;
 import com.fptyoga.yogacenter.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -178,19 +182,41 @@ public class admincontroller {
     }
 
     @PostMapping("/adduser/new")
-    public String newUser(@ModelAttribute User user,
+    public String newUser(@Valid @ModelAttribute User user,
             @RequestParam(value = "id", required = false) Long id,
-            RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+            RedirectAttributes ra, BindingResult result,
+            @RequestParam("file") MultipartFile file, Model model) {
 
+        if (result.hasErrors()) {
+            String errorMessage = result.getFieldError("phone").getDefaultMessage();
+            model.addAttribute("error", errorMessage);
+            return "admin/adduser";
+        }
         if (id == null || id == 0) {
             if (userRepository.existsByEmail(user.getEmail())) {
                 ra.addFlashAttribute("existemail", "The Email already exists.");
                 return "redirect:/admin/adduser";
             }
+            user.setRegistrationdate(LocalDate.now());
+            user.setStatus(true);
+            try {
+                userService.saveUser(file, user);
+            } catch (IOException e) {
+                // Xử lý lỗi nếu cần
+            }
+            userRepository.save(user);
+
+            return "redirect:/admin/index";
+        } else {
+            User chkUser = userRepository.findById(id).orElse(null);
+            if (!chkUser.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(user.getEmail())) {
+                ra.addFlashAttribute("existemail", "The Email already exists.");
+                return "redirect:/admin/adduser";
+            }
+            user.setRegistrationdate(chkUser.getRegistrationdate());
+            user.setStatus(true);
         }
 
-        user.setRegistrationdate(LocalDate.now());
-        user.setStatus(true);
         try {
             userService.saveUser(file, user);
         } catch (IOException e) {
@@ -199,7 +225,7 @@ public class admincontroller {
         userRepository.save(user);
 
         ra.addFlashAttribute("message", "The user has been saved successfully.");
-        return "redirect:/admin/index";
+        return "redirect:/admin/edit/" + id;
     }
 
     @GetMapping("/edit-trainer")
@@ -237,7 +263,7 @@ public class admincontroller {
             return "admin/adduser";
         } catch (Exception e) {
         }
-        return "admin/index";
+        return "admin/adduser";
     }
 
     @GetMapping("/download-png")

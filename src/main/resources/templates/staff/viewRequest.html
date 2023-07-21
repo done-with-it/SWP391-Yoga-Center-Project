@@ -99,14 +99,14 @@
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            View Request
+                            View Question
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAccounts" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Requesting</a>
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Requested</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Answering</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Answered</a>
                             </nav>
                         </div>
                     </div>
@@ -119,7 +119,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4" style="text-align: center;">Request of Guest</h1>
+                    <h1 class="mt-4" style="text-align: center;">Any Question</h1>
                     <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
                     <ol class="breadcrumb mb-4">
                     </ol>
@@ -190,7 +190,7 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>fullname</th>
                                         <th>Phone</th>
                                         <th>Email</th>
@@ -201,7 +201,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>fullname</th>
                                         <th>Phone</th>
                                         <th>Email</th>

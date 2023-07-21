@@ -64,9 +64,9 @@
 					<div class="td-left">
 						<img th:src="@{/admin/download-png(userid=${user.userid})}" alt="PNG Image">
 						<div class="td-social">
-							<a th:href="@{https://www.facebook.com/phu.omen}"><i class="fa fa-facebook"
+							<a th:href="${trainer.facebook}"><i class="fa fa-facebook"
 									target="_blank"></i></a>
-							<a href="#"><i class="fa fa-instagram"></i></a>
+									<a th:href="${trainer.instagram}"><i class="fa fa-instagram"></i></a>
 						</div>
 					</div>
 					<div class="td-right">
@@ -80,9 +80,7 @@
 								<p th:text="${user.email}"></p>
 							</li>
 							<li><strong>Biography:</strong>
-								<p>Certification from the National Institute of Sports Medicine (NASM) USA. 25 years of
-									sports training in the United States, Germany, Hong Kong, Malaysia, Singapore, and
-									now Vietnam at California Fitness & Yoga Centers.</p>
+								<p>[[${biography}]]</p>
 							</li>
 						</ul>
 						<a th:href="@{/courses}" class="site-btn sb-gradient">View course</a>

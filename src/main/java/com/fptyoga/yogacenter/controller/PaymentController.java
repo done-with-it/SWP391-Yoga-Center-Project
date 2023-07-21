@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -29,6 +30,8 @@ import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.config.Config;
 import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.ClassesRepository;
+import com.fptyoga.yogacenter.repository.UserRepository;
+import com.fptyoga.yogacenter.service.AccountService;
 import com.fptyoga.yogacenter.service.BookingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -47,7 +50,13 @@ public class PaymentController {
     private ClassesRepository classesRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private HttpSession session;
+
+    @Autowired
+    private AccountService accountService;
 
     /**
      * @param classID
@@ -59,7 +68,8 @@ public class PaymentController {
      */
     @RequestMapping("/create_payment")
     public String payment(@RequestParam(value = "classID") Long classID, @RequestParam(value = "date") String date,
-            @RequestParam(value = "timeid") Long timeid, @RequestParam(value = "userID") Long userID, @RequestParam(value = "price") float price,
+            @RequestParam(value = "timeid") Long timeid, @RequestParam(value = "userID") Long userID,
+            @RequestParam(value = "price") float price,
             RedirectAttributes ra, @RequestParam(value = "duration") Long duration)
             throws UnsupportedEncodingException {
 
@@ -72,11 +82,7 @@ public class PaymentController {
                     || !bookingRepository.existsByUserIdDateAndTimeIdAndStatus(userID, date, timeid)) {
                 String orderType = "billpayment";
 
-
-
-
                 long amount = Math.round(price) * 100;
-                
 
                 String vnp_TxnRef = Config.getRandomNumber(8);
                 String vnp_TmnCode = Config.vnp_TmnCode;
@@ -148,7 +154,7 @@ public class PaymentController {
                     session.setAttribute("expired", book.getExpired());
                     book.setStatus(false);
                     bookingRepository.save(book);
-                } else{
+                } else {
                     session.removeAttribute("expired");
                 }
 
@@ -183,9 +189,7 @@ public class PaymentController {
 
         LocalDateTime expired = (LocalDateTime) session.getAttribute("expired");
 
-
-
-        long cost = Long.valueOf(amount);
+        long cost = Long.valueOf(amount) / 100;
         // Tạo một đối tượng Payment và gán giá trị từ URL
         if (responseCode.equals("00")) {
             book.setStatus(true);
@@ -193,21 +197,35 @@ public class PaymentController {
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
-            book.setAmount(cost/100);
-            
-            if (expired != null) {
+            book.setAmount(cost);
+            if (expired != null && LocalDateTime.now().isBefore(expired)) {
                 expired = expired.plusMinutes(duration.longValue());
                 book.setExpired(expired);
             } else {
-                expired = book.getBookingdate().plusMinutes(duration.longValue());
+                expired = LocalDateTime.now().plusMinutes(duration.longValue());
                 book.setExpired(expired);
+
             }
 
             bookingRepository.save(book);
             Booking booked = bookingService.getCourse(book.getBookingid());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm:ss");
+            String expired_in = booked.getExpired().format(formatter);
+
             Class classes = classesRepository.findById(Long.valueOf(book.getClassid().getClassid())).orElse(null);
+            String course = classes.getCourseid().getCoursename();
+            String classname = classes.getClassname();
+
+            User user = userRepository.findById(Long.valueOf(book.getCustomerid().getUserid())).orElse(null);
+            String email = user.getEmail();
+            String name = user.getFullname();
+
             model.addAttribute("classes", classes);
             model.addAttribute("order", booked);
+            model.addAttribute("email", email);
+            model.addAttribute("name", name);
+
+            accountService.sendBill(email, order, cost, classname, course, expired_in, name);
         } else {
 
             book.setStatus(false);
@@ -215,7 +233,7 @@ public class PaymentController {
             book.setBankCode(bankCode);
             book.setBookingOrder(order);
             book.setResponseCode(responseCode);
-            book.setAmount(cost/100);
+            book.setAmount(cost / 100);
             bookingRepository.save(book);
             return "redirect:/index";
 
@@ -223,6 +241,5 @@ public class PaymentController {
 
         return "payment";
     }
-
 
 }

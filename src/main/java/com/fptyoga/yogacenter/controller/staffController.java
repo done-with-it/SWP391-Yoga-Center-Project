@@ -47,8 +47,11 @@ import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.FeedbackService;
 import com.fptyoga.yogacenter.service.UserService;
 
+import jakarta.validation.Valid;
+
 @Controller
 @RequestMapping("/staff")
+@Valid
 public class staffController {
 
     @Autowired
@@ -251,6 +254,8 @@ public class staffController {
             @RequestParam("file") MultipartFile file) {
         course.setCreatedate(LocalDate.now());
         course.setStatus(true);
+        course.setExchange(23000);
+        courseRepository.save(course);
         try {
             courseService.saveCourse(file, course);
         } catch (IOException e) {

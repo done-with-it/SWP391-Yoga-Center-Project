@@ -27,7 +27,7 @@ public class Feedback implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackid;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "NVARCHAR(MAX)")
     private String content;
 
     @Column(name = "status")
