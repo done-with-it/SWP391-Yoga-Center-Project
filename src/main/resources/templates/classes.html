@@ -105,8 +105,9 @@
 										<a th:if="${session.user == null}" th:href="@{/loginpage}"
 											class="site-btn sb-gradient">book now</a>
 										<a th:if="${session.user != null && session.user.role.roleid == 4}"
-										th:href="@{/create_payment(classID=${class.classid}, date=${class.date}, timeid=${class.timeid.timeid}, userID=${session.user.userid})}"
-										class="site-btn sb-gradient">book now</a>
+											th:href="@{/create_payment(classID=${class.classid}, date=${class.date}, timeid=${class.timeid.timeid}, userID=${session.user.userid}, duration=${class.courseid.duration}, price=${class.courseid.price * class.courseid.exchange})}"
+											onclick="return confirmBookClass();" class="site-btn sb-gradient">book
+											now</a>
 
 									</div>
 								</div>
@@ -298,6 +299,12 @@
 	<!-- Search model end -->
 
 	<!--====== Javascripts & Jquery ======-->
+	<script>
+		function confirmBookClass() {
+			return confirm("Are you sure you want to book this class? If you have booked this class we will extend it for another 30 days!");
+		}
+	</script>
+
 	<script src="js/vendor/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.slicknav.min.js"></script>

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .gradient-form {
       background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
@@ -44,7 +45,7 @@
                   </div>
                   <div class="form-outline mb-4">
                     <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
-                    <span style="color: red;">[[${error}]]</span>
+                    <span style="color: red;">[[${message}]]</span>
                   </div>
 
                   <!-- <div class="row">
@@ -52,7 +53,7 @@
                       <input type="checkbox" name="remember" value="true">Remember Me
                     </div> -->
                   <div class="col text-right">
-                    <a class="text-muted" href="#!">Forgot password?</a>
+                    <a class="text-muted" th:href="@{/forgot}">Forgot password?</a>
                   </div>
 
 
@@ -65,6 +66,23 @@
                     <a th:href="@{/createAccount}" class="btn btn-outline-danger">Create new account</a>
                   </div>
                 </form>
+                <p style="text-align: center;">Or</p>
+                <div style="text-align: center;">
+                  <a th:href="@{/oauth2/authorization/google}">
+                    <img src="img/google.png" alt="" with="40px" height="40px">
+                  </a>
+                </div>
+
+
+                <!-- <div id="g_id_onload"
+                  data-client_id="933177251061-45c56o95nq3k15bjof6uivk4ovdlth5c.apps.googleusercontent.com"
+                  data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost:8080/login/oauth2/code/google"
+                  data-itp_support="true">
+                </div>
+
+                <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                  data-text="signin_with" data-size="large" data-logo_alignment="left">
+                </div> -->
 
               </div>
             </div>

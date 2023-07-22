@@ -49,11 +49,13 @@
 
       </ul>
     </div>
-    <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+    <div th:if="${session.user.role.roleid == 1}" class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+    <div th:if="${session.user.role.roleid == 2}" class="col-sm-2"><a th:href="@{/staff/index}"><img title="Back Home" src="/img/logo.png"></a></div>
   </div>
   <br>
   <br>
   <hr>
+  <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
   <form class="form" th:action="@{/admin/adduser/new(id=${id})}" method="post" th:object="${user}"
     enctype="multipart/form-data">
     <input type="hidden" name="id" th:field="*{userid}" />
@@ -153,7 +155,7 @@
               <div class="col-xs-6">
                 <h4>Role</h4>
                 <select th:field="*{role}" nam="id">
-                  <option th:each="role : ${rolesList}" th:value="${role.roleid}" th:if="${role.roleid != 1}"
+                  <option th:each="role : ${rolesList}" th:value="${role.roleid}"
                     th:text="${role.roleName}" class="form-control"></option>
                   <!-- th:selected="${user.role.roleid == role.roleid}" -->
                 </select>

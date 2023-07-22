@@ -116,19 +116,7 @@
 			}
 		}
 	</style>
-	<script>
-		// Kiểm tra xem trạng thái đã được lưu trong sessionStorage chưa
-		if (!sessionStorage.getItem('isReloaded')) {
-			// Lưu trạng thái đã reload vào sessionStorage
-			sessionStorage.setItem('isReloaded', 'true');
-
-			// Reload trang
-			location.reload();
-		} else {
-			// Xóa trạng thái đã reload khỏi sessionStorage
-			sessionStorage.removeItem('isReloaded');
-		}
-	</script>
+	<!--  -->
 </head>
 
 <body>
@@ -148,8 +136,8 @@
 							</td>
 
 							<td>
-								Invoice #: [[${order.bookingid}]]<br />
-								Created: [[${order.bookingdate}]]<br />
+								Invoice #: [[${order.bookingid}]]<br/>
+								Created: [[${#temporals.format(order.bookingdate, "yy/MM/dd HH:mm:ss")}]]<br/>
 							</td>
 						</tr>
 					</table>
@@ -161,8 +149,8 @@
 					<table>
 						<tr>
 							<td>
-								Customer: [[${order.customerid.fullname}]]<br>
-								Email: [[${order.customerid.email}]]
+								Customer: [[${name}]]<br>
+								Email: [[${email}]]
 							</td>
 						</tr>
 					</table>

@@ -57,15 +57,19 @@
 	</section>
 	<!-- Page top Section end -->
 
-	<div class="container">
+	<div class="container" th:if="${roleid == 4}">
 		<div class="event-filter-warp">
 			<div class="row">
 				<div class="col-xl-9">
-					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
+					<a  class="site-btn sb-gradient"
+						th:href="@{/schedule(userid=${session.user.userid}, status=${3}, roleid=${session.user.role.roleid})}">Schedule</a>
+
+					<a class="site-btn sb-gradient"
+						th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">Booking</a>
+
+					<a class="site-btn sb-gradient"
 						th:href="@{/schedule(userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}">History</a>
 
-					<a th:if="${roleid == 4}" class="site-btn sb-gradient"
-						th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">Now</a>
 				</div>
 			</div>
 		</div>
@@ -73,10 +77,484 @@
 
 
 	<!-- Events Section -->
+	<div class="container">
+		<div class="w-95 w-md-75 w-lg-60 w-xl-55 mx-auto mb-6 text-center">
+
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="schedule-table">
+					<table class="table bg-white" th:if="${status == 3 AND roleid == 4}">
+						<thead>
+							<tr>
+								<th>Routine</th>
+								<th>8 am</th>
+								<th>10 am</th>
+								<th>13 pm</th>
+								<th class="last">15 pm</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="day">Monday</td>
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+							</tr>
+
+							<tr>
+								<td class="day">Tuesday</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+							</tr>
+
+							<tr>
+								<td class="day">Wednesday</td>
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+							</tr>
+
+							<tr>
+								<td class="day">Thursday</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+							</tr>
+
+							<tr>
+								<td class="day">Friday</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+							</tr>
+
+							<tr>
+								<td class="day">Saturday</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+							</tr>
+
+							<tr>
+								<td class="day">Sunday</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Sun' AND booked.classid.timeid.timeid == 5}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<td></td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Sun' AND booked.classid.timeid.timeid == 6}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<td></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 	<section class="events-page-section spad">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6" th:if="${roleid == 4}" th:each="booked : ${booked}">
+				<div class="col-lg-6" th:if="${((status == 0 OR status == 1)AND roleid == 4)}"
+					th:each="booked : ${booked}">
 					<div class="event-item">
 						<div class="ei-img">
 							<img th:src="@{/staff/downloads-png(courseid=${booked.classid.courseid.courseid})}"
@@ -87,7 +565,7 @@
 								<a th:if="${booked.status == true}"
 									th:href="@{/class-details(classid=${booked.classid.classid})}">[[${booked.classid.courseid.coursename}]]</a>
 								<a th:if="${booked.status == false}"
-									th:href="@{/create_payment(classID=${booked.classid.classid}, date=${booked.classid.date}, timeid=${booked.classid.timeid.timeid}, userID=${session.user.userid})}">[[${booked.classid.courseid.coursename}]]</a>
+									th:href="@{/create_payment(classID=${booked.classid.classid}, date=${booked.classid.date}, timeid=${booked.classid.timeid.timeid}, userID=${session.user.userid}, duration=${booked.classid.courseid.duration})}">[[${booked.classid.courseid.coursename}]]</a>
 							</h4>
 							<ul>
 								<li><i class="material-icons">person</i>[[${booked.classid.trainerid.fullname}]]</li>
@@ -95,34 +573,512 @@
 									[[${booked.classid.timeid.endtime}]]</li>
 								<li><i class="material-icons">map</i>[[${booked.classid.roomid.roomname}]] - <i
 										class="material-icons">event_available</i>[[${booked.classid.date}]]</li>
-								<div style="color: red;">Expired</div>
+								<div th:if="${booked.status == true}" style="color: blue;">Expires on:
+									[[${#temporals.format(booked.expired, "yy/MM/dd HH:mm:ss")}]]</div>
+								<div th:if="${booked.status == false}" style="color: red;">Expired:
+									[[${#temporals.format(booked.expired, "yy/MM/dd HH:mm:ss")}]]</div>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
-				<div class="col-lg-6" th:if="${roleid == 3}" th:each="classes : ${classes}">
-					<div class="event-item">
-						<div class="ei-img">
-							<img th:src="@{/staff/downloads-png(courseid=${classes.courseid.courseid})}" alt="PNG Image"
-								width="222px" height="186px">
-						</div>
-						<div class="ei-text">
-							<h4><a
-									th:href="@{/class-details(classid=${classes.classid})}">[[${classes.courseid.coursename}]]</a>
-							</h4>
-							<ul>
-								<li><i class="material-icons">person</i>[[${classes.trainerid.fullname}]]</li>
-								<li><i class="material-icons">alarm</i>[[${classes.timeid.starttime}]] -
-									[[${classes.timeid.endtime}]]</li>
-								<li><i class="material-icons">map</i>[[${classes.roomid.roomname}]] - <i
-										class="material-icons">event_available</i>[[${classes.date}]]</li>
-							</ul>
-						</div>
+				<div class="col-md-12">
+					<div class="schedule-table">
+						<table class="table bg-white" th:if="${roleid == 3}">
+							<thead>
+								<tr>
+									<th>Routine</th>
+									<th>8 am</th>
+									<th>10 am</th>
+									<th>13 pm</th>
+									<th class="last">15 pm</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr>
+									<td class="day">Monday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 1}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 2}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 3}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 4}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+								</tr>
+
+								<tr>
+									<td class="day">Tuesday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 1}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 2}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 3}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 4}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+								</tr>
+
+								<tr>
+									<td class="day">Wednesday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 1}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 2}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 3}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 4}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+								</tr>
+
+								<tr>
+									<td class="day">Thursday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 1}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 2}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 3}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 4}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+								</tr>
+
+								<tr>
+									<td class="day">Friday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 1}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 2}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 3}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Mon, Wed, Fri' && class.timeid.timeid == 4}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+								</tr>
+
+								<tr>
+									<td class="day">Saturday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 1}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 2}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 3}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Tue, Thu, Sat' && class.timeid.timeid == 4}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+								</tr>
+
+								<tr>
+									<td class="day">Sunday</td>
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Sun' && class.timeid.timeid == 5}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<td></td>
+
+									<th:block th:if="${#lists.isEmpty(classes)}">
+										<td></td>
+									</th:block>
+									<th:block th:unless="${#lists.isEmpty(classes)}">
+										<td>
+											<div class="active" th:each="class : ${classes}"
+												th:if="${class.date == 'Sun' && class.timeid.timeid == 6}">
+												<h4>
+													<a th:href="@{/class-details(classid=${class.classid})}"
+														th:text="${class.courseid.coursename}"></a>
+												</h4>
+												<p th:text="${class.timeid.starttime + ' - ' + class.timeid.endtime}">
+												</p>
+											</div>
+										</td>
+									</th:block>
+
+									<td></td>
+
+								</tr>
+
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
+
+
 		</div>
 	</section>
 	<!-- Events Section end -->

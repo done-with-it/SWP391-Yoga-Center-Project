@@ -24,21 +24,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fptyoga.yogacenter.Entity.Booking;
 import com.fptyoga.yogacenter.Entity.Class;
 import com.fptyoga.yogacenter.Entity.Content;
 import com.fptyoga.yogacenter.Entity.Course;
+import com.fptyoga.yogacenter.Entity.Feedback;
 import com.fptyoga.yogacenter.Entity.Room;
 import com.fptyoga.yogacenter.Entity.Time;
 import com.fptyoga.yogacenter.Entity.User;
+import com.fptyoga.yogacenter.repository.BookingRepository;
 import com.fptyoga.yogacenter.repository.ClassesRepository;
 import com.fptyoga.yogacenter.repository.ContentRepository;
 import com.fptyoga.yogacenter.repository.CourseRepository;
+import com.fptyoga.yogacenter.repository.FeedbacKRepository;
 import com.fptyoga.yogacenter.repository.RoomRepository;
 import com.fptyoga.yogacenter.repository.TimeRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
+import com.fptyoga.yogacenter.service.BookingService;
 import com.fptyoga.yogacenter.service.ClassesService;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
+import com.fptyoga.yogacenter.service.FeedbackService;
 import com.fptyoga.yogacenter.service.UserService;
 
 @Controller
@@ -75,6 +81,18 @@ public class staffController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
+    @Autowired
+    private BookingService bookingService;
+
+    @Autowired
+    private FeedbacKRepository feedbacKRepository;
+
+    @Autowired
+    private FeedbackService feedbackService;
+
     @GetMapping("/indexClass")
     public String Class(Model model) {
         List<Class> classes = classesRepository.findAll();
@@ -86,6 +104,9 @@ public class staffController {
     public String blog(Model model, @RequestParam(defaultValue = "1") int page) {
         PageRequest pageable = PageRequest.of(page - 1, 20, Sort.by("contentid").descending());
         Page<Content> contents = contentService.getAllContentsByStatus(pageable);
+
+        List<Class> classes = classesRepository.findAll();
+        model.addAttribute("classes", classes);
         model.addAttribute("contents", contents);
         return "staff/index";
     }
@@ -93,6 +114,9 @@ public class staffController {
     @GetMapping("/indexCourse")
     public String Course(Model model) {
         List<Course> courses = courseRepository.findAll();
+
+        List<Class> classes = classesRepository.findAll();
+        model.addAttribute("classes", classes);
         model.addAttribute("courses", courses);
         return "staff/indexCourse";
     }
@@ -227,6 +251,8 @@ public class staffController {
             @RequestParam("file") MultipartFile file) {
         course.setCreatedate(LocalDate.now());
         course.setStatus(true);
+        course.setExchange(23000);
+        courseRepository.save(course);
         try {
             courseService.saveCourse(file, course);
         } catch (IOException e) {
@@ -269,6 +295,61 @@ public class staffController {
         } catch (Exception e) {
         }
         return "staff/editCourse";
+    }
+
+    @GetMapping("/classBooking")
+    private String ClassBooking(Model model, @RequestParam(name = "classid", required = false) Long classid) {
+        List<Booking> booked = bookingService.getUserInClass(classid);
+        Class classes = classesRepository.findById(classid).orElse(null);
+
+        List<Class> classesList = classesRepository.findAll();
+        model.addAttribute("classesList", classesList);
+
+        model.addAttribute("classes", classes);
+        model.addAttribute("booked", booked);
+        return "staff/classBooking";
+    }
+
+    @GetMapping("/deleteClassBooking/{id}")
+    public String deleteUserInClassBooking(@PathVariable("id") Long bookingid, RedirectAttributes redirectAttributes) {
+        if (bookingid != null) {
+            Booking booking = bookingRepository.findById(bookingid)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid booking Id:" + bookingid));
+            Long classid = booking.getClassid().getClassid();
+            if (booking != null) {
+                booking.setStatus(false);
+                bookingRepository.save(booking);
+            }
+            redirectAttributes.addAttribute("classid", classid);
+        }
+        return "redirect:/staff/classBooking";
+    }
+
+    @GetMapping("/viewRequest")
+    public String viewRequest(Model model, @RequestParam(defaultValue = "") Boolean status) {
+        if (status != null) {
+            if (status == true) {
+                List<Feedback> feedbacks = feedbackService.getFeedbackByStatusTrue();
+                model.addAttribute("feedbacks", feedbacks);
+            } else {
+                List<Feedback> feedbacks = feedbackService.getFeedbackByStatusFalse();
+                model.addAttribute("feedbacks", feedbacks);
+            }
+        }
+
+        List<Class> classes = classesRepository.findAll();
+        model.addAttribute("classes", classes);
+
+        return "staff/viewRequest";
+    }
+
+    @GetMapping("/accept/{id}")
+    public String acceptRequest(@PathVariable("id") Long id) {
+        Feedback feedback = feedbacKRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid feedback Id:" + id));
+        feedback.setStatus(true);
+        feedbacKRepository.save(feedback);
+        return "redirect:/staff/viewRequest";
     }
 
 }

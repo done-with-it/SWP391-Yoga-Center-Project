@@ -35,4 +35,8 @@ public class ClassesService {
         return classesRepository.findByCourseid_CourseidAndDate(courseId, date, page);
     }
 
+    public int totalClasses(){
+        return classesRepository.countClassesWithStatusTrue();
+    }
+
 }

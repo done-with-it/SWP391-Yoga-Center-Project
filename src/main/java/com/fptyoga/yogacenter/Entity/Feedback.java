@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,16 +27,22 @@ public class Feedback implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackid;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "NVARCHAR(MAX)")
     private String content;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customerid;
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "fullname", columnDefinition = "NVARCHAR(50)")
+    private String fullname;
+
+    @Column(name = "email")
+    private String email;
+
 }
