@@ -13,6 +13,22 @@
     <link href="/css/admin.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
+        <style>
+            .circle-badge {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                background-color: red;
+                color: white;
+                text-align: center;
+                line-height: 20px;
+                border-radius: 50%;
+                margin-left: 30px;
+            }
+            .circle {
+                color: white;
+        }
+        </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -62,7 +78,7 @@
 
                         <a class="nav-link collapsed" th:href="@{/staff/index}">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Post
+                            Blogs
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <!-- <div class="collapse" id="collapsePost" aria-labelledby="headingTwo"
@@ -83,23 +99,39 @@
                         </a>
                         <div class="collapse" id="collapseBooking" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav" th:each="class : ${classes}">
+                            <nav class="sb-sidenav-menu-nested nav" th:each="class : ${classesList}">
                                 <a class="nav-link"
                                     th:href="@{/staff/classBooking(classid=${class.classid})}">[[${class.classname}]]</a>
                             </nav>
                         </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseBookingDeleted" aria-expanded="false" aria-controls="collapseBookingDeleted">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Class Booking Deleted
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseBookingDeleted" aria-labelledby="headingThree"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav" th:each="class : ${classesListDeleted}">
+                                <a class="nav-link" th:href="@{/staff/classBookingDeleted(classid=${class.classid})}">[[${class.classname}]]</a>
+                            </nav>
+                        </div>
 
+                        
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            View Request
+                            View Question <span th:if="${count > 0}" th:text="${count}" th:classappend="${count > 0 ? 'circle-badge' : ''}"></span>
+                        </h1>
+                            <span class="ellipsis" th:if="${status}"><i class="fas fa-ellipsis-v"></i></span>
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAccounts" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Requesting</a>
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Requested</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">
+                                    <span th:classappend="${count > 0 ? 'circle' : ''}">Answering</span></a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Answered</a>
                             </nav>
                         </div>
                     </div>
@@ -112,23 +144,23 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Staff</h1>
+                    <h1 class="mt-4"></h1>
                     <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
                     <div class="card mb-4" id="collapseCourse">
-                        <div class="card-header">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                             <i class="fas fa-table me-1"></i>
-                        </div>
-                        <div class="card-header" style="text-align: center;">
-                            <h5><a th:href="@{/staff/addCourse}" style="color: black; font-weight: bold;">ADD NEW
-                                    COURSE</a>
-                            </h5>
+                            <a th:href="@{/staff/addCourse(id=${0})}" style="display: inline-block; padding: 4px 15px; background-color: rgb(45, 139, 57); 
+                            color: rgb(255, 255, 255); font-weight: bold; text-decoration: none; border: 1px solid #ccc; border-radius: 5px;">
+                                <i class="material-icons" style="border-radius: 100%; border: 2px solid rgb(255, 255, 255); vertical-align: middle; padding: 4px;">add</i>
+                                <span style="line-height: 24px; vertical-align: middle;">Add New Course</span>
+                            </a>
                         </div>
                         <div class="card-body">
 
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Price</th>   
                                         <th>Image</th>
@@ -140,7 +172,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>STT</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Image</th> 
@@ -162,9 +194,9 @@
                                         <td>[[${course.duration}]]</td>
                                         <td>[[${course.createdate}]]</td>
                                         <td>
-                                            <a th:href="@{/staff/editcourse(id=${course.courseid})}"><i
+                                            <a th:href="@{/staff/editCourse/{id}(id=${course.courseid})}"><i
                                                     class="material-icons">edit</i></a>
-                                            <a th:href="@{/staff/deletecourse/{id}(id=${course.courseid})}"><i
+                                            <a th:href="@{/staff/deletecourse/{id}(id=${course.courseid})}" onclick="return confirmDelete();"><i
                                                     class="material-icons">delete</i></a>
                                         </td>
                                     </tr>
@@ -191,6 +223,11 @@
             </footer>
         </div>
     </div>
+    <script>
+        function confirmDelete() {
+            return confirm("Do you want to delete?");
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="/js/scripts.js"></script>

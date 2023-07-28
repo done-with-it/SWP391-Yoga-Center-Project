@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.fptyoga.yogacenter.Entity.Class;
+import com.fptyoga.yogacenter.Entity.Room;
+import com.fptyoga.yogacenter.Entity.Time;
 
 @Repository
 public interface ClassesRepository extends JpaRepository<Class, Long>{
@@ -28,4 +30,10 @@ public interface ClassesRepository extends JpaRepository<Class, Long>{
 
     @Query("SELECT COUNT(c.classid) FROM Class c WHERE c.status = true")
     int countClassesWithStatusTrue();
+
+    boolean existsByClassname(String Classname);
+    
+    boolean existsByDateAndRoomidAndTimeid(String date, Room room, Time time);
+
+    List<Class> findByStatus(boolean status);
 }

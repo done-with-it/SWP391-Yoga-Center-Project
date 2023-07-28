@@ -60,23 +60,55 @@
 	<div class="container" th:if="${roleid == 4}">
 		<div class="event-filter-warp">
 			<div class="row">
-				<div class="col-xl-9">
-					<a  class="site-btn sb-gradient"
+				<div class="col-xl-12 row justify-content-center" >
+					<a class="site-btn sb-gradient "
 						th:href="@{/schedule(userid=${session.user.userid}, status=${3}, roleid=${session.user.role.roleid})}">Schedule</a>
 
-					<a class="site-btn sb-gradient"
+					<a class="site-btn sb-gradient "
 						th:href="@{/schedule(userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}">Booking</a>
 
-					<a class="site-btn sb-gradient"
+					<a class="site-btn sb-gradient "
 						th:href="@{/schedule(userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}">History</a>
+					<br>
 
+
+					<br>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<script>
+		// Get a reference to the select dropdown and the button
+		const selectDropdown = document.getElementById('filterDay');
+		const filterButton = document.querySelector('.site-btn');
 
+		// Add event listener to the select dropdown
+		selectDropdown.addEventListener('change', function () {
+			// Trigger the form submission when an option is chosen
+			this.form.submit();
+		});
+	</script>
 	<!-- Events Section -->
+	<p>
+	<form class="ChooseWeeks" th:action="@{/schedule}" method="get" th:if="${status == 3}">
+		<input type="hidden" name="userid" th:value="${session.user.userid}" />
+		<input type="hidden" name="status" th:value="3" />
+		<input type="hidden" name="roleid" th:value="${session.user.role.roleid}" />
+
+		<select class="circle-select" id="filterDay" name="filterDay">
+			<option th:value="0" data-display="Choose Weeks">Now</option>
+			<!-- <option th:value="0">[[${filterDates[0].plusDays(0)}]] to [[${filterDates[6].plusDays(0)}]]</option> -->
+			<option th:value="7">[[${filterDates[0].plusDays(7)}]] to [[${filterDates[6].plusDays(7)}]]</option>
+			<option th:value="14">[[${filterDates[0].plusDays(14)}]] to [[${filterDates[6].plusDays(14)}]]</option>
+			<option th:value="21">[[${filterDates[0].plusDays(21)}]] to [[${filterDates[6].plusDays(21)}]]</option>
+		</select>
+		<button class="sumbitbutton " type="submit"><i class="searchicon material-icons">search</i></button>
+
+	</form>
+	</p>
+
+
 	<div class="container">
 		<div class="w-95 w-md-75 w-lg-60 w-xl-55 mx-auto mb-6 text-center">
 
@@ -96,14 +128,35 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td class="day">Monday</td>
+								<td class="day">
+									Monday
+									<h6>[[${weekDates[0]}]]</h6>
+								</td>
 								<th:block th:if="${#lists.isEmpty(booked)}">
 									<td></td>
 								</th:block>
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1 AND (weekDates[0].isBefore(booked.expired.toLocalDate) OR weekDates[0].isEqual(booked.expired.toLocalDate)) AND weekDates[0].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2 AND (weekDates[0].isBefore(booked.expired.toLocalDate) OR weekDates[0].isEqual(booked.expired.toLocalDate)) AND weekDates[0].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -119,7 +172,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3 AND (weekDates[0].isBefore(booked.expired.toLocalDate) OR weekDates[0].isEqual(booked.expired.toLocalDate)) AND weekDates[0].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -135,23 +188,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4 AND (weekDates[0].isBefore(booked.expired.toLocalDate) OR weekDates[0].isEqual(booked.expired.toLocalDate)) AND weekDates[0].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -163,7 +200,10 @@
 							</tr>
 
 							<tr>
-								<td class="day">Tuesday</td>
+								<td class="day">
+									Tuesday
+									<h6>[[${weekDates[1]}]]</h6>
+								</td>
 
 								<th:block th:if="${#lists.isEmpty(booked)}">
 									<td></td>
@@ -171,7 +211,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1 AND (weekDates[1].isBefore(booked.expired.toLocalDate) OR weekDates[1].isEqual(booked.expired.toLocalDate)) AND weekDates[1].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -187,7 +227,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2 AND (weekDates[1].isBefore(booked.expired.toLocalDate) OR weekDates[1].isEqual(booked.expired.toLocalDate)) AND weekDates[1].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -203,7 +243,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3 AND (weekDates[1].isBefore(booked.expired.toLocalDate) OR weekDates[1].isEqual(booked.expired.toLocalDate)) AND weekDates[1].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -219,75 +259,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-							</tr>
-
-							<tr>
-								<td class="day">Wednesday</td>
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4 AND (weekDates[1].isBefore(booked.expired.toLocalDate) OR weekDates[1].isEqual(booked.expired.toLocalDate)) AND weekDates[1].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -300,7 +272,26 @@
 							</tr>
 
 							<tr>
-								<td class="day">Thursday</td>
+								<td class="day">
+									Wednesday
+									<h6>[[${weekDates[2]}]]</h6>
+								</td>
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1 AND (weekDates[2].isBefore(booked.expired.toLocalDate) OR weekDates[2].isEqual(booked.expired.toLocalDate)) AND weekDates[2].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+
+										</div>
+									</td>
+								</th:block>
 
 								<th:block th:if="${#lists.isEmpty(booked)}">
 									<td></td>
@@ -308,7 +299,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2 AND (weekDates[2].isBefore(booked.expired.toLocalDate) OR weekDates[2].isEqual(booked.expired.toLocalDate)) AND weekDates[2].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -324,7 +315,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3 AND (weekDates[2].isBefore(booked.expired.toLocalDate) OR weekDates[2].isEqual(booked.expired.toLocalDate)) AND weekDates[2].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -340,91 +331,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-							</tr>
-
-							<tr>
-								<td class="day">Friday</td>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3}">
-											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
-											<p
-												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
-											</p>
-											[[${booked.classid.trainerid.fullname}]]
-										</div>
-									</td>
-								</th:block>
-
-								<th:block th:if="${#lists.isEmpty(booked)}">
-									<td></td>
-								</th:block>
-								<th:block th:unless="${#lists.isEmpty(booked)}">
-									<td>
-										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4 AND (weekDates[2].isBefore(booked.expired.toLocalDate) OR weekDates[2].isEqual(booked.expired.toLocalDate)) AND weekDates[2].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -437,7 +344,10 @@
 							</tr>
 
 							<tr>
-								<td class="day">Saturday</td>
+								<td class="day">
+									Thursday
+									<h6>[[${weekDates[3]}]]</h6>
+								</td>
 
 								<th:block th:if="${#lists.isEmpty(booked)}">
 									<td></td>
@@ -445,7 +355,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1 AND (weekDates[3].isBefore(booked.expired.toLocalDate) OR weekDates[3].isEqual(booked.expired.toLocalDate)) AND weekDates[3].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -461,7 +371,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2 AND (weekDates[3].isBefore(booked.expired.toLocalDate) OR weekDates[3].isEqual(booked.expired.toLocalDate)) AND weekDates[3].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -477,7 +387,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3 AND (weekDates[3].isBefore(booked.expired.toLocalDate) OR weekDates[3].isEqual(booked.expired.toLocalDate)) AND weekDates[3].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -493,7 +403,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4}">
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4 AND (weekDates[3].isBefore(booked.expired.toLocalDate) OR weekDates[3].isEqual(booked.expired.toLocalDate)) AND weekDates[3].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -505,7 +415,10 @@
 							</tr>
 
 							<tr>
-								<td class="day">Sunday</td>
+								<td class="day">
+									Friday
+									<h6>[[${weekDates[4]}]]</h6>
+								</td>
 
 								<th:block th:if="${#lists.isEmpty(booked)}">
 									<td></td>
@@ -513,7 +426,150 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Sun' AND booked.classid.timeid.timeid == 5}">
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 1  AND (weekDates[4].isBefore(booked.expired.toLocalDate) OR weekDates[4].isEqual(booked.expired.toLocalDate)) AND weekDates[4].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 2 AND (weekDates[4].isBefore(booked.expired.toLocalDate) OR weekDates[4].isEqual(booked.expired.toLocalDate)) AND weekDates[4].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 3 AND (weekDates[4].isBefore(booked.expired.toLocalDate) OR weekDates[4].isEqual(booked.expired.toLocalDate)) AND weekDates[4].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Mon, Wed, Fri' AND booked.classid.timeid.timeid == 4 AND (weekDates[4].isBefore(booked.expired.toLocalDate) OR weekDates[4].isEqual(booked.expired.toLocalDate)) AND weekDates[4].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+							</tr>
+
+							<tr>
+								<td class="day">
+									Saturday
+									<h6>[[${weekDates[5]}]]</h6>
+								</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 1 AND (weekDates[5].isBefore(booked.expired.toLocalDate) OR weekDates[5].isEqual(booked.expired.toLocalDate)) AND weekDates[5].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 2 AND (weekDates[5].isBefore(booked.expired.toLocalDate) OR weekDates[5].isEqual(booked.expired.toLocalDate)) AND weekDates[5].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 3 AND (weekDates[5].isBefore(booked.expired.toLocalDate) OR weekDates[5].isEqual(booked.expired.toLocalDate)) AND weekDates[5].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Tue, Thu, Sat' AND booked.classid.timeid.timeid == 4 AND (weekDates[5].isBefore(booked.expired.toLocalDate) OR weekDates[5].isEqual(booked.expired.toLocalDate)) AND weekDates[5].isAfter(booked.bookingdate.toLocalDate)}">
+											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
+											<p
+												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
+											</p>
+											[[${booked.classid.trainerid.fullname}]]
+										</div>
+									</td>
+								</th:block>
+							</tr>
+
+							<tr>
+								<td class="day">
+									Sunday
+									<h6>[[${weekDates[6]}]]</h6>
+								</td>
+
+								<th:block th:if="${#lists.isEmpty(booked)}">
+									<td></td>
+								</th:block>
+								<th:block th:unless="${#lists.isEmpty(booked)}">
+									<td>
+										<div class="active" th:each="booked : ${booked}"
+											th:if="${booked.classid.date == 'Sun' AND booked.classid.timeid.timeid == 5 AND (weekDates[6].isBefore(booked.expired.toLocalDate) OR weekDates[6].isEqual(booked.expired.toLocalDate)) AND weekDates[6].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -531,7 +587,7 @@
 								<th:block th:unless="${#lists.isEmpty(booked)}">
 									<td>
 										<div class="active" th:each="booked : ${booked}"
-											th:if="${booked.classid.date == 'Sun' AND booked.classid.timeid.timeid == 6}">
+											th:if="${booked.classid.date == 'Sun' AND booked.classid.timeid.timeid == 6 AND (weekDates[6].isBefore(booked.expired.toLocalDate) OR weekDates[6].isEqual(booked.expired.toLocalDate)) AND weekDates[6].isAfter(booked.bookingdate.toLocalDate)}">
 											<h4 th:text="${booked.classid.courseid.coursename}"></h4>
 											<p
 												th:text="${booked.classid.timeid.starttime + ' - ' + booked.classid.timeid.endtime}">
@@ -582,6 +638,35 @@
 					</div>
 				</div>
 			</div>
+			<div class="site-pagination pt-3" th:if="${status == 0}">
+				<a th:href="@{/schedule(page=${currentPage - 1}, userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}"
+					th:if="${currentPage > 1}">
+					<i class="material-icons">keyboard_arrow_left</i>
+				</a>
+				<div th:each="i : ${#numbers.sequence(1, totalPages)}">
+					<a th:href="@{/schedule(page=${i}, userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}"
+						th:class="${i == currentPage ? 'active' : ''}" th:text="${i}"></a>
+				</div>
+				<a th:href="@{/schedule(page=${currentPage + 1}, userid=${session.user.userid}, status=${0}, roleid=${session.user.role.roleid})}"
+					th:if="${currentPage < totalPages}">
+					<i class="material-icons">keyboard_arrow_right</i>
+				</a>
+			</div>
+
+			<div class="site-pagination pt-3" th:if="${status == 1}">
+				<a th:href="@{/schedule(page=${currentPage - 1}, userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}"
+					th:if="${currentPage > 1}">
+					<i class="material-icons">keyboard_arrow_left</i>
+				</a>
+				<div th:each="i : ${#numbers.sequence(1, totalPages)}">
+					<a th:href="@{/schedule(page=${i}, userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}"
+						th:class="${i == currentPage ? 'active' : ''}" th:text="${i}"></a>
+				</div>
+				<a th:href="@{/schedule(page=${currentPage + 1}, userid=${session.user.userid}, status=${1}, roleid=${session.user.role.roleid})}"
+					th:if="${currentPage < totalPages}">
+					<i class="material-icons">keyboard_arrow_right</i>
+				</a>
+			</div>
 
 			<div class="row">
 				<div class="col-md-12">
@@ -599,7 +684,10 @@
 							<tbody>
 
 								<tr>
-									<td class="day">Monday</td>
+									<td class="day">
+										Monday
+										<h6>[[${weekDates[0]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>
@@ -671,7 +759,10 @@
 								</tr>
 
 								<tr>
-									<td class="day">Tuesday</td>
+									<td class="day">
+										Tuesday
+										<h6>[[${weekDates[1]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>
@@ -743,7 +834,10 @@
 								</tr>
 
 								<tr>
-									<td class="day">Wednesday</td>
+									<td class="day">
+										Wednesday
+										<h6>[[${weekDates[2]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>
@@ -815,7 +909,10 @@
 								</tr>
 
 								<tr>
-									<td class="day">Thursday</td>
+									<td class="day">
+										Thursday
+										<h6>[[${weekDates[3]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>
@@ -887,7 +984,10 @@
 								</tr>
 
 								<tr>
-									<td class="day">Friday</td>
+									<td class="day">
+										Friday
+										<h6>[[${weekDates[4]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>
@@ -959,7 +1059,10 @@
 								</tr>
 
 								<tr>
-									<td class="day">Saturday</td>
+									<td class="day">
+										Saturday
+										<h6>[[${weekDates[5]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>
@@ -1031,7 +1134,10 @@
 								</tr>
 
 								<tr>
-									<td class="day">Sunday</td>
+									<td class="day">
+										Sunday
+										<h6>[[${weekDates[6]}]]</h6>
+									</td>
 									<th:block th:if="${#lists.isEmpty(classes)}">
 										<td></td>
 									</th:block>

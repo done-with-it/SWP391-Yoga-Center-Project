@@ -1,11 +1,14 @@
 package com.fptyoga.yogacenter.service;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -62,18 +65,26 @@ public class AccountService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
+            NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
+            String formattedPrice = numberFormat.format(price);
             helper.setTo(email);
             helper.setSubject("FPT YOGA BILL");
-            helper.setText("Dear " + name + ","
-                    + "\n" + orderInfo
-                    + "\nCourse: " + course
-                    + "\nClass:" + Class
-                    + "\nPrice:" + price
-                    + "\nExpire on:" + expired
-                    + "\nThank you for using our service!"
-                    + "\nFPT Yoga,");
+            String emailContent = "<img src='cid:logo' alt='11zon Logo' width='100%' style='display: block; margin: 0 auto;'>"
+                    + "<p style='font-size: 14px;'>Dear " + name + ",</p>"
+                    + "<p style='font-size: 14px;'>Welcome to FPT Yoga Center. Here's your class information:</p>"
+                    + "<p style='font-size: 14px;'>" + orderInfo + "<p>"
+                    + "<p style='font-size: 14px;'>Course: " + course + "<p>"
+                    + "<p style='font-size: 14px;'>Class:" + Class + "<p>"
+                    + "<p style='font-size: 14px;'>Price:" + formattedPrice + "<p>"
+                    + "<p style='font-size: 14px;'>Expire on:" + expired + "<p>"
+                    + "<p style='font-size: 14px;'>You can visit our website to see detailed information about your class schedule. Thank you for using our service!</p>"
+                    + "<p style='font-size: 14px;'>Best regards," + "<p>"
+                    + "<p style='font-size: 14px;'>FPT Yoga" + "<p>";
 
+            ClassPathResource logoResource = new ClassPathResource(
+                    "/img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png");
+            helper.addInline("logo", logoResource);
+            helper.setText(emailContent, true);
             mailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -113,7 +124,5 @@ public class AccountService {
         // Mã hợp lệ
         return true;
     }
-
-    
 
 }

@@ -4,7 +4,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <head>
-  <title>Bootstrap Example</title>
+  <title>FPT Yoga Center</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -35,6 +35,35 @@
       });
     });
   </script>
+  <script>
+    function calculateAge(dob) {
+    var dobDate = new Date(dob);
+    var currentDate = new Date();
+    var age = currentDate.getFullYear() - dobDate.getFullYear();
+    var monthDiff = currentDate.getMonth() - dobDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < dobDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+    function validateAge() {
+      var dobInput = document.getElementById("dob").value;
+      var age = calculateAge(dobInput);
+  
+      if (age < 16) {
+        var validationMessage = document.getElementById("ageValidationMessage");
+        validationMessage.innerText = "You must be over 16 years old.";
+        return false;
+      } else {
+        var validationMessage = document.getElementById("ageValidationMessage");
+        validationMessage.innerText = ""; // Xóa thông báo nếu tuổi đủ 16
+        return true;
+      }
+    }
+    
+  </script>
 </head>
 
 
@@ -49,15 +78,17 @@
 
       </ul>
     </div>
-    <div th:if="${session.user.role.roleid == 1}" class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
-    <div th:if="${session.user.role.roleid == 2}" class="col-sm-2"><a th:href="@{/staff/index}"><img title="Back Home" src="/img/logo.png"></a></div>
+    <div th:if="${session.user.role.roleid == 1}" class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home"
+          src="/img/logo.png"></a></div>
+    <div th:if="${session.user.role.roleid == 2}" class="col-sm-2"><a th:href="@{/staff/index}"><img title="Back Home"
+          src="/img/logo.png"></a></div>
   </div>
   <br>
   <br>
   <hr>
   <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
   <form class="form" th:action="@{/admin/adduser/new(id=${id})}" method="post" th:object="${user}"
-    enctype="multipart/form-data">
+    enctype="multipart/form-data" onsubmit="return validateAge();">
     <input type="hidden" name="id" th:field="*{userid}" />
     <div class="row">
       <div class="col-sm-3"><!--left col-->
@@ -105,7 +136,9 @@
 
               <div class="col-xs-6">
                 <h4>Full Name</h4>
-                <input type="text" class="form-control" th:field="*{fullname}" placeholder="Full name">
+                <input type="text" class="form-control" th:field="*{fullname}" placeholder="Full name" minlength="5"
+                  maxlength="20" pattern="[a-zA-Z\s]+"
+                  title="Only letters and spaces are allowed (no numbers or special characters)">
               </div>
             </div>
             <div class="form-group">
@@ -113,15 +146,20 @@
               <div class="col-xs-6">
                 <h4>Date of Birth</h4>
                 <input type="date" class="form-control" th:field="*{dob}" placeholder="mm/dd/yy">
+                <span id="ageValidationMessage" style="color: red;"></span>
               </div>
             </div>
 
             <div class="form-group">
 
               <div class="col-xs-6">
-                <h4>Phone</h4>
-                <input type="text" class="form-control" th:field="*{phone}" placeholder="Enter Phone" required
-                  minlength="10">
+                <h4 for="phone">Phone</h4>
+                <input type="text" class="form-control" th:field="*{phone}" id="phone" placeholder="Enter Phone"
+                  pattern="0\d{8,11}$"
+                  title="Please enter a valid phone number with 9 to 12 digits, starting with a non-zero digit."
+                  minlength="9" maxlength="12" required>
+                  <!-- <input type="text" class="form-control" th:field="*{phone}" id="phone" placeholder="Enter Phone">
+                  <span style="color: red;" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span> -->
               </div>
             </div>
 
@@ -146,7 +184,7 @@
 
               <div class="col-xs-6">
                 <h4>Password</h4>
-                <input type="text" class="form-control" th:field="*{password}" placeholder="password">
+                <input type="text" class="form-control" th:field="*{password}" placeholder="password" minlength="6" required>
               </div>
             </div>
 
@@ -155,8 +193,8 @@
               <div class="col-xs-6">
                 <h4>Role</h4>
                 <select th:field="*{role}" nam="id">
-                  <option th:each="role : ${rolesList}" th:value="${role.roleid}"
-                    th:text="${role.roleName}" class="form-control"></option>
+                  <option th:each="role : ${rolesList}" th:value="${role.roleid}" th:text="${role.roleName}"
+                    class="form-control"></option>
                   <!-- th:selected="${user.role.roleid == role.roleid}" -->
                 </select>
               </div>

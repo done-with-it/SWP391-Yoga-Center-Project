@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +41,7 @@ public class Course implements Serializable {
     private byte[] img;
 
     @Column(name = "description", columnDefinition = "VARCHAR(MAX)")
+    @NotEmpty
     private String description;
 
     @Column(name = "create_date")

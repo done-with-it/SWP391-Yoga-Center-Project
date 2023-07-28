@@ -13,7 +13,22 @@
     <link href="/css/admin.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
         crossorigin="anonymous"></script>
-
+        <style>
+            .circle-badge {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                background-color: red;
+                color: white;
+                text-align: center;
+                line-height: 20px;
+                border-radius: 50%;
+                margin-left: 30px;
+            }
+            .circle {
+                color: white;
+        }
+        </style>
 
 </head>
 
@@ -65,7 +80,7 @@
 
                         <a class="nav-link collapsed" th:href="@{/staff/index}">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Post
+                            Blogs
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <!-- <div class="collapse" id="collapsePost" aria-labelledby="headingTwo"
@@ -93,16 +108,33 @@
                         </div>
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseBookingDeleted" aria-expanded="false" aria-controls="collapseBookingDeleted">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Class Booking Deleted
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseBookingDeleted" aria-labelledby="headingThree"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav" th:each="class : ${classesListDeleted}">
+                                <a class="nav-link" th:href="@{/staff/classBookingDeleted(classid=${class.classid})}">[[${class.classname}]]</a>
+                            </nav>
+                        </div>
+
+                        
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            View Request
+                            View Question <span th:if="${count > 0}" th:text="${count}" th:classappend="${count > 0 ? 'circle-badge' : ''}"></span>
+                        </h1>
+                            <span class="ellipsis" th:if="${status}"><i class="fas fa-ellipsis-v"></i></span>
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAccounts" aria-labelledby="headingTwo"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">Requesting</a>
-                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Requested</a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${false})}">
+                                     <span th:classappend="${count > 0 ? 'circle' : ''}">Answering</span></a>
+                                <a class="nav-link" th:href="@{/staff/viewRequest(status=${true})}">Answered</a>
                             </nav>
                         </div>
                     </div>
@@ -114,8 +146,10 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
+                <p></p>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Class Booking</h1>
+                    <h2>Classname: [[${classname}]]</h2>
+                    <h4 style="font-family: 'Times New Roman', Times, serif;">Trainer: [[${trainer}]]</h4>
                     <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
                     <ol class="breadcrumb mb-4">
                     </ol>
@@ -180,7 +214,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">

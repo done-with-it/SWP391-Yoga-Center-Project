@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +39,13 @@ import com.fptyoga.yogacenter.service.ClassesService;
 import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.RoleService;
+import com.fptyoga.yogacenter.service.TrainerService;
 import com.fptyoga.yogacenter.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
+@PreAuthorize(value = "")
 @RequestMapping("/admin")
 public class admincontroller {
 
@@ -73,10 +78,13 @@ public class admincontroller {
 
     @Autowired
     private ClassesService classesService;
+    @Autowired
+    private TrainerService trainerService;
 
     @GetMapping("/index")
-    public String trainer(Model model, @RequestParam(defaultValue = "") Long roleid) {
-
+    public String trainer(Model model, @RequestParam(defaultValue = "") Long roleid,HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(user.getRole().getRoleid() != 1) return "redirect:/404";
         int countClass = classesService.totalClasses();
         long CountCustomer = userService.countUsersByRoleAndStatus();
         long SumAmout = bookingService.TotalAmount();
@@ -149,8 +157,6 @@ public class admincontroller {
         return "redirect:/admin/accountDeleted";
     }
 
-    
-
     @GetMapping("/adduser")
     public String addUser(Model model, @RequestParam(value = "id", required = false) Long id) {
         User user;
@@ -171,7 +177,10 @@ public class admincontroller {
     @PostMapping("/adduser/new")
     public String newUser(@ModelAttribute User user,
             @RequestParam(value = "id", required = false) Long id,
-            RedirectAttributes ra, @RequestParam("file") MultipartFile file) {
+            RedirectAttributes ra,
+            @RequestParam("file") MultipartFile file,
+            Model model) {
+        
 
         if (id == null || id == 0) {
             if (userRepository.existsByEmail(user.getEmail())) {
@@ -196,8 +205,9 @@ public class admincontroller {
             }
             user.setRegistrationdate(chkUser.getRegistrationdate());
             user.setStatus(true);
+
         }
-        
+
         try {
             userService.saveUser(file, user);
         } catch (IOException e) {
@@ -210,11 +220,10 @@ public class admincontroller {
     }
 
     @GetMapping("/edit-trainer")
-    public String editTrainer(Model model, @RequestParam(value = "id") Long id, @ModelAttribute Trainer trainers) {
-        trainers = trainerRepository.findByTrainerid_Userid(id);
-        trainers.setInfoid(trainers.getInfoid());
+    public String editTrainer(Model model, @RequestParam(value = "id") Long id) {
+        Trainer trainer = trainerRepository.findById(id).orElse(null);
         model.addAttribute("id", id);
-        model.addAttribute("trainers", trainers);
+        model.addAttribute("trainer", trainer);
         return "admin/edit-trainer";
     }
 

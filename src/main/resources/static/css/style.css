@@ -17,7 +17,6 @@ body {
 	height: 100%;
 	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	font-smoothing: antialiased;
 }
 
 h1,
@@ -152,8 +151,9 @@ ol {
 .hero-section,
 .back-to-top {
 	/*background màu */
-	background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
-	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%);
+	/* background: -o-linear-gradient(305deg, #bca6e6 0%, #afa8a8 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #afa8a8 100%); */
+	background-color: #9782be;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#afa8a8", GradientType=1);
 }
 
@@ -417,6 +417,8 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 .header-bottom {
 	padding: 25px 80px 0;
+	background-color: #9782be;
+
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -521,7 +523,8 @@ only screen and (min-width: 576px) and (max-width: 767px),
 .main-menu .sub-menu {
 	position: absolute;
 	list-style: none;
-	width: 210px;
+	
+	/* width: 210px; */
 	left: 0;
 	top: 100%;
 	padding: 25px 10px 24px 30px;
@@ -631,11 +634,11 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 @media only screen and (min-width: 576px) and (max-width: 767px),
 (max-width: 576px) {
-    .slicknav_btn {
-        background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
-        background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
-    }
+	.slicknav_btn {
+		background: -o-linear-gradient(305deg, #a98fdb 0%, #dfd2d2 100%);
+		background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a98fdb", endColorstr="#dfd2d2", GradientType=1);
+	}
 }
 
 .back-to-top {
@@ -1058,7 +1061,7 @@ only screen and (min-width: 576px) and (max-width: 767px),
 .hs-text h2 {
 	text-transform: uppercase;
 	font-size: 50px;
-	color: #ded3d3ce;
+	color: white;
 	font-family: 'Times New Roman', Times;
 	line-height: 1.3;
 	margin-bottom: 20px;
@@ -1072,7 +1075,7 @@ only screen and (min-width: 576px) and (max-width: 767px),
 
 .hs-text p {
 	font-size: 16px;
-	color: #d8cacad1;
+	color: white;
 	margin-bottom: 60px;
 }
 
@@ -4355,189 +4358,284 @@ only screen and (min-width: 576px) and (max-width: 767px),
 		}
 	}
 }
-.gradient-form{
+
+.gradient-form {
 	width: 100%;
 }
 
 
-body{margin-top:20px;}
+body {
+	margin-top: 20px;
+}
+
 .schedule-table table thead tr {
-background: #86d4f5;
+	background: #86d4f5;
 }
+
 .schedule-table table thead th {
-padding: 25px 50px;
-color: #fff;
-text-align: center;
-font-size: 20px;
-font-weight: 800;
-position: relative;
-border: 0;
+	padding: 25px 50px;
+	color: #fff;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 800;
+	position: relative;
+	border: 0;
 }
+
 .schedule-table table thead th:before {
-content: "";
-width: 3px;
-height: 35px;
-background: rgba(255, 255, 255, 0.2);
-position: absolute;
-right: -1px;
-top: 50%;
-transform: translateY(-50%);
+	content: "";
+	width: 3px;
+	height: 35px;
+	background: rgba(255, 255, 255, 0.2);
+	position: absolute;
+	right: -1px;
+	top: 50%;
+	transform: translateY(-50%);
 }
+
 .schedule-table table thead th.last:before {
-content: none;
+	content: none;
 }
+
 .schedule-table table tbody td {
-vertical-align: middle;
-border: 1px solid #e2edf8;
-font-weight: 500;
-padding: 30px;
-text-align: center;
+	vertical-align: middle;
+	border: 1px solid #e2edf8;
+	font-weight: 500;
+	padding: 30px;
+	text-align: center;
 }
+
 .schedule-table table tbody td.day {
-font-size: 22px;
-font-weight: 600;
-background: #f0f1f3;
-border: 1px solid #e4e4e4;
-position: relative;
-transition: all 0.3s linear 0s;
-min-width: 165px;
+	font-size: 22px;
+	font-weight: 600;
+	background: #f0f1f3;
+	border: 1px solid #e4e4e4;
+	position: relative;
+	transition: all 0.3s linear 0s;
+	min-width: 165px;
 }
+
 .schedule-table table tbody td.active {
-position: relative;
-z-index: 10;
-transition: all 0.3s linear 0s;
-min-width: 165px;
+	position: relative;
+	z-index: 10;
+	transition: all 0.3s linear 0s;
+	min-width: 165px;
 }
+
 .schedule-table table tbody td.active h4 {
-font-weight: 700;
-color: #000;
-font-size: 20px;
-margin-bottom: 5px;
+	font-weight: 700;
+	color: #000;
+	font-size: 20px;
+	margin-bottom: 5px;
 }
+
 .schedule-table table tbody td.active p {
-font-size: 16px;
-line-height: normal;
-margin-bottom: 0;
+	font-size: 16px;
+	line-height: normal;
+	margin-bottom: 0;
 }
+
 .schedule-table table tbody td .hover h4 {
-font-weight: 700;
-font-size: 20px;
-color: #ffffff;
-margin-bottom: 5px;
+	font-weight: 700;
+	font-size: 20px;
+	color: #ffffff;
+	margin-bottom: 5px;
 }
+
 .schedule-table table tbody td .hover p {
-font-size: 16px;
-margin-bottom: 5px;
-color: #ffffff;
-line-height: normal;
+	font-size: 16px;
+	margin-bottom: 5px;
+	color: #ffffff;
+	line-height: normal;
 }
+
 .schedule-table table tbody td .hover span {
-color: #ffffff;
-font-weight: 600;
-font-size: 18px;
+	color: #ffffff;
+	font-weight: 600;
+	font-size: 18px;
 }
+
 .schedule-table table tbody td.active::before {
-position: absolute;
-content: "";
-min-width: 100%;
-min-height: 100%;
-transform: scale(0);
-top: 0;
-left: 0;
-z-index: -1;
-border-radius: 0.25rem;
-transition: all 0.3s linear 0s;
+	position: absolute;
+	content: "";
+	min-width: 100%;
+	min-height: 100%;
+	transform: scale(0);
+	top: 0;
+	left: 0;
+	z-index: -1;
+	border-radius: 0.25rem;
+	transition: all 0.3s linear 0s;
 }
+
 .schedule-table table tbody td .hover {
-position: absolute;
-left: 50%;
-top: 50%;
-width: 120%;
-height: 120%;
-transform: translate(-50%, -50%) scale(0.8);
-z-index: 99;
-background: #86d4f5;
-border-radius: 0.25rem;
-padding: 25px 0;
-visibility: hidden;
-opacity: 0;
-transition: all 0.3s linear 0s;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 120%;
+	height: 120%;
+	transform: translate(-50%, -50%) scale(0.8);
+	z-index: 99;
+	background: #86d4f5;
+	border-radius: 0.25rem;
+	padding: 25px 0;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.3s linear 0s;
 }
+
 .schedule-table table tbody td.active:hover .hover {
-transform: translate(-50%, -50%) scale(1);
-visibility: visible;
-opacity: 1;
+	transform: translate(-50%, -50%) scale(1);
+	visibility: visible;
+	opacity: 1;
 }
+
 .schedule-table table tbody td.day:hover {
-background: #86d4f5;
-color: #fff;
-border: 1px solid #86d4f5;
+	background: #86d4f5;
+	color: #fff;
+	border: 1px solid #86d4f5;
 }
+
 @media screen and (max-width: 1199px) {
-.schedule-table {
-display: block;
-width: 100%;
-overflow-x: auto;
+	.schedule-table {
+		display: block;
+		width: 100%;
+		overflow-x: auto;
+	}
+
+	.schedule-table table thead th {
+		padding: 25px 40px;
+	}
+
+	.schedule-table table tbody td {
+		padding: 20px;
+	}
+
+	.schedule-table table tbody td.active h4 {
+		font-size: 18px;
+	}
+
+	.schedule-table table tbody td.active p {
+		font-size: 15px;
+	}
+
+	.schedule-table table tbody td.day {
+		font-size: 20px;
+	}
+
+	.schedule-table table tbody td .hover {
+		padding: 15px 0;
+	}
+
+	.schedule-table table tbody td .hover span {
+		font-size: 17px;
+	}
 }
-.schedule-table table thead th {
-padding: 25px 40px;
-}
-.schedule-table table tbody td {
-padding: 20px;
-}
-.schedule-table table tbody td.active h4 {
-font-size: 18px;
-}
-.schedule-table table tbody td.active p {
-font-size: 15px;
-}
-.schedule-table table tbody td.day {
-font-size: 20px;
-}
-.schedule-table table tbody td .hover {
-padding: 15px 0;
-}
-.schedule-table table tbody td .hover span {
-font-size: 17px;
-}
-}
+
 @media screen and (max-width: 991px) {
-.schedule-table table thead th {
-font-size: 18px;
-padding: 20px;
+	.schedule-table table thead th {
+		font-size: 18px;
+		padding: 20px;
+	}
+
+	.schedule-table table tbody td.day {
+		font-size: 18px;
+	}
+
+	.schedule-table table tbody td.active h4 {
+		font-size: 17px;
+	}
 }
-.schedule-table table tbody td.day {
-font-size: 18px;
-}
-.schedule-table table tbody td.active h4 {
-font-size: 17px;
-}
-}
+
 @media screen and (max-width: 767px) {
-.schedule-table table thead th {
-padding: 15px;
+	.schedule-table table thead th {
+		padding: 15px;
+	}
+
+	.schedule-table table tbody td {
+		padding: 15px;
+	}
+
+	.schedule-table table tbody td.active h4 {
+		font-size: 16px;
+	}
+
+	.schedule-table table tbody td.active p {
+		font-size: 14px;
+	}
+
+	.schedule-table table tbody td .hover {
+		padding: 10px 0;
+	}
+
+	.schedule-table table tbody td.day {
+		font-size: 18px;
+	}
+
+	.schedule-table table tbody td .hover span {
+		font-size: 15px;
+	}
 }
-.schedule-table table tbody td {
-padding: 15px;
-}
-.schedule-table table tbody td.active h4 {
-font-size: 16px;
-}
-.schedule-table table tbody td.active p {
-font-size: 14px;
-}
-.schedule-table table tbody td .hover {
-padding: 10px 0;
-}
-.schedule-table table tbody td.day {
-font-size: 18px;
-}
-.schedule-table table tbody td .hover span {
-font-size: 15px;
-}
-}
+
 @media screen and (max-width: 575px) {
-.schedule-table table tbody td.day {
-min-width: 135px;
+	.schedule-table table tbody td.day {
+		min-width: 135px;
+	}
 }
+
+.headfix {
+	background: -o-linear-gradient(305deg, #bca6e6 0%, #979292 100%);
+	background: linear-gradient(145deg, #bca6e6 0%, #979292 100%);
+	overflow: hidden;
 }
+
+
+.ChooseWeeks {
+	margin-left: 20%;
+}
+
+.sumbitbutton {
+	display: inline-block;
+	border: none;
+	font-size: 16px;
+	font-weight: 600;
+	width: 49px;
+	height: 49px;
+	border-radius: 50px;
+	text-transform: uppercase;
+	color: white;
+	background: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+	line-height: normal;
+	cursor: pointer;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+.searchicon {
+	margin-top: 3px;
+}
+
+.optional {
+	margin-top: 3%;
+}
+.form-check-inline {
+	display: inline-flex;
+	align-items: center;
+  }
+
+  Tùy chỉnh kích thước radio button .custom-radio-input {
+	width: 18px;
+	height: 18px;
+	margin: 0;
+  }
+
+  .toggle-icon {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+  }
+  .sub-menu{
+	margin-left: 10px;
+  }

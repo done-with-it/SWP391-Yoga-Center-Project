@@ -275,7 +275,7 @@
 				<div class="ts-item" th:each="trainer : ${trainList}">
 					<div class="trainer-item">
 						<div class="ti-img">
-							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image">
+							<img th:src="@{/admin/download-png(userid=${trainer.userid})}" alt="PNG Image" height="260px" width="120px">
 						</div>
 						<div class="ti-text">
 							<h4>
@@ -401,7 +401,7 @@
 				<div class="col-xl-6">
 					<div class="event-item" th:each="content : ${contents}">
 						<div class="ei-img">
-							<img th:src="${content.img}" alt="">
+							<img th:src="@{/staff/download-png(contentid=${content.contentid})}" alt="" height="185px">
 						</div>
 						<div class="ei-text">
 							<h4><a th:href="@{/single-blog(contentid=${content.contentid})}"
@@ -428,7 +428,7 @@
 		<div class="container">
 			<div class="section-title text-center">
 				<img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png" alt="">
-				<h2>Pricing plans</h2>
+				<h2>Price Course</h2>
 				<p>Practice Yoga to perfect physical beauty, take care of your soul and enjoy life more fully!</p>
 			</div>
 
@@ -441,7 +441,7 @@
 							</div>
 							<div class="pi-price">
 								<h3>[[${course.price}]]$</h3>
-								<p>Each Moth</p>
+								<p>28 Days</p>
 							</div>
 							<h4>[[${course.coursename}]]</h4>
 						</a><br>
@@ -465,9 +465,8 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="singup-text">
-						<h3>Sign Up for Our Classes</h3>
-						<p>To be invited to the nearest Cali center and get free physical advice to learn more about the
-							program.</p>
+						<h3>Any Quesion for us?</h3>
+						<p>For more information,please contact us or fill out the form below.</p>
 					</div>
 					<form class="singup-form" th:action="@{/request}" th:object="${feedbacks}" method="post">
 						<div class="row">

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="headfix" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+  
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     .gradient-form {
@@ -14,8 +15,34 @@
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bca6e6", endColorstr="#979292", GradientType=1);
     }
 
-    .gradient-custom-2 {
-      background-image:
+
+    .google-button {
+      display: inline-block;
+      background: var(--gray-100-twilight-900);
+      /* Replace with the desired background color */
+      color: var(--gray-600-gray-200);
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 0.0625rem solid #d9dde8;
+      /* Replace with the desired border color */
+      border-radius: 0.5rem;
+      width: 100%;
+
+    }
+
+    .google-button img {
+      vertical-align: middle;
+      margin-right: 10px;
+      mix-blend-mode: multiply;
+    }
+
+    .google-button span {
+      vertical-align: middle;
+    }
+
+    .google-button:hover {
+      background: #edeff4;
+      /* Replace 'gray' with the desired color for the hover effect */
     }
   </style>
   <title>FPT Yoga</title>
@@ -31,10 +58,10 @@
               <div class="card-body p-md-5 mx-md-4">
                 <div class="text-center">
                   <a class="navbar-brand" th:href="@{/index}">
-                    <center>
+
                       <div class="logo-for-all"><img src="img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png"
                           width="80%"></div>
-                    </center>
+
                   </a>
                   <h4 class="mt-1 mb-5 pb-1">We understand you</h4>
                   <h4 class="mt-1 mb-4 pb-1">Login</h4>
@@ -43,11 +70,12 @@
                   <div class="form-outline mb-4">
                     <input type="email" class="form-control" th:field="*{email}" placeholder="Email Address">
                   </div>
-                  <div class="form-outline mb-4">
-                    <input type="password" class="form-control" th:field="*{password}" placeholder="Password">
-                    <span style="color: red;">[[${message}]]</span>
+                  <div class="form-outline mb-4 position-relative">
+                    <input type="password" th:field="*{password}" id="passwordField" class="form-control"
+                      placeholder="Password" minlength="6" required>
+                    <i class="far fa-eye position-absolute toggle-icon" id="togglePassword"></i>
                   </div>
-
+                  <span style="color: red;">[[${message}]]</span>
                   <!-- <div class="row">
                     <div class="col text-left">
                       <input type="checkbox" name="remember" value="true">Remember Me
@@ -66,10 +94,11 @@
                     <a th:href="@{/createAccount}" class="btn btn-outline-danger">Create new account</a>
                   </div>
                 </form>
-                <p style="text-align: center;">Or</p>
+                <hr>
                 <div style="text-align: center;">
-                  <a th:href="@{/oauth2/authorization/google}">
-                    <img src="img/google.png" alt="" with="40px" height="40px">
+                  <a th:href="@{/oauth2/authorization/google}" class="google-button">
+                    <img src="img/google.png" width="25px" height="25px">
+                    <span>Sign in with Google</span>
                   </a>
                 </div>
 
@@ -91,6 +120,8 @@
       </div>
     </div>
   </section>
+  <script src="/js/scripts.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 

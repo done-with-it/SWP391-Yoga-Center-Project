@@ -68,10 +68,6 @@
 					</div>
 				</div>
 			</div>
-			<form class="infor-form">
-				<input type="text" placeholder="Your Email">
-				<button><img src="img/icons/send.png" alt=""></button>
-			</form>
 			<div class="insta-social">
 				<a href="#"><i class="fa fa-instagram"></i></a>
 				<a th:href="@{https://www.facebook.com/GreenSea.prj}"><i class="fa fa-facebook"></i></a>
@@ -103,11 +99,9 @@
 							<li th:if="${session.user.role.roleid == 4 || session.user.role.roleid == 3}"><a
 									th:href="@{/edit/{id}(id=${session.user.userid})}">Profile</a>
 							</li>
-							<li th:if="${session.user.role.roleid == 2}"><a th:href="@{/staff/index}">Staff
-									Dashboard</a>
+							<li th:if="${session.user.role.roleid == 2}"><a th:href="@{/staff/index}">Manage</a>
 							</li>
-							<li th:if="${session.user.role.roleid == 1}"><a th:href="@{/admin/index}">Admin
-									Dashboard</a>
+							<li  th:if="${session.user.role.roleid == 1}"><a th:href="@{/admin/index}">Manage</a>
 							</li>
 							<li><a th:href="@{/logout}">Logout</a></li>
 						</ul>
@@ -218,10 +212,6 @@
 					<li><i class="material-icons">alarm_on</i>Mon - Fri: 6:30am - 07:45pm</li>
 					<li><i class="material-icons">alarm_on</i>Sat - Sun: 8:30am - 05:45pm</li>
 				</ul>
-				<form class="infor-form">
-					<input type="text" placeholder="Your Email">
-					<button><img src="img/icons/send.png" alt=""></button>
-				</form>
 			</div>
 		</div>
 		<div class="col-lg-1 col-sm-6">

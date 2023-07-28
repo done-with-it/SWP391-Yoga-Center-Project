@@ -4,6 +4,10 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link rel="stylesheet" href="/css/profile.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
 <body>
     <div class="main-content">
         <!-- Top navbar -->
@@ -219,7 +223,7 @@
                                             <div class="form-group focused">
                                                 <label class="form-control-label">Email address</label>
                                                 <input type="email" class="form-control form-control-alternative"
-                                                    placeholder="jesse@example.com" th:field="*{email}">
+                                                    placeholder="jesse@example.com" th:field="*{email}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -249,6 +253,7 @@
                                 </div>
                                 <hr class="my-4">
                                 <button type="submit" class="btn btn-info">Edit profile</button>
+                                <a class="btn btn-info" th:href="@{/forgot}">Change Password</a>
                                 <a class="btn btn-info" th:href="@{/index}">Home</a>
                                 <!-- Description -->
                                 <!-- <h6 class="heading-small text-muted mb-4">About me</h6>

@@ -17,7 +17,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     public List<Course> getAllCourse() {
-        return courseRepository.findAll();
+        return courseRepository.findByStatus(true);
     }
 
     public Course getCourseById(Long courseid) {
@@ -58,4 +58,7 @@ public class CourseService {
     public int totalCourse(){
         return courseRepository.CountCourseWithStatusTrue();
     }
+    public boolean CheckCoursename(String coursename){
+            return courseRepository.existsByCoursename(coursename);
+        }
 }

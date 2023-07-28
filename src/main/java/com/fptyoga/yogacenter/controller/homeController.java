@@ -1,10 +1,11 @@
 package com.fptyoga.yogacenter.controller;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,8 +143,8 @@ public class homeController {
     @GetMapping("/index")
     public String index(Model model, @RequestParam(defaultValue = "1") int page, HttpSession session) {
         List<User> trainList = userService.listAll(3L);
-        PageRequest pageable = PageRequest.of(page - 1, 3, Sort.by("createdate").descending());
-        Page<Content> contents = contentRepository.findAll(pageable);
+        PageRequest pageable = PageRequest.of(page - 1, 3, Sort.by("contentid").descending());
+        Page<Content> contents = contentService.getAllContentsByStatus(pageable);
         List<Course> courses = courseRepository.findAll();
         model.addAttribute("courses", courses);
         model.addAttribute("currentPage", page);
@@ -221,6 +222,7 @@ public class homeController {
     public String about(Model model) {
         List<User> trainList = userService.listAll(3L);
         model.addAttribute("trainList", trainList);
+        model.addAttribute("feedbacks", new Feedback());
         return "about";
     }
 
@@ -242,9 +244,28 @@ public class homeController {
 
     @GetMapping("/schedule")
     public String getSchedules(@RequestParam("userid") Long userid, @RequestParam("status") int status, Model model,
-            @RequestParam("roleid") Long roleid,
+            @RequestParam("roleid") Long roleid, @RequestParam(defaultValue = "0") String filterDay,
             @RequestParam(defaultValue = "1") int page) {
-        PageRequest pageable = PageRequest.of(page - 1, 6);
+        PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by("bookingid").descending());
+        // -------------------------------------------
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate monday = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        
+        int filter = Integer.parseInt(filterDay);
+
+        List<LocalDate> filterDates = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            filterDates.add(monday.plusDays(i));
+        }
+        model.addAttribute("filterDates", filterDates);
+
+        List<LocalDate> weekDates = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            weekDates.add(monday.plusDays(i + filter));
+        }
+
+        // -------------------------------------------
         if (roleid == 4) {
             List<Booking> booking = bookingRepository.findAll();
             for (Booking book : booking) {
@@ -254,20 +275,22 @@ public class homeController {
                     bookingRepository.save(book);
                 }
             }
-            List<Booking> booked;
+            Page<Booking> booked;
             if (status == 1 || status == 3) {
-                booked = bookingService.getSchedule(userid);
+                booked = bookingService.getSchedule(userid, pageable);
             } else {
-                booked = bookingService.getHistorySchedule(userid);
-                Collections.sort(booked, Comparator.comparing(Booking::getBookingid));
-                Collections.reverse(booked);
+                booked = bookingService.getHistorySchedule(userid, pageable);
             }
 
             model.addAttribute("booked", booked);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", booked.getTotalPages());
         } else {
             Page<Class> classes = classesService.getSchedulesByTrainer(userid, pageable);
             model.addAttribute("classes", classes);
         }
+
+        model.addAttribute("weekDates", weekDates);
         model.addAttribute("status", status);
         model.addAttribute("roleid", roleid);
         return "schedule";
@@ -357,7 +380,8 @@ public class homeController {
     }
 
     @GetMapping("/single-blog")
-    public String singleblog(@RequestParam("contentid") Long contentid, Model model) {
+    public String singleblog(@RequestParam("contentid") Long contentid, Model model,
+            @RequestParam(defaultValue = "1") int page) {
         List<Content> contents = contentRepository.findAll();
         int flag = contents.size();
 
@@ -374,7 +398,8 @@ public class homeController {
         }
 
         Content content = contentService.getContentsBlog(contentid);
-        List<Content> listcontents = contentRepository.findAll(Sort.by("contentid").descending()).subList(0, 3);
+        PageRequest pageable = PageRequest.of(page - 1, 3, Sort.by("contentid").descending());
+        Page<Content> listcontents = contentService.getAllContentsByStatus(pageable);
         List<String> distinctTopics = contentService.getFilterContent();
 
         Content previousblog = null;

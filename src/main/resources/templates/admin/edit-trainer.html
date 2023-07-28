@@ -51,13 +51,13 @@
         <div class="col-sm-2"><a th:href="@{/admin/index}"><img title="Back Home" src="/img/logo.png"></a></div>
     </div>
     <hr>
-    <form class="form" th:action="@{/admin/updateTrainer(id=${id})}" method="post" th:object="${trainer}"
-        enctype="multipart/form-data">
+    <form class="form" th:action="@{/admin/updateTrainer(id=${id})}" method="post" th:object="${trainer}">
         <input type="hidden" th:field="*{infoid}">
+        <input type="hidden" th:field="*{trainerid}">
         <div class="form-group">
 
             <div class="col-xs-12">
-                <h4>Experience[[${trainer.infoid}]]</h4>
+
                 <input type="text" class="form-control" th:field="*{experience}" placeholder="Full name">
             </div>
         </div>

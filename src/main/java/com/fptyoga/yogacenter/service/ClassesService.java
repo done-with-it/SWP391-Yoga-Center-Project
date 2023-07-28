@@ -39,4 +39,8 @@ public class ClassesService {
         return classesRepository.countClassesWithStatusTrue();
     }
 
+    public boolean CheckClassesname(String classname){
+        return classesRepository.existsByClassname(classname);
+    }
+
 }

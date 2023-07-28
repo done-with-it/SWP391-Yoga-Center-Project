@@ -73,7 +73,8 @@
                         </div>
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseAccountsDeleted" aria-expanded="false" aria-controls="collapseAccountsDeleted">
+                            data-bs-target="#collapseAccountsDeleted" aria-expanded="false"
+                            aria-controls="collapseAccountsDeleted">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Accounts Deleted
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -162,44 +163,52 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol> -->
                     <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body"><h5>Total Amount</h5></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <h2>[[${formattedNumber}]] VND</h2>
-                                        
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">
+                                    <h5>Total Amount</h5>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body"><h5>Total number of customers</h5></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <h2>[[${CountCustomer}]]</h2>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body"><h5>Classes</h5></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <h2>[[${countClass}]]</h2>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body"><h5>Courses</h5></div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <h2>[[${countCourse}]]</h2>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>[[${formattedNumber}]] VND</h2>
+
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">
+                                    <h5>Total number of customers</h5>
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>[[${CountCustomer}]]</h2>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body">
+                                    <h5>Classes</h5>
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>[[${countClass}]]</h2>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-danger text-white mb-4">
+                                <div class="card-body">
+                                    <h5>Courses</h5>
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <h2>[[${countCourse}]]</h2>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card mb-4">
@@ -220,16 +229,16 @@
                             </div>
                         </div>
                     </div>
-                    <div style="text-align: center;">
-                        <h2><a th:href="@{/admin/adduser(id=${0})}" style="color: black; font-weight: bold;">ADD NEW
-                                USERS</a>
-                        </h2>
-                    </div>
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            USER TABLE
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h6 style="margin: 0;"> <i class="fas fa-table me-1"></i>USER TABLE</h6>
+                            <a th:href="@{/admin/adduser(id=${0})}" style="display: inline-block; padding: 4px 15px; background-color: rgb(45, 139, 57); 
+                            color: rgb(255, 255, 255); font-weight: bold; text-decoration: none; border: 1px solid #ccc; border-radius: 5px;">
+                                <i class="material-icons" style="border-radius: 100%; border: 2px solid rgb(255, 255, 255); vertical-align: middle; padding: 4px;">add</i>
+                                <span style="line-height: 24px; vertical-align: middle;">Add new user</span>
+                            </a>
                         </div>
+
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
@@ -283,10 +292,10 @@
                                                 width="96px"></td>
                                         <td>
                                             <a th:href="@{/admin/edit/{id}(id=${user.userid})}"><i
-                                                    class="material-icons">edit</i></a>
+                                                    class="material-icons" style="color: rgb(72, 154, 202);">edit</i></a>
                                             <a th:href="@{/admin/delete/{id}(id=${user.userid})}"
                                                 onclick="return confirmDelete();"><i
-                                                    class="material-icons">delete</i></a>
+                                                    class="material-icons" style="color: red;">delete</i></a>
                                         </td>
                                     </tr>
                                 </tbody>

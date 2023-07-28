@@ -16,4 +16,8 @@ public class TrainerService {
     public Trainer getTrainer(Long trainerid){
         return repo.findByTrainerid_Userid(trainerid);
     }
+
+    public Long getInfoidByUserid(Long id) {
+        return repo.findInfoidByUserid(id);
+    }
 }

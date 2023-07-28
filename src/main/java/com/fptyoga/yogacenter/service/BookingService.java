@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fptyoga.yogacenter.Entity.Booking;
@@ -17,16 +19,16 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public List<Booking> getSchedule(Long Customerid) {
-        return bookingRepository.findByCustomerid_UseridAndStatus(Customerid, true);
+    public Page<Booking> getSchedule(Long Customerid, Pageable page) {
+        return bookingRepository.findByCustomerid_UseridAndStatus(Customerid, true, page);
     }
 
     public List<Booking> getUserInClass(Long classid) {
         return bookingRepository.findByClassid_ClassidAndStatus(classid, true);
     }
 
-    public List<Booking> getHistorySchedule(Long Customerid) {
-        return bookingRepository.findByCustomerid_UseridAndStatusAndResponseCode(Customerid, false, "00");
+    public Page<Booking> getHistorySchedule(Long Customerid, Pageable page) {
+        return bookingRepository.findByCustomerid_UseridAndStatusAndResponseCode(Customerid, false, "00", page);
     }
 
     public Booking getCourse(Long classid) {

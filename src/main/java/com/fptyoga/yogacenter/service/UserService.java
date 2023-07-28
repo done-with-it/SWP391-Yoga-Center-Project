@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fptyoga.yogacenter.Entity.Trainer;
 import com.fptyoga.yogacenter.Entity.User;
 import com.fptyoga.yogacenter.dto.MonthlyTotal;
+import com.fptyoga.yogacenter.repository.TrainerRepository;
 import com.fptyoga.yogacenter.repository.UserRepository;
 
 import jakarta.persistence.EntityManager;
@@ -26,6 +28,9 @@ public class UserService {
     @Autowired
     private UserRepository repo;
 
+    @Autowired
+    private TrainerRepository trainerRepository;
+
     public List<User> listAll(Long role) {
         return repo.findByRole_RoleidAndStatus(role, true);
 
@@ -34,6 +39,24 @@ public class UserService {
     public User getUser(Long userid) {
         Optional<User> userOptional = repo.findById(userid);
         return userOptional.orElse(null);
+    }
+
+    public void updateTrainerInfo(User user, String description, String achievement, float experience, String biography, Long userid) {
+        // Kiểm tra xem người dùng có role là "trainers" không
+        if (user.getRole().getRoleName().equals("trainer")) {
+            Trainer trainer = trainerRepository.findByTrainerid_Userid(userid);
+            if (trainer == null) {
+                trainer = new Trainer();
+                trainer.setTrainerid(user);
+            }
+
+            trainer.setDescription(description);
+            trainer.setAchievement(achievement);
+            trainer.setExperience(experience);
+            trainer.setBiography(biography);
+
+            trainerRepository.save(trainer);
+        } 
     }
 
     public void saveUser(MultipartFile file, User user) throws IOException {
@@ -127,4 +150,5 @@ public class UserService {
         return repo.countByRoleAndStatus();
     }
 
+    
 }

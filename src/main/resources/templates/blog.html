@@ -55,18 +55,23 @@
 		</div>
 	</section>
 	<!-- Page top Section end -->
+	<div class="container">
+		<div class="event-filter-warp">
+			<div class="row justify-content-center">
+				<form th:action="@{/blog}" method="get">
+						<select class="circle-select" name="topic">
+							<option value="" data-display="Choose Topic">Choose Topic</option>
+							<option th:each="distinctTopic : ${distinctTopics}" th:value="${distinctTopic}" th:text="${distinctTopic}"></option>
+						</select>
+					<button class="site-btn sb-gradient" type="submit">Filter now</button>
+					
+				</form>
+			</div>
+		</div>
+	</div>
 	<br>
 	<div>
-		<form th:action="@{/blog}" method="get">
-			<div>
-				<select class="circle-select" name="topic">
-					<option value="" data-display="Choose Topic">Choose Topic</option>
-					<option th:each="distinctTopic : ${distinctTopics}" th:value="${distinctTopic}" th:text="${distinctTopic}"></option>
-				</select>
-			</div>
-			<div class="clearfix"></div><br>
-			<button class="site-btn sb-gradient" type="submit">Filter now</button>
-		</form>
+		
 	</div>
 	<!-- Events Section -->
 	<section class="events-page-section spad">

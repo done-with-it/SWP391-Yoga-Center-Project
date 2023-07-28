@@ -25,7 +25,6 @@ public class Trainer implements Serializable {
 
     @Id
     @Column(name = "info_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long infoid;
 
     @OneToOne

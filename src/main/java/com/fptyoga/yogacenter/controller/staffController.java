@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +47,8 @@ import com.fptyoga.yogacenter.service.ContentService;
 import com.fptyoga.yogacenter.service.CourseService;
 import com.fptyoga.yogacenter.service.FeedbackService;
 import com.fptyoga.yogacenter.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/staff")
@@ -94,29 +97,59 @@ public class staffController {
     private FeedbackService feedbackService;
 
     @GetMapping("/indexClass")
-    public String Class(Model model) {
-        List<Class> classes = classesRepository.findAll();
-        model.addAttribute("classes", classes);
+    public String Class(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user.getRole().getRoleid() != 2)
+            return "redirect:/404";
+
+        long count = feedbackService.countFeedbackByStatusFalse();
+        model.addAttribute("count", count);
+
+        List<Class> classesList = classesRepository.findByStatus(true);
+        model.addAttribute("classesList", classesList);
+
+        List<Class> classesListDeleted = classesRepository.findByStatus(false);
+        model.addAttribute("classesListDeleted", classesListDeleted);
         return "staff/indexClass";
     }
 
     @GetMapping("/index")
-    public String blog(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String blog(Model model, @RequestParam(defaultValue = "1") int page, HttpSession session) {
+
+        User user = (User) session.getAttribute("user");
+        if (user.getRole().getRoleid() != 2)
+            return "redirect:/404";
         PageRequest pageable = PageRequest.of(page - 1, 20, Sort.by("contentid").descending());
         Page<Content> contents = contentService.getAllContentsByStatus(pageable);
 
-        List<Class> classes = classesRepository.findAll();
-        model.addAttribute("classes", classes);
+        long count = feedbackService.countFeedbackByStatusFalse();
+        model.addAttribute("count", count);
+
+        List<Class> classesList = classesRepository.findByStatus(true);
+        model.addAttribute("classesList", classesList);
+
+        List<Class> classesListDeleted = classesRepository.findByStatus(false);
+        model.addAttribute("classesListDeleted", classesListDeleted);
         model.addAttribute("contents", contents);
         return "staff/index";
     }
 
     @GetMapping("/indexCourse")
-    public String Course(Model model) {
+    public String Course(Model model, HttpSession session) {
+
+        User user = (User) session.getAttribute("user");
+        if (user.getRole().getRoleid() != 2)
+            return "redirect:/404";
         List<Course> courses = courseRepository.findAll();
 
-        List<Class> classes = classesRepository.findAll();
-        model.addAttribute("classes", classes);
+        long count = feedbackService.countFeedbackByStatusFalse();
+        model.addAttribute("count", count);
+
+        List<Class> classesList = classesRepository.findByStatus(true);
+        model.addAttribute("classesList", classesList);
+
+        List<Class> classesListDeleted = classesRepository.findByStatus(false);
+        model.addAttribute("classesListDeleted", classesListDeleted);
         model.addAttribute("courses", courses);
         return "staff/indexCourse";
     }
@@ -152,8 +185,12 @@ public class staffController {
 
     @PostMapping("/content")
     public String setBlog(@ModelAttribute Content content,
-            RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile file) {
+            RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile file, BindingResult result) {
 
+        if (result.hasErrors()) {
+
+            return "staff/addblog";
+        }
         content.setCreatedate(LocalDate.now());
         content.setStatus(true);
         contentRepository.save(content);
@@ -187,13 +224,24 @@ public class staffController {
     }
 
     @GetMapping("/addClass")
-    public String addClass(Model model) {
+    public String addClass(Model model, @RequestParam(value = "id", required = false) Long id) {
+
+        Class classes;
+
+        if (id == null || id == 0) {
+            classes = new Class();
+            model.addAttribute("id", 0);
+        } else {
+            classes = classesRepository.findById(id).orElse(null);
+            model.addAttribute("id", id);
+        }
         List<Course> courses = courseRepository.findAll();
         List<Room> rooms = roomRepository.findAll();
         List<Time> times = timeRepository.findAll();
         List<User> trainers = userService.listAll(3L);
         List<String> classDistincts = classesService.getDistinctClass();
-        model.addAttribute("classes", new Class());
+
+        model.addAttribute("classes", classes);
         model.addAttribute("courses", courses);
         model.addAttribute("rooms", rooms);
         model.addAttribute("times", times);
@@ -203,7 +251,29 @@ public class staffController {
     }
 
     @PostMapping("/addClass/new")
-    public String newClass(@ModelAttribute Class classes, RedirectAttributes ra) {
+    public String newClass(@ModelAttribute Class classes, RedirectAttributes ra,
+            @RequestParam(value = "id", required = false) Long id) {
+
+        if (id == null || id == 0) {
+            if (classesService.CheckClassesname(classes.getClassname())) {
+                ra.addFlashAttribute("existsClass", "The Class already exists.");
+                return "redirect:/staff/addClass";
+            }
+            if (classesRepository.existsByDateAndRoomidAndTimeid(classes.getDate(), classes.getRoomid(),
+                    classes.getTimeid())) {
+                ra.addFlashAttribute("exists", "The room already existed at that time.");
+                return "redirect:/staff/addClass";
+            }
+            classes.setStatus(true);
+            classesRepository.save(classes);
+        } else {
+            Class chkClass = classesRepository.findById(id).orElse(null);
+            if (!chkClass.getClassname().equals(classes.getClassname())
+                    && classesService.CheckClassesname(classes.getClassname())) {
+                ra.addFlashAttribute("exists", "The room already existed at that time.");
+                return "redirect:/staff/addClass";
+            }
+        }
         classes.setStatus(true);
         classesRepository.save(classes);
         ra.addFlashAttribute("message", "The Class has been saved successfully.");
@@ -234,21 +304,52 @@ public class staffController {
         try {
             Class classes = classesRepository.findById(id).orElse(null);
             model.addAttribute("classes", classes);
-            return "staff/editClass";
+            return "staff/addClass";
         } catch (Exception e) {
         }
-        return "staff/editClass";
+        return "staff/addClass";
     }
 
     @GetMapping("/addCourse")
-    public String addCourse(Model model) {
-        model.addAttribute("course", new Course());
+    public String addCourse(Model model, @RequestParam(value = "id", required = false) Long id) {
+
+        Course course;
+        if (id == null || id == 0) {
+            course = new Course();
+            model.addAttribute("id", 0);
+        } else {
+            course = courseRepository.findById(id).orElse(null);
+            model.addAttribute("id", id);
+        }
+        model.addAttribute("course", course);
         return "staff/addCourse";
     }
 
     @PostMapping("/addCourse/new")
     public String newCourse(@ModelAttribute Course course, RedirectAttributes ra,
-            @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file, @RequestParam(value = "id", required = false) Long id) {
+
+        if (id == null || id == 0) {
+            if (courseService.CheckCoursename(course.getCoursename())) {
+                ra.addFlashAttribute("existsCourse", "The Course already exists.");
+                return "redirect:/staff/addCourse";
+            }
+            course.setStatus(true);
+            courseRepository.save(course);
+            try {
+                courseService.saveCourse(file, course);
+            } catch (IOException e) {
+                // Xử lý lỗi nếu cần
+            }
+            return "redirect:/staff/indexCourse";
+        } else {
+            Course chkCourse = courseRepository.findById(id).orElse(null);
+            if (!chkCourse.getCoursename().equals(course.getCoursename())
+                    && courseService.CheckCoursename(course.getCoursename())) {
+                ra.addFlashAttribute("existsCourse", "The Course already exists.");
+                return "redirect:/staff/addCourse";
+            }
+        }
         course.setCreatedate(LocalDate.now());
         course.setStatus(true);
         course.setExchange(23000);
@@ -286,28 +387,57 @@ public class staffController {
         return "redirect:/staff/indexCourse";
     }
 
-    @GetMapping("/editcourse")
-    public String showEditCourse(@RequestParam(defaultValue = "") Long id, Model model) {
+    @GetMapping("/editCourse/{id}")
+    public String showEditCourse(@PathVariable("id") Long id, Model model) {
         try {
             Course course = courseRepository.findById(id).orElse(null);
             model.addAttribute("course", course);
-            return "staff/editcourse";
+            return "staff/addCourse";
         } catch (Exception e) {
         }
-        return "staff/editCourse";
+        return "staff/addCourse";
     }
 
     @GetMapping("/classBooking")
     private String ClassBooking(Model model, @RequestParam(name = "classid", required = false) Long classid) {
+
+        long count = feedbackService.countFeedbackByStatusFalse();
+        model.addAttribute("count", count);
+
         List<Booking> booked = bookingService.getUserInClass(classid);
         Class classes = classesRepository.findById(classid).orElse(null);
 
-        List<Class> classesList = classesRepository.findAll();
+        List<Class> classesList = classesRepository.findByStatus(true);
         model.addAttribute("classesList", classesList);
+        List<Class> classesListDeleted = classesRepository.findByStatus(false);
+        model.addAttribute("classesListDeleted", classesListDeleted);
 
         model.addAttribute("classes", classes);
         model.addAttribute("booked", booked);
+        model.addAttribute("classname", classes.getClassname());
+        model.addAttribute("trainer", classes.getTrainerid().getFullname());
         return "staff/classBooking";
+    }
+
+    @GetMapping("/classBookingDeleted")
+    private String ClassBookingDeleted(Model model, @RequestParam(name = "classid", required = false) Long classid) {
+
+        long count = feedbackService.countFeedbackByStatusFalse();
+        model.addAttribute("count", count);
+
+        List<Booking> booked = bookingService.getUserInClass(classid);
+        Class classes = classesRepository.findById(classid).orElse(null);
+
+        List<Class> classesList = classesRepository.findByStatus(true);
+        model.addAttribute("classesList", classesList);
+        List<Class> classesListDeleted = classesRepository.findByStatus(false);
+        model.addAttribute("classesListDeleted", classesListDeleted);
+
+        model.addAttribute("classes", classes);
+        model.addAttribute("booked", booked);
+        model.addAttribute("classname", classes.getClassname());
+        model.addAttribute("trainer", classes.getTrainerid().getFullname());
+        return "staff/classBookingDeleted";
     }
 
     @GetMapping("/deleteClassBooking/{id}")
@@ -336,9 +466,14 @@ public class staffController {
                 model.addAttribute("feedbacks", feedbacks);
             }
         }
+        long count = feedbackService.countFeedbackByStatusFalse();
+        model.addAttribute("count", count);
 
-        List<Class> classes = classesRepository.findAll();
-        model.addAttribute("classes", classes);
+        List<Class> classesList = classesRepository.findByStatus(true);
+        model.addAttribute("classesList", classesList);
+
+        List<Class> classesListDeleted = classesRepository.findByStatus(false);
+        model.addAttribute("classesListDeleted", classesListDeleted);
 
         return "staff/viewRequest";
     }

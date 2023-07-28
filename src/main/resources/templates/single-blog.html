@@ -72,7 +72,9 @@
 						<div class="blog-meta">
 							<p><i class="material-icons">person</i>[[${content.author}]]</p>
 						</div>
-						<p th:utext="${content.description}"></p>
+						<div class="blog-meta">
+							<p th:utext="${content.description}"></p>
+						</div>
 
 						<!-- <blockquote>Yoga is now one of the most popular practice in the world. It is not simply the
 							movement of the four limbs, Yoga is the product of a massive culture, a special "religion"
@@ -237,7 +239,7 @@
 						<h2 class="sb-title">Latest post</h2>
 						<div class="latest-post-widget">
 							<div class="lp-item" th:each="content : ${listcontents}">
-								<div class="lp-thumb set-bg" th:data-setbg="${content.img}"></div>
+								<div class="lp-thumb set-bg" th:data-setbg="@{/staff/download-png(contentid=${content.contentid})}"></div>
 								<div class="lp-text">
 									<h3><a th:href="@{/single-blog(contentid=${content.contentid})}"
 											th:text="${content.title}"></a></h3>
@@ -246,59 +248,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="sb-widget">
-						<h2 class="sb-title">Latest post</h2>
-						<div class="insta-widget">
-							<div class="insta-item">
-								<div class="insta-img">
-									<img src="img/infor/1.jpg" alt="">
-									<div class="insta-hover">
-										<i class="fa fa-instagram"></i>
-									</div>
-								</div>
-							</div>
-							<div class="insta-item">
-								<div class="insta-img">
-									<img src="img/infor/2.jpg" alt="">
-									<div class="insta-hover">
-										<i class="fa fa-instagram"></i>
-									</div>
-								</div>
-							</div>
-							<div class="insta-item">
-								<div class="insta-img">
-									<img src="img/infor/3.jpg" alt="">
-									<div class="insta-hover">
-										<i class="fa fa-instagram"></i>
-									</div>
-								</div>
-							</div>
-							<div class="insta-item">
-								<div class="insta-img">
-									<img src="img/infor/4.jpg" alt="">
-									<div class="insta-hover">
-										<i class="fa fa-instagram"></i>
-									</div>
-								</div>
-							</div>
-							<div class="insta-item">
-								<div class="insta-img">
-									<img src="img/infor/5.jpg" alt="">
-									<div class="insta-hover">
-										<i class="fa fa-instagram"></i>
-									</div>
-								</div>
-							</div>
-							<div class="insta-item">
-								<div class="insta-img">
-									<img src="img/infor/6.jpg" alt="">
-									<div class="insta-hover">
-										<i class="fa fa-instagram"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div> -->
 				</div>
 			</div>
 		</div>

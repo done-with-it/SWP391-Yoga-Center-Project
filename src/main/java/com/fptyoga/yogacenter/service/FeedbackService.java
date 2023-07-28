@@ -7,15 +7,21 @@ import org.springframework.stereotype.Service;
 
 import com.fptyoga.yogacenter.Entity.Feedback;
 import com.fptyoga.yogacenter.repository.FeedbacKRepository;
+
 @Service
 public class FeedbackService {
     @Autowired
     private FeedbacKRepository feedbacKRepository;
 
-    public List<Feedback> getFeedbackByStatusTrue(){
+    public List<Feedback> getFeedbackByStatusTrue() {
         return feedbacKRepository.findByStatus(true);
     }
-    public List<Feedback> getFeedbackByStatusFalse(){
+
+    public List<Feedback> getFeedbackByStatusFalse() {
         return feedbacKRepository.findByStatus(false);
+    }
+
+    public long countFeedbackByStatusFalse() {
+        return feedbacKRepository.countFeedbackByStatusFalse();
     }
 }

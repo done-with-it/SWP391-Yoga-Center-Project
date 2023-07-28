@@ -4,7 +4,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <head>
-  <title>Bootstrap Example</title>
+  <title>FPT Yoga Center</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -35,6 +35,12 @@
       });
     });
   </script>
+  <style>
+    .formborder {
+      border: 1px solid rgba(0, 0, 0, 0.175);
+      border-radius: 5px;
+    }
+  </style>
 </head>
 
 
@@ -42,7 +48,8 @@
 <div class="container bootstrap snippet">
   <div class="row">
     <div class="col-sm-10">
-      <h1>Add New Class</h1>
+      <h1 th:if="${id == 0}">Add New Class</h1>
+      <h1 th:if="${id != 0}">Edit Class</h1>
     </div>
     <div class="col-sm-2"><a th:href="@{/staff/indexClass}"><img title="Back Home" src="/img/logo.png"></a></div>
   </div>
@@ -65,32 +72,34 @@
 
     </div><!--/col-3-->
     <div th:if="${message}" class="alert alert-success text-center">[[${message}]]</div>
-    <div class="col-sm-11">
+    <div class="col-sm-11 formborder">
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+        <!-- <li class="active "><a data-toggle="tab" href="#home">Home</a></li> -->
       </ul>
 
 
-      <div class="tab-content">
+      <div class="tab-content ">
         <div class="tab-pane active" id="home">
           <hr>
-          <form class="form" th:action="@{/staff/addClass/new}" method="post" th:object="${classes}">
-            <hr>
-            
+          <form class="form" th:action="@{/staff/addClass/new(id=${id})}" method="post" th:object="${classes}">
+            <input type="hidden" name="id" th:field="*{classid}" />
+
+
             <div class="form-group">
 
               <div>
                 <h4>Name's Class</h4>
-                <input type="text" class="form-control" th:field="*{classname}" placeholder="name's class">
+                <input type="text" class="form-control" th:field="*{classname}" placeholder="name's class" required>
+                <span style="color: red;">[[${existsClass}]]</span>
               </div>
             </div>
             <div class="form-group">
 
               <div>
                 <h4>Date</h4>
-                <select th:field="*{date}">
+                <select class="addClassForm" th:field="*{date}">
                   <option th:each="classDistinct : ${classDistincts}" th:value="${classDistinct}"
-                    th:text="${classDistinct}" class="form-control"></option>
+                    th:text="${classDistinct}"></option>
                 </select>
               </div>
             </div>
@@ -99,30 +108,8 @@
 
               <div>
                 <h4>Courses</h4>
-                <select th:field="*{courseid}">
-                  <option th:each="course : ${courses}" th:value="${course.courseid}"
-                    th:text="${course.coursename}" class="form-control"></option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-
-              <div>
-                <h4>Rooms</h4>
-                <select th:field="*{roomid}">
-                  <option th:each="room : ${rooms}" th:value="${room.roomid}"
-                    th:text="${room.roomname}" class="form-control"></option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-
-              <div>
-                <h4>Time</h4>
-                <select th:field="*{timeid}">
-                  <option th:each="time : ${times}" th:value="${time.timeid}" th:text="${time.starttime + '-' + time.endtime}"
+                <select th:field="*{courseid}" class="addClassForm">
+                  <option th:each="course : ${courses}" th:value="${course.courseid}" th:text="${course.coursename}"
                     class="form-control"></option>
                 </select>
               </div>
@@ -131,13 +118,44 @@
             <div class="form-group">
 
               <div>
-                <h4>Trainer</h4>
-                <select th:field="*{trainerid}">
-                  <option th:each="trainer : ${trainers}" th:value="${trainer.userid}"
-                    th:text="${trainer.fullname}" class="form-control"></option>
+                <h4>Rooms</h4>
+                <select th:field="*{roomid}" class="addClassForm">
+                  <option th:each="room : ${rooms}" th:value="${room.roomid}" th:text="${room.roomname}"
+                    class="form-control"></option>
                 </select>
               </div>
             </div>
+
+            <div class="form-group">
+
+              <div>
+                <h4>Time</h4>
+                <select th:field="*{timeid}" class="addClassForm">
+                  <option th:each="time : ${times}" th:value="${time.timeid}"
+                    th:text="${time.starttime + '-' + time.endtime}" class="form-control"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+
+              <div>
+                <h4>Trainer</h4>
+                <select th:field="*{trainerid}" class="addClassForm">
+                  <option th:each="trainer : ${trainers}" th:value="${trainer.userid}" th:text="${trainer.fullname}"
+                    class="form-control"></option>
+                </select>
+              </div>
+            </div>
+            <style>
+              .addClassForm {
+                width: 33%;
+                height: 6%;
+                align-items: center;
+              }
+
+              .
+            </style>
             <!-- <div class="form-group">
                           
                           <div class="col-xs-6">
@@ -156,6 +174,7 @@
                         </div>
                     </div> -->
 
+            <div style="color: red;" th:if="${exists}">[[${exists}]]</div>
             <div class="form-group">
               <div class="col-xs-12">
                 <br>

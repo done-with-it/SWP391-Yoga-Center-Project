@@ -9,6 +9,8 @@
 
 	<!-- Favicon -->
 	<link rel="icon" href="./images/favicon.png" type="image/x-icon" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/style.css" />
 
 	<!-- Invoice styling -->
 	<style>
@@ -120,7 +122,8 @@
 </head>
 
 <body>
-	<h1>FPT YOGA BILL</h1>
+	<h2>FPT YOGA BILL</h2>
+	<br>
 
 	<div class="invoice-box">
 		<table>
@@ -136,8 +139,8 @@
 							</td>
 
 							<td>
-								Invoice #: [[${order.bookingid}]]<br/>
-								Created: [[${#temporals.format(order.bookingdate, "yy/MM/dd HH:mm:ss")}]]<br/>
+								Invoice #: [[${order.bookingid}]]<br />
+								Created: [[${#temporals.format(order.bookingdate, "yy/MM/dd HH:mm:ss")}]]<br />
 							</td>
 						</tr>
 					</table>
@@ -189,7 +192,17 @@
 			</tr>
 
 		</table>
+		
 	</div>
+	<p>
+		<div class="copyright">
+			Copyright &copy;
+			<script>document.write(new Date().getFullYear());</script> All rights reserved | This
+			website is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a
+				th:href="@{https://www.facebook.com/GreenSea.prj}" target="_blank">FPT Yoga</a>
+		</div>
+	</p>
+	
 </body>
 
 </html>

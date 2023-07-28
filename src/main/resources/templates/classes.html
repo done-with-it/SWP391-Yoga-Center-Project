@@ -106,7 +106,7 @@
 											class="site-btn sb-gradient">book now</a>
 										<a th:if="${session.user != null && session.user.role.roleid == 4}"
 											th:href="@{/create_payment(classID=${class.classid}, date=${class.date}, timeid=${class.timeid.timeid}, userID=${session.user.userid}, duration=${class.courseid.duration}, price=${class.courseid.price * class.courseid.exchange})}"
-											onclick="return confirmBookClass();" class="site-btn sb-gradient">book
+											onclick="return confirmBookClass(event);" class="site-btn sb-gradient">book
 											now</a>
 
 									</div>
@@ -299,12 +299,53 @@
 	<!-- Search model end -->
 
 	<!--====== Javascripts & Jquery ======-->
-	<script>
+	<!-- <script>
 		function confirmBookClass() {
-			return confirm("Are you sure you want to book this class? If you have booked this class we will extend it for another 30 days!");
+			return confirm("Are you sure you want to book this class? If you have booked this class we will extend it for another 30 days!");		
+		}
+	</script> -->
+	<style>
+		/* Custom CSS for the Yes! button */
+		.swal-button--confirm {
+			background-image: linear-gradient(145deg, #a98fdb 0%, #dfd2d2 100%);
+			color: #ffffff; /* Set the text color for the button */
+		}
+		.swal-modal{
+			width: 29%;
+		}
+		
+	</style>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+		function confirmBookClass(event) {
+			event.preventDefault(); // Prevent the default action of the link (following the href)
+	
+			sweetAlert({
+				title: "Are you sure you want to book this class?",
+				text: "If you have booked this class, we will extend it for another 30 days!",
+				icon: "img/login/11zon_resized/logoV2-removebg-preview_1_11zon.png", // Use the image path directly as the icon
+				buttons: {
+					cancel: true,
+					confirm: {
+						text: "Yes!",
+						value: true,
+						visible: true,
+						className: "",
+					},
+				},
+			}).then((value) => {
+				// 'value' will be true if 'Yes!' (confirm) button is clicked, or false if cancel is clicked
+				if (value) {
+					// User confirmed, proceed with following the link
+					window.location.href = event.target.href;
+				} else {
+					// User canceled, do nothing
+				}
+			});
 		}
 	</script>
-
+	  
+	
 	<script src="js/vendor/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.slicknav.min.js"></script>

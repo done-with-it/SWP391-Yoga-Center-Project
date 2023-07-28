@@ -3,6 +3,8 @@ package com.fptyoga.yogacenter.repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +16,9 @@ import com.fptyoga.yogacenter.Entity.Booking;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    List<Booking> findByCustomerid_UseridAndStatus(Long customerid, boolean status);
+    Page<Booking> findByCustomerid_UseridAndStatus(Long customerid, boolean status, Pageable page);
 
-    List<Booking> findByCustomerid_UseridAndStatusAndResponseCode(Long customerid, boolean status, String responseCode);
+    Page<Booking> findByCustomerid_UseridAndStatusAndResponseCode(Long customerid, boolean status, String responseCode, Pageable page);
 
     List<Booking> findByClassid_ClassidAndStatus(Long classid, boolean status);
 

@@ -52,6 +52,9 @@ public class User implements Serializable {
     @Column(name = "gender")
     private String gender;
 
+    
+    // @Pattern(regexp = "^0\\d{8,11}$", message = "Phone must start with 0 and have 9 to 12 digits")
+    // @Size(min = 9, max = 12, message = "Phone must have 9 to 12 digits")
     @Column(name = "phone")
     private String phone;
 
