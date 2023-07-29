@@ -13,4 +13,4 @@
 * Phạm Quốc Đạt
 
 
-#### Copyright &#169; 2023 by Team 6 SWP391 
+#### Copyright &#169; 2023 by Team CodeSix SWP391 
